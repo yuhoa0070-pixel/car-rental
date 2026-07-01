@@ -59,7 +59,7 @@
     function renderCharts() {
         if (typeof Chart === "undefined") return;
         const c = chartColors();
-        const palette = ["#3b6cf6", "#16a34a", "#d97706", "#8b5cf6", "#ec4899", "#94a1b8"];
+        const palette = ["#6366f1", "#a855f7", "#059669", "#f59e0b", "#ec4899", "#94a1b8"];
 
         document.getElementById("revenueTrend").textContent = D.revenue.trend;
 
@@ -71,8 +71,8 @@
                 datasets: [{
                     data: D.revenue.values,
                     borderColor: c.primary,
-                    backgroundColor: "rgba(59,108,246,0.12)",
-                    fill: true, tension: 0.4, borderWidth: 2,
+                    backgroundColor: "rgba(99,102,241,0.10)",
+                    fill: true, tension: 0.4, borderWidth: 2.5,
                     pointBackgroundColor: c.primary, pointRadius: 3
                 }]
             },
