@@ -20,19 +20,19 @@
             </div>
             <nav class="nav">
                 <a class="nav-item active" data-view="dashboard" href="#dashboard">
-                    <span class="nav-icon">📊</span><span>Dashboard</span>
+                    <span class="nav-icon" data-icon="dashboard"></span><span>Dashboard</span>
                 </a>
                 <a class="nav-item" data-view="workorders" href="#workorders">
-                    <span class="nav-icon">🔧</span><span>Work Orders</span>
+                    <span class="nav-icon" data-icon="wrench"></span><span>Work Orders</span>
                 </a>
                 <a class="nav-item" data-view="appointments" href="#appointments">
-                    <span class="nav-icon">📅</span><span>Appointments</span>
+                    <span class="nav-icon" data-icon="calendar"></span><span>Appointments</span>
                 </a>
                 <a class="nav-item" data-view="vehicles" href="#vehicles">
-                    <span class="nav-icon">🚗</span><span>Vehicles</span>
+                    <span class="nav-icon" data-icon="car"></span><span>Vehicles</span>
                 </a>
                 <a class="nav-item" data-view="customers" href="#customers">
-                    <span class="nav-icon">👥</span><span>Customers</span>
+                    <span class="nav-icon" data-icon="users"></span><span>Customers</span>
                 </a>
             </nav>
             <div class="sidebar-footer">
@@ -50,7 +50,7 @@
         <main class="main">
             <header class="topbar">
                 <div class="topbar-left">
-                    <button class="menu-btn" id="menuBtn" aria-label="Toggle menu">☰</button>
+                    <button class="menu-btn" id="menuBtn" aria-label="Toggle menu" data-icon="menu"></button>
                     <div>
                         <h1 class="page-title" id="pageTitle">Dashboard</h1>
                         <p class="page-sub" id="pageSub">Overview of your shop's performance</p>
@@ -58,11 +58,11 @@
                 </div>
                 <div class="topbar-right">
                     <div class="search">
-                        <span class="search-icon">🔍</span>
+                        <span class="search-icon" data-icon="search"></span>
                         <input type="text" placeholder="Search work orders, customers..." id="searchInput">
                     </div>
-                    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">🌙</button>
-                    <button class="btn-primary" id="newOrderBtn">+ New Work Order</button>
+                    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme"></button>
+                    <button class="btn-primary" id="newOrderBtn"><span class="btn-icon" data-icon="plus"></span>New Work Order</button>
                 </div>
             </header>
 

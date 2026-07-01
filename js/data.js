@@ -1,10 +1,10 @@
 /* GaragHub mock data */
 const GH_DATA = {
     kpis: [
-        { label: "Revenue (this month)", value: "$48,250", delta: "+12.5%", up: true, icon: "💰", tone: "success" },
-        { label: "Active Work Orders", value: "18", delta: "+3 today", up: true, icon: "🔧", tone: "primary" },
-        { label: "Vehicles in Shop", value: "11", delta: "-2 vs yesterday", up: false, icon: "🚗", tone: "warning" },
-        { label: "Appointments Today", value: "7", delta: "+2 vs avg", up: true, icon: "📅", tone: "primary" }
+        { label: "Revenue (this month)", value: "$48,250", delta: "+12.5%", up: true, icon: "dollar", tone: "success" },
+        { label: "Active Work Orders", value: "18", delta: "+3 today", up: true, icon: "wrench", tone: "primary" },
+        { label: "Vehicles in Shop", value: "11", delta: "-2 vs yesterday", up: false, icon: "car", tone: "warning" },
+        { label: "Appointments Today", value: "7", delta: "+2 vs avg", up: true, icon: "calendar", tone: "primary" }
     ],
 
     revenue: {

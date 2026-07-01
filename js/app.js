@@ -6,6 +6,34 @@
     let currentOrderFilter = "all";
     let revenueChart, serviceChart;
 
+    /* ---------- SVG icon set (Feather/Lucide style, single source of truth) ---------- */
+    function svg(inner) {
+        return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" '
+            + 'stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + inner + '</svg>';
+    }
+    const ICONS = {
+        dashboard: svg('<rect x="3" y="3" width="7" height="7" rx="1.2"/><rect x="14" y="3" width="7" height="7" rx="1.2"/><rect x="14" y="14" width="7" height="7" rx="1.2"/><rect x="3" y="14" width="7" height="7" rx="1.2"/>'),
+        wrench: svg('<path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>'),
+        calendar: svg('<rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>'),
+        car: svg('<path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"/><circle cx="7" cy="17" r="2"/><path d="M9 17h6"/><circle cx="17" cy="17" r="2"/>'),
+        users: svg('<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>'),
+        menu: svg('<line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>'),
+        search: svg('<circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>'),
+        moon: svg('<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>'),
+        sun: svg('<circle cx="12" cy="12" r="4"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>'),
+        plus: svg('<line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>'),
+        dollar: svg('<line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>'),
+        arrowUp: svg('<line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/>'),
+        arrowDown: svg('<line x1="12" y1="5" x2="12" y2="19"/><polyline points="19 12 12 19 5 12"/>')
+    };
+
+    function hydrateIcons(root) {
+        (root || document).querySelectorAll("[data-icon]").forEach(node => {
+            const key = node.getAttribute("data-icon");
+            if (ICONS[key]) node.innerHTML = ICONS[key];
+        });
+    }
+
     /* ---------- helpers ---------- */
     function el(html) {
         const t = document.createElement("template");
@@ -37,11 +65,11 @@
             grid.appendChild(el(`
                 <div class="kpi">
                     <div class="kpi-top">
-                        <div class="kpi-icon" style="background:${toneBg[k.tone]};color:${toneFg[k.tone]}">${k.icon}</div>
+                        <div class="kpi-icon" style="background:${toneBg[k.tone]};color:${toneFg[k.tone]}">${ICONS[k.icon] || ""}</div>
                     </div>
                     <div class="kpi-label">${k.label}</div>
                     <div class="kpi-value">${k.value}</div>
-                    <div class="kpi-delta ${k.up ? "up" : "down"}">${k.up ? "▲" : "▼"} ${k.delta}</div>
+                    <div class="kpi-delta ${k.up ? "up" : "down"}">${k.up ? ICONS.arrowUp : ICONS.arrowDown} ${k.delta}</div>
                 </div>`));
         });
     }
@@ -221,7 +249,7 @@
         document.getElementById("themeToggle").addEventListener("click", () => {
             const dark = document.body.getAttribute("data-theme") === "dark";
             document.body.setAttribute("data-theme", dark ? "light" : "dark");
-            document.getElementById("themeToggle").textContent = dark ? "🌙" : "☀️";
+            document.getElementById("themeToggle").innerHTML = dark ? ICONS.moon : ICONS.sun;
             try { localStorage.setItem("gh-theme", dark ? "light" : "dark"); } catch (e) {}
             renderCharts();
         });
@@ -245,13 +273,16 @@
 
     /* ---------- Init ---------- */
     function init() {
+        hydrateIcons();
+
+        let isDark = false;
         try {
-            const saved = localStorage.getItem("gh-theme");
-            if (saved === "dark") {
+            if (localStorage.getItem("gh-theme") === "dark") {
                 document.body.setAttribute("data-theme", "dark");
-                document.getElementById("themeToggle").textContent = "☀️";
+                isDark = true;
             }
         } catch (e) {}
+        document.getElementById("themeToggle").innerHTML = isDark ? ICONS.sun : ICONS.moon;
 
         renderKPIs();
         renderActiveOrders();
