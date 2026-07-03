@@ -1,162 +1,404 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GaragHub — Dashboard</title>
-    <link rel="stylesheet" href="css/styles.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
-</head>
-<body>
-    <div class="app">
-        <!-- Sidebar -->
-        <aside class="sidebar" id="sidebar">
-            <div class="brand">
-                <div class="brand-logo">GH</div>
-                <span class="brand-name">GaragHub</span>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>GarageHub Dashboard</title>
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar" aria-label="Main navigation">
+        <a class="brand" href="#" aria-label="GarageHub home">
+          <span class="brand-mark">gh</span>
+          <span>GarageHub</span>
+        </a>
+
+        <nav class="nav-list">
+          <a class="nav-item active" href="#" aria-current="page">
+            <svg aria-hidden="true"><use href="#icon-grid"></use></svg>
+            Dashboard
+          </a>
+          <a class="nav-item" href="#">
+            <svg aria-hidden="true"><use href="#icon-users"></use></svg>
+            Customers
+          </a>
+          <a class="nav-item" href="#">
+            <svg aria-hidden="true"><use href="#icon-car"></use></svg>
+            Vehicles
+          </a>
+          <a class="nav-item" href="#">
+            <svg aria-hidden="true"><use href="#icon-clipboard"></use></svg>
+            Repair Orders
+          </a>
+          <a class="nav-item" href="#">
+            <svg aria-hidden="true"><use href="#icon-receipt"></use></svg>
+            Invoices
+          </a>
+          <a class="nav-item" href="#">
+            <svg aria-hidden="true"><use href="#icon-box"></use></svg>
+            Inventory
+          </a>
+          <a class="nav-item" href="#">
+            <svg aria-hidden="true"><use href="#icon-team"></use></svg>
+            Staff
+          </a>
+          <a class="nav-item" href="#">
+            <svg aria-hidden="true"><use href="#icon-chart"></use></svg>
+            Reports
+          </a>
+          <a class="nav-item" href="#">
+            <svg aria-hidden="true"><use href="#icon-bell"></use></svg>
+            Reminders
+          </a>
+          <a class="nav-item" href="#">
+            <svg aria-hidden="true"><use href="#icon-settings"></use></svg>
+            Settings
+          </a>
+        </nav>
+
+        <div class="sidebar-footer">
+          <div class="help-card">
+            <svg aria-hidden="true"><use href="#icon-headset"></use></svg>
+            <div>
+              <strong>Need help?</strong>
+              <span>Visit our help center</span>
             </div>
-            <nav class="nav">
-                <a class="nav-item active" data-view="dashboard" href="#dashboard">
-                    <span class="nav-icon" data-icon="dashboard"></span><span>Dashboard</span>
-                </a>
-                <a class="nav-item" data-view="workorders" href="#workorders">
-                    <span class="nav-icon" data-icon="wrench"></span><span>Work Orders</span>
-                </a>
-                <a class="nav-item" data-view="appointments" href="#appointments">
-                    <span class="nav-icon" data-icon="calendar"></span><span>Appointments</span>
-                </a>
-                <a class="nav-item" data-view="vehicles" href="#vehicles">
-                    <span class="nav-icon" data-icon="car"></span><span>Vehicles</span>
-                </a>
-                <a class="nav-item" data-view="customers" href="#customers">
-                    <span class="nav-icon" data-icon="users"></span><span>Customers</span>
-                </a>
-            </nav>
-            <div class="sidebar-footer">
-                <div class="tech-card">
-                    <div class="tech-avatar">MJ</div>
-                    <div>
-                        <div class="tech-name">Mike Johnson</div>
-                        <div class="tech-role">Shop Manager</div>
-                    </div>
-                </div>
+          </div>
+
+          <button class="profile-button" type="button">
+            <span class="avatar">JS</span>
+            <span>
+              <strong>John Smith</strong>
+              <small>Owner</small>
+            </span>
+            <svg aria-hidden="true"><use href="#icon-chevron"></use></svg>
+          </button>
+        </div>
+      </aside>
+
+      <main class="main-area">
+        <header class="topbar">
+          <button class="icon-button menu-button" type="button" aria-label="Open menu">
+            <svg aria-hidden="true"><use href="#icon-menu"></use></svg>
+          </button>
+
+          <label class="search-field">
+            <svg aria-hidden="true"><use href="#icon-search"></use></svg>
+            <input id="dashboardSearch" type="search" placeholder="Search customers, vehicles, orders..." />
+          </label>
+
+          <div class="topbar-actions">
+            <button class="quick-add" id="quickAddButton" type="button">
+              <svg aria-hidden="true"><use href="#icon-plus"></use></svg>
+              Quick Add
+            </button>
+            <button class="icon-button has-badge" type="button" aria-label="Notifications">
+              <svg aria-hidden="true"><use href="#icon-bell"></use></svg>
+              <span>5</span>
+            </button>
+            <button class="icon-button" type="button" aria-label="Messages">
+              <svg aria-hidden="true"><use href="#icon-message"></use></svg>
+            </button>
+            <button class="shop-switcher" type="button">
+              <span class="shop-icon"><svg aria-hidden="true"><use href="#icon-shop"></use></svg></span>
+              AutoFix Workshop
+              <svg aria-hidden="true"><use href="#icon-chevron"></use></svg>
+            </button>
+          </div>
+        </header>
+
+        <section class="welcome-row">
+          <div>
+            <h1>Welcome back, John!</h1>
+            <p>Here is what is happening in your workshop today.</p>
+          </div>
+          <button class="date-button" type="button">
+            <svg aria-hidden="true"><use href="#icon-calendar"></use></svg>
+            May 16, 2024
+            <svg aria-hidden="true"><use href="#icon-chevron"></use></svg>
+          </button>
+        </section>
+
+        <section class="metric-grid" aria-label="Workshop summary">
+          <article class="metric-card" data-search="revenue today money income">
+            <div class="metric-heading">
+              <span class="metric-icon green"><svg aria-hidden="true"><use href="#icon-dollar"></use></svg></span>
+              <h2>Revenue Today</h2>
             </div>
-        </aside>
+            <strong>$4,850.00</strong>
+            <p class="trend up">12.5% vs yesterday</p>
+            <svg class="sparkline green-line" viewBox="0 0 180 48" aria-hidden="true">
+              <path d="M2 36 L20 31 L39 34 L58 31 L78 24 L96 29 L113 18 L132 22 L150 14 L166 4 L178 0" />
+            </svg>
+          </article>
 
-        <!-- Main -->
-        <main class="main">
-            <header class="topbar">
-                <div class="topbar-left">
-                    <button class="menu-btn" id="menuBtn" aria-label="Toggle menu" data-icon="menu"></button>
-                    <div>
-                        <h1 class="page-title" id="pageTitle">Dashboard</h1>
-                        <p class="page-sub" id="pageSub">Overview of your shop's performance</p>
-                    </div>
-                </div>
-                <div class="topbar-right">
-                    <div class="search">
-                        <span class="search-icon" data-icon="search"></span>
-                        <input type="text" placeholder="Search work orders, customers..." id="searchInput">
-                    </div>
-                    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme"></button>
-                    <button class="btn-primary" id="newOrderBtn"><span class="btn-icon" data-icon="plus"></span>New Work Order</button>
-                </div>
-            </header>
-
-            <div class="content">
-                <!-- Dashboard View -->
-                <section class="view active" id="view-dashboard">
-                    <div class="kpi-grid" id="kpiGrid"></div>
-
-                    <div class="charts-grid">
-                        <div class="card chart-card">
-                            <div class="card-head">
-                                <h2>Revenue (last 7 days)</h2>
-                                <span class="badge badge-up" id="revenueTrend">+0%</span>
-                            </div>
-                            <canvas id="revenueChart" height="120"></canvas>
-                        </div>
-                        <div class="card chart-card">
-                            <div class="card-head">
-                                <h2>Service Breakdown</h2>
-                            </div>
-                            <canvas id="serviceChart" height="120"></canvas>
-                        </div>
-                    </div>
-
-                    <div class="lower-grid">
-                        <div class="card">
-                            <div class="card-head">
-                                <h2>Active Work Orders</h2>
-                                <a class="link" href="#workorders" data-view="workorders">View all</a>
-                            </div>
-                            <div class="table-wrap">
-                                <table id="activeOrdersTable"></table>
-                            </div>
-                        </div>
-                        <div class="card">
-                            <div class="card-head">
-                                <h2>Today's Appointments</h2>
-                                <a class="link" href="#appointments" data-view="appointments">View all</a>
-                            </div>
-                            <div id="todayAppointments" class="appt-list"></div>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- Work Orders View -->
-                <section class="view" id="view-workorders">
-                    <div class="card">
-                        <div class="card-head">
-                            <h2>All Work Orders</h2>
-                            <div class="filters" id="orderFilters">
-                                <button class="chip active" data-status="all">All</button>
-                                <button class="chip" data-status="In Progress">In Progress</button>
-                                <button class="chip" data-status="Waiting Parts">Waiting Parts</button>
-                                <button class="chip" data-status="Completed">Completed</button>
-                            </div>
-                        </div>
-                        <div class="table-wrap">
-                            <table id="allOrdersTable"></table>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- Appointments View -->
-                <section class="view" id="view-appointments">
-                    <div class="card">
-                        <div class="card-head"><h2>Upcoming Appointments</h2></div>
-                        <div id="allAppointments" class="appt-list"></div>
-                    </div>
-                </section>
-
-                <!-- Vehicles View -->
-                <section class="view" id="view-vehicles">
-                    <div class="card">
-                        <div class="card-head"><h2>Vehicles in Service</h2></div>
-                        <div class="table-wrap">
-                            <table id="vehiclesTable"></table>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- Customers View -->
-                <section class="view" id="view-customers">
-                    <div class="card">
-                        <div class="card-head"><h2>Customers</h2></div>
-                        <div class="table-wrap">
-                            <table id="customersTable"></table>
-                        </div>
-                    </div>
-                </section>
+          <article class="metric-card" data-search="active repairs repair orders progress">
+            <div class="metric-heading">
+              <span class="metric-icon blue"><svg aria-hidden="true"><use href="#icon-wrench"></use></svg></span>
+              <h2>Active Repairs</h2>
             </div>
-        </main>
+            <strong>24</strong>
+            <p class="trend up">9.1% vs yesterday</p>
+            <svg class="sparkline blue-line" viewBox="0 0 180 48" aria-hidden="true">
+              <path d="M2 38 L18 34 L35 36 L52 29 L69 34 L84 25 L102 11 L121 32 L139 30 L156 20 L174 35" />
+            </svg>
+          </article>
+
+          <article class="metric-card" data-search="completed repairs done finished">
+            <div class="metric-heading">
+              <span class="metric-icon green"><svg aria-hidden="true"><use href="#icon-check"></use></svg></span>
+              <h2>Completed Repairs</h2>
+            </div>
+            <strong>18</strong>
+            <p class="trend up">5.3% vs yesterday</p>
+            <svg class="sparkline green-line" viewBox="0 0 180 48" aria-hidden="true">
+              <path d="M2 36 L18 31 L35 35 L53 27 L72 29 L90 18 L108 25 L124 20 L140 8 L160 14 L178 2" />
+            </svg>
+          </article>
+
+          <article class="metric-card" data-search="vehicles checked in car arrivals">
+            <div class="metric-heading">
+              <span class="metric-icon purple"><svg aria-hidden="true"><use href="#icon-car"></use></svg></span>
+              <h2>Vehicles Checked In</h2>
+            </div>
+            <strong>32</strong>
+            <p class="trend purple-text">8.2% vs yesterday</p>
+            <svg class="sparkline purple-line" viewBox="0 0 180 48" aria-hidden="true">
+              <path d="M2 24 L20 18 L39 14 L55 26 L72 29 L90 17 L109 25 L126 24 L143 15 L160 13 L178 12" />
+            </svg>
+          </article>
+
+          <article class="metric-card" data-search="overdue invoices payments pending">
+            <div class="metric-heading">
+              <span class="metric-icon orange"><svg aria-hidden="true"><use href="#icon-receipt"></use></svg></span>
+              <h2>Overdue Invoices</h2>
+            </div>
+            <strong>7</strong>
+            <p class="trend down">3.4% vs yesterday</p>
+            <svg class="sparkline orange-line" viewBox="0 0 180 48" aria-hidden="true">
+              <path d="M2 30 L18 24 L36 28 L54 20 L72 11 L90 23 L108 20 L126 15 L144 20 L162 14 L178 21" />
+            </svg>
+          </article>
+
+          <article class="metric-card" data-search="low stock inventory parts">
+            <div class="metric-heading">
+              <span class="metric-icon red"><svg aria-hidden="true"><use href="#icon-box"></use></svg></span>
+              <h2>Low Stock Items</h2>
+            </div>
+            <strong>14</strong>
+            <a href="#">View inventory</a>
+            <svg class="sparkline red-line" viewBox="0 0 180 48" aria-hidden="true">
+              <path d="M2 10 L20 24 L38 31 L56 23 L74 32 L92 20 L110 34 L128 27 L146 32 L164 26 L178 27" />
+            </svg>
+          </article>
+        </section>
+
+        <section class="content-grid">
+          <article class="panel revenue-panel" data-search="revenue overview monthly chart income">
+            <div class="panel-header">
+              <div>
+                <h2>Revenue Overview</h2>
+                <strong>$28,540.00</strong>
+                <p class="trend up">18.6% vs last month</p>
+              </div>
+              <button class="ghost-button" type="button">
+                This Month
+                <svg aria-hidden="true"><use href="#icon-chevron"></use></svg>
+              </button>
+            </div>
+
+            <div class="line-chart" aria-label="Revenue line chart">
+              <div class="y-labels">
+                <span>$8K</span>
+                <span>$6K</span>
+                <span>$4K</span>
+                <span>$2K</span>
+                <span>$0</span>
+              </div>
+              <svg viewBox="0 0 620 220" role="img" aria-label="Revenue rises sharply near the end of the month">
+                <defs>
+                  <linearGradient id="areaGradient" x1="0" x2="0" y1="0" y2="1">
+                    <stop offset="0%" stop-color="#1c66f2" stop-opacity=".2" />
+                    <stop offset="100%" stop-color="#1c66f2" stop-opacity="0" />
+                  </linearGradient>
+                </defs>
+                <g class="grid-lines">
+                  <line x1="0" x2="620" y1="30" y2="30" />
+                  <line x1="0" x2="620" y1="72" y2="72" />
+                  <line x1="0" x2="620" y1="114" y2="114" />
+                  <line x1="0" x2="620" y1="156" y2="156" />
+                  <line x1="0" x2="620" y1="198" y2="198" />
+                </g>
+                <path class="area" d="M0 166 L38 172 L76 128 L114 156 L152 168 L190 150 L228 131 L266 112 L304 132 L342 148 L380 135 L418 127 L456 123 L494 83 L532 18 L570 30 L610 58 L620 72 L620 220 L0 220 Z" />
+                <path class="main-line" d="M0 166 L38 172 L76 128 L114 156 L152 168 L190 150 L228 131 L266 112 L304 132 L342 148 L380 135 L418 127 L456 123 L494 83 L532 18 L570 30 L610 58 L620 72" />
+                <g class="chart-points">
+                  <circle cx="0" cy="166" r="4" /><circle cx="38" cy="172" r="4" /><circle cx="76" cy="128" r="4" />
+                  <circle cx="152" cy="168" r="4" /><circle cx="266" cy="112" r="4" /><circle cx="342" cy="148" r="4" />
+                  <circle cx="456" cy="123" r="4" /><circle cx="494" cy="83" r="4" /><circle cx="532" cy="18" r="4" />
+                  <circle cx="570" cy="30" r="4" /><circle cx="620" cy="72" r="4" />
+                </g>
+              </svg>
+              <div class="x-labels">
+                <span>May 1</span>
+                <span>May 5</span>
+                <span>May 10</span>
+                <span>May 15</span>
+                <span>May 20</span>
+                <span>May 25</span>
+                <span>May 31</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="panel status-panel" data-search="repair orders status progress approval completed hold cancelled">
+            <div class="panel-header compact">
+              <h2>Repair Orders Status</h2>
+            </div>
+            <div class="status-content">
+              <div class="donut-wrap" aria-label="64 total repair orders">
+                <div class="donut">
+                  <span>Total</span>
+                  <strong>64</strong>
+                </div>
+              </div>
+              <ul class="status-list">
+                <li><span class="dot blue-bg"></span>In Progress <strong>24 (37.5%)</strong></li>
+                <li><span class="dot orange-bg"></span>Waiting Approval <strong>14 (21.9%)</strong></li>
+                <li><span class="dot green-bg"></span>Completed <strong>18 (28.1%)</strong></li>
+                <li><span class="dot purple-bg"></span>On Hold <strong>6 (9.4%)</strong></li>
+                <li><span class="dot red-bg"></span>Cancelled <strong>2 (3.1%)</strong></li>
+              </ul>
+            </div>
+          </article>
+
+          <article class="panel reminders-panel" data-search="upcoming reminders oil brake tire battery">
+            <div class="panel-title-row">
+              <h2>Upcoming Reminders</h2>
+              <a href="#">View all</a>
+            </div>
+            <ul class="reminder-list">
+              <li>
+                <span><svg aria-hidden="true"><use href="#icon-calendar"></use></svg></span>
+                <div><strong>Oil Change - Toyota Camry</strong><small>Today, 10:00 AM</small></div>
+              </li>
+              <li>
+                <span><svg aria-hidden="true"><use href="#icon-calendar"></use></svg></span>
+                <div><strong>Brake Service - Honda City</strong><small>Tomorrow, 11:00 AM</small></div>
+              </li>
+              <li>
+                <span><svg aria-hidden="true"><use href="#icon-calendar"></use></svg></span>
+                <div><strong>Tire Rotation - Hyundai i20</strong><small>May 18, 09:30 AM</small></div>
+              </li>
+              <li>
+                <span><svg aria-hidden="true"><use href="#icon-calendar"></use></svg></span>
+                <div><strong>Battery Check - Ford EcoSport</strong><small>May 19, 02:00 PM</small></div>
+              </li>
+            </ul>
+          </article>
+
+          <article class="panel orders-panel" data-search="recent repair orders toyota camry honda ford hyundai mahindra">
+            <div class="panel-title-row">
+              <h2>Recent Repair Orders</h2>
+              <a href="#">View all</a>
+            </div>
+            <div class="order-list">
+              <div><strong>#RO-2024-064</strong><span>Toyota Camry</span><em class="tag orange">In Progress</em></div>
+              <div><strong>#RO-2024-063</strong><span>Honda City</span><em class="tag blue">Waiting</em></div>
+              <div><strong>#RO-2024-062</strong><span>Ford EcoSport</span><em class="tag orange">In Progress</em></div>
+              <div><strong>#RO-2024-061</strong><span>Hyundai i20</span><em class="tag green">Completed</em></div>
+              <div><strong>#RO-2024-060</strong><span>Mahindra XUV700</span><em class="tag blue">Waiting</em></div>
+            </div>
+          </article>
+
+          <article class="panel invoices-panel" data-search="recent invoices paid pending rahul sneha amit vikram neha">
+            <div class="panel-title-row">
+              <h2>Recent Invoices</h2>
+              <a href="#">View all</a>
+            </div>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Invoice #</th>
+                    <th>Customer</th>
+                    <th>Amount</th>
+                    <th>Status</th>
+                    <th>Date</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr><td>INV-2024-099</td><td>Rahul Sharma</td><td>$450.00</td><td><span class="tag green">Paid</span></td><td>May 16, 2024</td></tr>
+                  <tr><td>INV-2024-098</td><td>Sneha Patel</td><td>$320.00</td><td><span class="tag green">Paid</span></td><td>May 16, 2024</td></tr>
+                  <tr><td>INV-2024-097</td><td>Amit Verma</td><td>$780.00</td><td><span class="tag orange">Pending</span></td><td>May 15, 2024</td></tr>
+                  <tr><td>INV-2024-096</td><td>Vikram Singh</td><td>$150.00</td><td><span class="tag green">Paid</span></td><td>May 15, 2024</td></tr>
+                  <tr><td>INV-2024-095</td><td>Neha Kapoor</td><td>$560.00</td><td><span class="tag orange">Pending</span></td><td>May 14, 2024</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </article>
+
+          <article class="panel alerts-panel" data-search="inventory alerts brake pads oil air filter oil filter stock">
+            <div class="panel-title-row">
+              <h2>Inventory Alerts</h2>
+              <a href="#">View all</a>
+            </div>
+            <ul class="alert-list">
+              <li><span class="alert-icon orange"><svg aria-hidden="true"><use href="#icon-shield"></use></svg></span><div><strong>Brake Pads</strong><small>Low Stock (3 left)</small></div></li>
+              <li><span class="alert-icon orange"><svg aria-hidden="true"><use href="#icon-shield"></use></svg></span><div><strong>Engine Oil 5W-30</strong><small>Low Stock (5 left)</small></div></li>
+              <li><span class="alert-icon red"><svg aria-hidden="true"><use href="#icon-shield"></use></svg></span><div><strong>Air Filter</strong><small>Out of Stock</small></div></li>
+              <li><span class="alert-icon orange"><svg aria-hidden="true"><use href="#icon-shield"></use></svg></span><div><strong>Oil Filter</strong><small>Low Stock (4 left)</small></div></li>
+            </ul>
+          </article>
+        </section>
+      </main>
     </div>
 
-    <script src="js/data.js"></script>
+    <div class="modal-backdrop" id="quickAddModal" aria-hidden="true">
+      <section class="quick-modal" role="dialog" aria-modal="true" aria-labelledby="quickAddTitle">
+        <div class="panel-title-row">
+          <h2 id="quickAddTitle">Quick Add</h2>
+          <button class="icon-button" id="closeModalButton" type="button" aria-label="Close quick add">
+            <svg aria-hidden="true"><use href="#icon-x"></use></svg>
+          </button>
+        </div>
+        <div class="quick-actions">
+          <button type="button"><svg aria-hidden="true"><use href="#icon-clipboard"></use></svg>New repair order</button>
+          <button type="button"><svg aria-hidden="true"><use href="#icon-users"></use></svg>New customer</button>
+          <button type="button"><svg aria-hidden="true"><use href="#icon-receipt"></use></svg>Create invoice</button>
+          <button type="button"><svg aria-hidden="true"><use href="#icon-box"></use></svg>Add stock item</button>
+        </div>
+      </section>
+    </div>
+
+    <div class="toast" id="toast" role="status" aria-live="polite">Ready to add.</div>
+
+    <svg class="icon-sprite" aria-hidden="true">
+      <symbol id="icon-grid" viewBox="0 0 24 24"><path d="M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM14 14h6v6h-6z"/></symbol>
+      <symbol id="icon-users" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v2"/><circle cx="9.5" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></symbol>
+      <symbol id="icon-car" viewBox="0 0 24 24"><path d="M5 17h14l-1.4-6.3A3 3 0 0 0 14.7 8H9.3a3 3 0 0 0-2.9 2.7z"/><path d="M7 17v2M17 17v2M8 13h8"/></symbol>
+      <symbol id="icon-clipboard" viewBox="0 0 24 24"><path d="M9 4h6l1 2h3v15H5V6h3z"/><path d="M9 12h6M9 16h4"/></symbol>
+      <symbol id="icon-receipt" viewBox="0 0 24 24"><path d="M6 3h12v18l-2-1.2-2 1.2-2-1.2-2 1.2-2-1.2L6 21z"/><path d="M9 8h6M9 12h6M9 16h3"/></symbol>
+      <symbol id="icon-box" viewBox="0 0 24 24"><path d="M12 3 3 7.5l9 4.5 9-4.5z"/><path d="M3 7.5v9L12 21l9-4.5v-9M12 12v9"/></symbol>
+      <symbol id="icon-team" viewBox="0 0 24 24"><path d="M12 12a4 4 0 1 0-4-4 4 4 0 0 0 4 4ZM4 21a8 8 0 0 1 16 0"/></symbol>
+      <symbol id="icon-chart" viewBox="0 0 24 24"><path d="M4 19V5M4 19h16"/><path d="M8 16v-5M12 16V8M16 16v-8"/></symbol>
+      <symbol id="icon-bell" viewBox="0 0 24 24"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/><path d="M10 21a2 2 0 0 0 4 0"/></symbol>
+      <symbol id="icon-settings" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .34 1.88l.06.06-2 3.46-.08-.02a1.8 1.8 0 0 0-1.94.43 1.8 1.8 0 0 0-.43 1.94l.02.08h-4l.02-.08a1.8 1.8 0 0 0-.43-1.94 1.8 1.8 0 0 0-1.94-.43l-.08.02-2-3.46.06-.06A1.7 1.7 0 0 0 7.34 15a1.8 1.8 0 0 0-1.51-1.23L5.75 13v-4l.08-.01a1.8 1.8 0 0 0 1.51-1.23 1.7 1.7 0 0 0-.34-1.88l-.06-.06 2-3.46.08.02a1.8 1.8 0 0 0 1.94-.43A1.8 1.8 0 0 0 11.39 0h4a1.8 1.8 0 0 0 .43 1.95 1.8 1.8 0 0 0 1.94.43l.08-.02 2 3.46-.06.06A1.7 1.7 0 0 0 19.4 7a1.8 1.8 0 0 0 1.51 1.23l.08.01v4l-.08.01A1.8 1.8 0 0 0 19.4 15Z"/></symbol>
+      <symbol id="icon-headset" viewBox="0 0 24 24"><path d="M4 14v-2a8 8 0 0 1 16 0v2"/><path d="M4 14h4v6H5a1 1 0 0 1-1-1zM20 14h-4v6h3a1 1 0 0 0 1-1z"/><path d="M16 20a4 4 0 0 1-4 2"/></symbol>
+      <symbol id="icon-chevron" viewBox="0 0 24 24"><path d="m8 10 4 4 4-4"/></symbol>
+      <symbol id="icon-menu" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></symbol>
+      <symbol id="icon-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m16 16 4 4"/></symbol>
+      <symbol id="icon-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+      <symbol id="icon-message" viewBox="0 0 24 24"><path d="M21 15a4 4 0 0 1-4 4H8l-5 3V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4z"/><path d="M8 9h8M8 13h5"/></symbol>
+      <symbol id="icon-shop" viewBox="0 0 24 24"><path d="M4 10h16l-1-6H5z"/><path d="M6 10v10h12V10"/><path d="M9 20v-6h6v6M4 10a3 3 0 0 0 6 0 3 3 0 0 0 6 0 3 3 0 0 0 6 0"/></symbol>
+      <symbol id="icon-calendar" viewBox="0 0 24 24"><path d="M7 3v4M17 3v4M4 9h16M5 5h14a1 1 0 0 1 1 1v14H4V6a1 1 0 0 1 1-1Z"/></symbol>
+      <symbol id="icon-dollar" viewBox="0 0 24 24"><path d="M12 3v18M17 7.5A4.5 4.5 0 0 0 12 5c-3 0-5 1.3-5 3.4 0 4.4 10 2.1 10 6.6 0 2.1-2 4-5 4a5.6 5.6 0 0 1-5-2.5"/></symbol>
+      <symbol id="icon-wrench" viewBox="0 0 24 24"><path d="M14.7 6.3a4 4 0 0 0-5 5L3 18l3 3 6.7-6.7a4 4 0 0 0 5-5l-3 3-3-3z"/></symbol>
+      <symbol id="icon-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol>
+      <symbol id="icon-shield" viewBox="0 0 24 24"><path d="M12 3 5 6v5c0 4.5 2.8 8.6 7 10 4.2-1.4 7-5.5 7-10V6z"/><path d="M9 11 11 13l4-4"/></symbol>
+      <symbol id="icon-x" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></symbol>
+    </svg>
+
     <script src="js/app.js"></script>
-</body>
+  </body>
 </html>
