@@ -19,11 +19,11 @@
             <svg aria-hidden="true"><use href="#icon-grid"></use></svg>
             Dashboard
           </a>
-          <a class="nav-item active" href="#customers" data-view="customers" aria-current="page">
+          <a class="nav-item" href="#customers" data-view="customers">
             <svg aria-hidden="true"><use href="#icon-users"></use></svg>
             Customers
           </a>
-          <a class="nav-item" href="#">
+          <a class="nav-item active" href="#vehicles" data-view="vehicles" aria-current="page">
             <svg aria-hidden="true"><use href="#icon-car"></use></svg>
             Vehicles
           </a>
@@ -92,6 +92,7 @@
             <button class="quick-add" id="quickAddButton" type="button">
               <svg aria-hidden="true"><use href="#icon-plus"></use></svg>
               Quick Add
+              <svg aria-hidden="true"><use href="#icon-chevron"></use></svg>
             </button>
             <button class="icon-button has-badge" type="button" aria-label="Notifications">
               <svg aria-hidden="true"><use href="#icon-bell"></use></svg>
@@ -357,7 +358,7 @@
           </section>
         </section>
 
-        <section class="view customers-view active" data-view-panel="customers">
+        <section class="view customers-view" data-view-panel="customers">
           <section class="page-heading">
             <div>
               <h1>Customers</h1>
@@ -541,6 +542,241 @@
             </div>
           </section>
         </section>
+
+        <section class="view vehicles-view active" data-view-panel="vehicles">
+          <section class="page-heading">
+            <div>
+              <h1>Vehicles</h1>
+              <p>Manage all vehicles, view service history and related customer information.</p>
+            </div>
+            <button class="primary-action" type="button">
+              <svg aria-hidden="true"><use href="#icon-plus"></use></svg>
+              Add Vehicle
+            </button>
+          </section>
+
+          <section class="vehicle-stats" aria-label="Vehicle summary">
+            <article class="vehicle-stat" data-search="total vehicles">
+              <span class="metric-icon blue"><svg aria-hidden="true"><use href="#icon-car"></use></svg></span>
+              <div>
+                <p>Total Vehicles</p>
+                <strong>2,156</strong>
+                <small class="vehicle-trend up"><span>8.4%</span> vs last month</small>
+              </div>
+            </article>
+            <article class="vehicle-stat" data-search="this month added vehicles">
+              <span class="metric-icon green"><svg aria-hidden="true"><use href="#icon-calendar"></use></svg></span>
+              <div>
+                <p>This Month Added</p>
+                <strong>86</strong>
+                <small class="vehicle-trend up"><span>12.7%</span> vs last month</small>
+              </div>
+            </article>
+            <article class="vehicle-stat" data-search="due for service vehicles">
+              <span class="metric-icon purple"><svg aria-hidden="true"><use href="#icon-wrench"></use></svg></span>
+              <div>
+                <p>Due for Service</p>
+                <strong>132</strong>
+                <small class="vehicle-trend alert"><span>4.3%</span> vs last month</small>
+              </div>
+            </article>
+            <article class="vehicle-stat" data-search="total mileage kilometers">
+              <span class="metric-icon orange"><svg aria-hidden="true"><use href="#icon-gauge"></use></svg></span>
+              <div>
+                <p>Total Mileage</p>
+                <strong>1.45M km</strong>
+                <small class="vehicle-trend up"><span>6.6%</span> vs last month</small>
+              </div>
+            </article>
+          </section>
+
+          <section class="vehicles-panel" data-search="vehicle table toyota camry honda city hyundai i20 ford ecosport mahindra xuv700 maruti suzuki swift kia seltos skoda octavia">
+            <div class="vehicle-toolbar">
+              <label class="customer-search">
+                <svg aria-hidden="true"><use href="#icon-search"></use></svg>
+                <input type="search" placeholder="Search by plate number, VIN, make, model or customer..." />
+              </label>
+              <button class="filter-button" type="button">All Makes <svg aria-hidden="true"><use href="#icon-chevron"></use></svg></button>
+              <button class="filter-button" type="button">All Models <svg aria-hidden="true"><use href="#icon-chevron"></use></svg></button>
+              <button class="filter-button" type="button">All Status <svg aria-hidden="true"><use href="#icon-chevron"></use></svg></button>
+              <button class="filter-button" type="button"><svg aria-hidden="true"><use href="#icon-filter"></use></svg>More Filters</button>
+              <button class="icon-button" type="button" aria-label="Table view options">
+                <svg aria-hidden="true"><use href="#icon-list"></use></svg>
+              </button>
+            </div>
+
+            <div class="vehicles-table-wrap">
+              <table class="vehicles-table">
+                <thead>
+                  <tr>
+                    <th><input type="checkbox" aria-label="Select all vehicles" /></th>
+                    <th>Vehicle</th>
+                    <th>Plate Number</th>
+                    <th>Customer</th>
+                    <th>Make / Model</th>
+                    <th>Year</th>
+                    <th>Mileage</th>
+                    <th>Last Service</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><input type="checkbox" aria-label="Select Toyota Camry" /></td>
+                    <td>
+                      <div class="vehicle-cell">
+                        <span class="vehicle-thumb silver" aria-hidden="true"><span></span></span>
+                        <div><strong>Toyota Camry</strong><small>VIN: 4T1BF1FK9EU123456</small></div>
+                      </div>
+                    </td>
+                    <td><span class="plate-badge">ABC-1234</span></td>
+                    <td><div class="owner-cell"><span class="customer-avatar blue-soft">RS</span><div><strong>Rahul Sharma</strong><small>+1 (555) 123-4567</small></div></div></td>
+                    <td><strong>Toyota</strong><small>Camry LE</small></td>
+                    <td>2020</td>
+                    <td>48,560 km</td>
+                    <td><strong>May 10, 2024</strong><a href="#">Oil Change</a></td>
+                    <td><span class="tag green">Active</span></td>
+                    <td><button class="dots-button" type="button" aria-label="Vehicle actions">⋮</button></td>
+                  </tr>
+                  <tr>
+                    <td><input type="checkbox" aria-label="Select Honda City" /></td>
+                    <td>
+                      <div class="vehicle-cell">
+                        <span class="vehicle-thumb charcoal" aria-hidden="true"><span></span></span>
+                        <div><strong>Honda City</strong><small>VIN: MRHGN1650FP123789</small></div>
+                      </div>
+                    </td>
+                    <td><span class="plate-badge">DEF-5678</span></td>
+                    <td><div class="owner-cell"><span class="customer-avatar lavender">AV</span><div><strong>Amit Verma</strong><small>+1 (555) 987-6543</small></div></div></td>
+                    <td><strong>Honda</strong><small>City ZX</small></td>
+                    <td>2019</td>
+                    <td>32,145 km</td>
+                    <td><strong>May 05, 2024</strong><a href="#">General Service</a></td>
+                    <td><span class="tag green">Active</span></td>
+                    <td><button class="dots-button" type="button" aria-label="Vehicle actions">⋮</button></td>
+                  </tr>
+                  <tr>
+                    <td><input type="checkbox" aria-label="Select Hyundai i20" /></td>
+                    <td>
+                      <div class="vehicle-cell">
+                        <span class="vehicle-thumb pearl" aria-hidden="true"><span></span></span>
+                        <div><strong>Hyundai i20</strong><small>VIN: MALB351CFLM123456</small></div>
+                      </div>
+                    </td>
+                    <td><span class="plate-badge">GHI-9012</span></td>
+                    <td><div class="owner-cell"><span class="customer-avatar lavender">SP</span><div><strong>Sneha Patel</strong><small>+1 (555) 567-8901</small></div></div></td>
+                    <td><strong>Hyundai</strong><small>i20 Asta</small></td>
+                    <td>2021</td>
+                    <td>21,870 km</td>
+                    <td><strong>Apr 28, 2024</strong><a href="#">Wheel Alignment</a></td>
+                    <td><span class="tag orange">Due Soon</span></td>
+                    <td><button class="dots-button" type="button" aria-label="Vehicle actions">⋮</button></td>
+                  </tr>
+                  <tr>
+                    <td><input type="checkbox" aria-label="Select Ford EcoSport" /></td>
+                    <td>
+                      <div class="vehicle-cell">
+                        <span class="vehicle-thumb cobalt" aria-hidden="true"><span></span></span>
+                        <div><strong>Ford EcoSport</strong><small>VIN: MAJ6P1UL2JC123456</small></div>
+                      </div>
+                    </td>
+                    <td><span class="plate-badge">JKL-3456</span></td>
+                    <td><div class="owner-cell"><span class="customer-avatar mint">VS</span><div><strong>Vikram Singh</strong><small>+1 (555) 234-5678</small></div></div></td>
+                    <td><strong>Ford</strong><small>EcoSport Titanium</small></td>
+                    <td>2018</td>
+                    <td>55,320 km</td>
+                    <td><strong>Mar 30, 2024</strong><a href="#">Brake Service</a></td>
+                    <td><span class="tag green">Active</span></td>
+                    <td><button class="dots-button" type="button" aria-label="Vehicle actions">⋮</button></td>
+                  </tr>
+                  <tr>
+                    <td><input type="checkbox" aria-label="Select Mahindra XUV700" /></td>
+                    <td>
+                      <div class="vehicle-cell">
+                        <span class="vehicle-thumb silver" aria-hidden="true"><span></span></span>
+                        <div><strong>Mahindra XUV700</strong><small>VIN: MA1RJ2HNXK123456</small></div>
+                      </div>
+                    </td>
+                    <td><span class="plate-badge">MNO-7890</span></td>
+                    <td><div class="owner-cell"><span class="customer-avatar mint">NK</span><div><strong>Neha Kapoor</strong><small>+1 (555) 345-6789</small></div></div></td>
+                    <td><strong>Mahindra</strong><small>XUV700 AX7</small></td>
+                    <td>2022</td>
+                    <td>18,960 km</td>
+                    <td><strong>May 12, 2024</strong><a href="#">General Service</a></td>
+                    <td><span class="tag green">Active</span></td>
+                    <td><button class="dots-button" type="button" aria-label="Vehicle actions">⋮</button></td>
+                  </tr>
+                  <tr>
+                    <td><input type="checkbox" aria-label="Select Maruti Suzuki Swift" /></td>
+                    <td>
+                      <div class="vehicle-cell">
+                        <span class="vehicle-thumb pearl" aria-hidden="true"><span></span></span>
+                        <div><strong>Maruti Suzuki Swift</strong><small>VIN: MA3EWB81S00123456</small></div>
+                      </div>
+                    </td>
+                    <td><span class="plate-badge">PQR-2345</span></td>
+                    <td><div class="owner-cell"><span class="customer-avatar peach">DM</span><div><strong>Deepak Mehta</strong><small>+1 (555) 456-7890</small></div></div></td>
+                    <td><strong>Maruti Suzuki</strong><small>Swift VXI</small></td>
+                    <td>2017</td>
+                    <td>62,110 km</td>
+                    <td><strong>Mar 15, 2024</strong><a href="#">Oil Change</a></td>
+                    <td><span class="tag red">Overdue</span></td>
+                    <td><button class="dots-button" type="button" aria-label="Vehicle actions">⋮</button></td>
+                  </tr>
+                  <tr>
+                    <td><input type="checkbox" aria-label="Select Kia Seltos" /></td>
+                    <td>
+                      <div class="vehicle-cell">
+                        <span class="vehicle-thumb pearl" aria-hidden="true"><span></span></span>
+                        <div><strong>Kia Seltos</strong><small>VIN: KNAP281BGN5123456</small></div>
+                      </div>
+                    </td>
+                    <td><span class="plate-badge">STU-6789</span></td>
+                    <td><div class="owner-cell"><span class="customer-avatar blue-soft">PJ</span><div><strong>Pooja Jain</strong><small>+1 (555) 678-9012</small></div></div></td>
+                    <td><strong>Kia</strong><small>Seltos HTX</small></td>
+                    <td>2021</td>
+                    <td>27,540 km</td>
+                    <td><strong>May 02, 2024</strong><a href="#">General Service</a></td>
+                    <td><span class="tag orange">Due Soon</span></td>
+                    <td><button class="dots-button" type="button" aria-label="Vehicle actions">⋮</button></td>
+                  </tr>
+                  <tr>
+                    <td><input type="checkbox" aria-label="Select Skoda Octavia" /></td>
+                    <td>
+                      <div class="vehicle-cell">
+                        <span class="vehicle-thumb silver" aria-hidden="true"><span></span></span>
+                        <div><strong>Skoda Octavia</strong><small>VIN: TMBAC9NE6H0123456</small></div>
+                      </div>
+                    </td>
+                    <td><span class="plate-badge">VWX-0123</span></td>
+                    <td><div class="owner-cell"><span class="customer-avatar peach">AS</span><div><strong>Arjun Saxena</strong><small>+1 (555) 789-0123</small></div></div></td>
+                    <td><strong>Skoda</strong><small>Octavia Style</small></td>
+                    <td>2019</td>
+                    <td>41,230 km</td>
+                    <td><strong>Feb 20, 2024</strong><a href="#">Battery Check</a></td>
+                    <td><span class="tag green">Active</span></td>
+                    <td><button class="dots-button" type="button" aria-label="Vehicle actions">⋮</button></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="customer-pagination">
+              <span>Showing 1 to 8 of 2,156 vehicles</span>
+              <div>
+                <button type="button" disabled><svg aria-hidden="true"><use href="#icon-chevron-left"></use></svg></button>
+                <button class="active" type="button">1</button>
+                <button type="button">2</button>
+                <button type="button">3</button>
+                <button type="button">...</button>
+                <button type="button">270</button>
+                <button type="button"><svg aria-hidden="true"><use href="#icon-chevron-right"></use></svg></button>
+                <button class="per-page" type="button">10 / page <svg aria-hidden="true"><use href="#icon-chevron"></use></svg></button>
+              </div>
+            </div>
+          </section>
+        </section>
       </main>
     </div>
 
@@ -589,6 +825,7 @@
       <symbol id="icon-dollar" viewBox="0 0 24 24"><path d="M12 3v18M17 7.5A4.5 4.5 0 0 0 12 5c-3 0-5 1.3-5 3.4 0 4.4 10 2.1 10 6.6 0 2.1-2 4-5 4a5.6 5.6 0 0 1-5-2.5"/></symbol>
       <symbol id="icon-wrench" viewBox="0 0 24 24"><path d="M14.7 6.3a4 4 0 0 0-5 5L3 18l3 3 6.7-6.7a4 4 0 0 0 5-5l-3 3-3-3z"/></symbol>
       <symbol id="icon-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol>
+      <symbol id="icon-gauge" viewBox="0 0 24 24"><path d="M4 15a8 8 0 0 1 16 0"/><path d="M6 19h12"/><path d="m13 13 4-4"/><circle cx="12" cy="15" r="1"/></symbol>
       <symbol id="icon-shield" viewBox="0 0 24 24"><path d="M12 3 5 6v5c0 4.5 2.8 8.6 7 10 4.2-1.4 7-5.5 7-10V6z"/><path d="M9 11 11 13l4-4"/></symbol>
       <symbol id="icon-x" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></symbol>
     </svg>
