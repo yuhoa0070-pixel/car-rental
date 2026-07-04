@@ -14,6 +14,9 @@
   --shadow: 0 20px 50px rgba(15, 23, 42, .08);
   --shadow-soft: 0 1px 2px rgba(15, 23, 42, .05), 0 12px 30px rgba(15, 23, 42, .04);
   --radius: 8px;
+  --font-sans: Inter, "SF Pro Text", "Segoe UI Variable", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-display: "SF Pro Display", Inter, "Segoe UI Variable", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-data: Inter, "SF Pro Text", "Segoe UI Variable", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   color-scheme: light;
 }
 
@@ -29,15 +32,21 @@ html {
 body {
   margin: 0;
   color: var(--ink);
-  font-family: "SF Pro Text", "SF Pro Display", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+  font-family: var(--font-sans);
   font-size: 15px;
-  line-height: 1.45;
+  font-weight: 400;
+  line-height: 1.5;
+  letter-spacing: 0;
   background: linear-gradient(180deg, #fbfcff 0%, #f5f8fc 46%, #eef3f8 100%);
+  -webkit-font-smoothing: antialiased;
+  font-optical-sizing: auto;
+  text-rendering: optimizeLegibility;
 }
 
 button,
 input {
   font: inherit;
+  letter-spacing: 0;
 }
 
 button,
@@ -3732,6 +3741,163 @@ td {
   min-width: 0;
   min-height: 46px;
   width: 100%;
+}
+
+/* Typography refresh */
+.brand,
+.welcome-row h1,
+.page-heading h1,
+.metric-heading h2,
+.panel h2,
+.invoice-preview-head h2,
+.invoice-sheet h3,
+.inventory-side-card h2,
+.staff-profile-hero h2,
+.staff-side-card h2,
+.quick-modal h2 {
+  font-family: var(--font-display);
+  letter-spacing: 0;
+}
+
+.brand {
+  font-weight: 760;
+}
+
+.welcome-row h1,
+.page-heading h1 {
+  color: #0b1324;
+  font-weight: 720;
+  line-height: 1.08;
+}
+
+.metric-heading h2,
+.panel h2,
+.invoice-preview-head h2,
+.invoice-sheet h3,
+.inventory-side-card h2,
+.staff-profile-hero h2,
+.staff-side-card h2,
+.quick-modal h2 {
+  font-weight: 680;
+}
+
+.page-heading p,
+.welcome-row p,
+.help-card span,
+.profile-button small,
+.top-profile small,
+.customer-pagination,
+.invoice-meta p,
+.invoice-sheet small,
+.inventory-small-list small,
+.stock-movement-list small,
+.staff-member-cell small,
+.staff-contact-list li,
+.permission-block > span,
+.staff-detail-list dt,
+.performance-list dt {
+  font-weight: 450;
+  line-height: 1.55;
+}
+
+.nav-item,
+.quick-add,
+.primary-action,
+.ghost-button,
+.date-button,
+.shop-switcher,
+.quick-actions button,
+.filter-button,
+.outline-action,
+.staff-side-actions .primary-action,
+.staff-side-actions .outline-action {
+  font-weight: 600;
+}
+
+.metric-card > strong,
+.customer-stat strong,
+.vehicle-stat strong,
+.repair-stat strong,
+.invoice-stat strong,
+.inventory-stat strong,
+.staff-stat strong,
+.stat-total,
+.invoice-total-row dd,
+.performance-list dd,
+.staff-detail-list dd,
+.stock-count,
+.donut-total strong,
+.repair-count strong {
+  font-family: var(--font-data);
+  font-weight: 720;
+  letter-spacing: 0;
+}
+
+.customer-stat p,
+.vehicle-stat p,
+.repair-stat p,
+.invoice-stat p,
+.inventory-stat p,
+.staff-stat p,
+.trend,
+.invoice-trend,
+.inventory-trend,
+.staff-trend {
+  font-weight: 560;
+}
+
+.customers-table th,
+.vehicles-table th,
+.repair-orders-table th,
+.invoice-table th,
+.inventory-table th,
+.staff-table th {
+  color: #53637a;
+  font-weight: 620;
+}
+
+.customers-table td,
+.vehicles-table td,
+.repair-orders-table td,
+.invoice-table td,
+.inventory-table td,
+.staff-table td,
+.invoice-sheet-table td {
+  font-weight: 480;
+}
+
+.customers-table strong,
+.vehicles-table strong,
+.repair-orders-table strong,
+.invoice-table strong,
+.inventory-table strong,
+.staff-table strong,
+.invoice-sheet-table strong,
+.order-list strong,
+.invoice-list strong,
+.alert-list strong,
+.inventory-small-list strong,
+.stock-movement-list strong {
+  font-weight: 660;
+}
+
+.tag,
+.role-tag,
+.plate-badge,
+.invoice-pill,
+.permission-block em {
+  font-weight: 620;
+}
+
+.search-field input,
+.customer-search input {
+  font-weight: 420;
+}
+
+.search-field input::placeholder,
+.customer-search input::placeholder {
+  color: #8b9ab0;
+  font-weight: 400;
 }
 
 .modal-backdrop {
