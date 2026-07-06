@@ -5679,7 +5679,7 @@ td {
 
 .nav-item.active {
   color: #ffffff;
-  background: #16233a;
+  background: #2f72e8;
   box-shadow: none;
 }
 
@@ -5728,8 +5728,8 @@ td {
 }
 
 .nav-item.active .nav-badge {
-  color: #16233a;
-  border-color: rgba(255, 255, 255, .62);
+  color: #1d57c8;
+  border-color: rgba(255, 255, 255, .72);
   background: #ffffff;
 }
 
