@@ -7,6 +7,8 @@
   --line: #dce5ef;
   --blue: #175cff;
   --blue-deep: #1248c7;
+  --blue-ink: #1e3f8f;
+  --blue-soft: #eef5ff;
   --green: #16a35f;
   --orange: #f08a24;
   --red: #e33a45;
@@ -766,9 +768,10 @@ input:focus-visible,
 .filter-button.active,
 .repair-toolbar .icon-button.active,
 .staff-toolbar .icon-button.active {
-  color: var(--blue);
-  border-color: rgba(29, 100, 242, .45);
-  background: #f5f8ff;
+  color: var(--blue-ink);
+  border-color: rgba(23, 92, 255, .58);
+  background: var(--blue-soft);
+  box-shadow: inset 0 0 0 1px rgba(23, 92, 255, .12);
 }
 
 .filter-button :is(svg, .ti) {
@@ -781,12 +784,12 @@ input:focus-visible,
   position: fixed;
   z-index: 40;
   display: grid;
-  gap: 4px;
-  padding: 6px;
+  gap: 3px;
+  padding: 8px;
   background: #fff;
   border: 1px solid #d7e0ea;
   border-radius: var(--radius);
-  box-shadow: 0 16px 32px rgba(15, 23, 42, .1);
+  box-shadow: 0 16px 34px rgba(15, 23, 42, .12);
 }
 
 .toolbar-menu[hidden] {
@@ -794,10 +797,13 @@ input:focus-visible,
 }
 
 .toolbar-menu button {
+  position: relative;
   display: flex;
   align-items: center;
-  min-height: 38px;
-  padding: 0 12px;
+  justify-content: space-between;
+  gap: 16px;
+  min-height: 40px;
+  padding: 0 12px 0 16px;
   color: #334155;
   text-align: left;
   border: 0;
@@ -807,10 +813,32 @@ input:focus-visible,
   font-weight: 620;
 }
 
+.toolbar-menu button em {
+  color: #64748b;
+  font-size: 11px;
+  font-style: normal;
+  font-weight: 620;
+}
+
 .toolbar-menu button:hover,
 .toolbar-menu button.active {
-  color: var(--blue);
-  background: #f1f6ff;
+  color: var(--blue-ink);
+  background: var(--blue-soft);
+}
+
+.toolbar-menu button.active em {
+  color: var(--blue-ink);
+}
+
+.toolbar-menu button.active::before {
+  content: "";
+  position: absolute;
+  left: 6px;
+  top: 10px;
+  bottom: 10px;
+  width: 3px;
+  border-radius: 999px;
+  background: var(--blue);
 }
 
 .customers-table-wrap {
@@ -2158,22 +2186,22 @@ td {
 
 .tag.green {
   color: #087443;
-  background: #e5f8ee;
+  background: #e7f7ee;
 }
 
 .tag.orange {
-  color: #b75b00;
-  background: #fff0dd;
+  color: #a75505;
+  background: #fff4df;
 }
 
 .tag.red {
   color: #b42332;
-  background: #ffe7eb;
+  background: #ffe8ec;
 }
 
 .tag.blue {
-  color: #0f4ee8;
-  background: #eaf2ff;
+  color: var(--blue-ink);
+  background: var(--blue-soft);
 }
 
 .tag.gray {

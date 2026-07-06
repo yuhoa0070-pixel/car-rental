@@ -317,7 +317,17 @@
       item.setAttribute("role", "menuitemradio");
       item.setAttribute("aria-checked", String(option.active));
       item.className = option.active ? "active" : "";
-      item.textContent = option.label;
+
+      const label = document.createElement("span");
+      label.textContent = option.label;
+      item.append(label);
+
+      if (option.active) {
+        const note = document.createElement("em");
+        note.textContent = "Selected";
+        item.append(note);
+      }
+
       item.addEventListener("click", () => {
         onSelect(option);
         closeToolbarMenu();
