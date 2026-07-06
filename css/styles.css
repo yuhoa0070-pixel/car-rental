@@ -6424,6 +6424,17 @@ td {
   gap: var(--section-gap);
 }
 
+.customer-stats,
+.vehicle-stats,
+.repair-stats,
+.invoice-stats,
+.inventory-stats,
+.staff-stats,
+.reminders-overview,
+.settings-overview {
+  grid-template-columns: repeat(auto-fit, minmax(min(250px, 100%), 1fr));
+}
+
 .content-grid,
 .invoice-layout,
 .inventory-layout,
@@ -6498,9 +6509,23 @@ td {
 .staff-stat,
 .reminder-stat,
 .settings-stat {
+  display: grid;
+  grid-template-columns: var(--size-stat-icon) minmax(0, 1fr);
+  align-items: start;
   gap: var(--space-4);
   min-height: 128px;
   padding: var(--card-pad);
+}
+
+.customer-stat > div,
+.vehicle-stat > div,
+.repair-stat > div,
+.invoice-stat > div,
+.inventory-stat > div,
+.staff-stat > div,
+.reminder-stat > div,
+.settings-stat > div {
+  min-width: 0;
 }
 
 .customer-stat .metric-icon,
@@ -6514,6 +6539,7 @@ td {
   width: var(--size-stat-icon);
   height: var(--size-stat-icon);
   flex: 0 0 var(--size-stat-icon);
+  align-self: start;
 }
 
 .customer-stat p,
@@ -6548,6 +6574,16 @@ td {
   line-height: 1.08;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+.vehicle-trend,
+.repair-trend,
+.invoice-trend,
+.inventory-trend,
+.staff-trend,
+.reminder-trend {
+  max-width: 100%;
+  line-height: 1.3;
 }
 
 .app-toolbar {
