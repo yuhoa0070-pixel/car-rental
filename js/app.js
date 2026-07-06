@@ -876,6 +876,27 @@
     }
   }
 
+  function setFilterButtonLabel(button, label, isActive, value) {
+    let labelElement = query("[data-filter-label]", button);
+
+    if (!labelElement) {
+      labelElement = document.createElement("span");
+      labelElement.dataset.filterLabel = "";
+      button.prepend(labelElement);
+    }
+
+    labelElement.textContent = label;
+    button.classList.toggle("active", isActive);
+    button.setAttribute("aria-label", `${label} filter`);
+
+    const tone = isActive ? getFilterTone(button.dataset.filterControl, value) : "";
+    if (tone) {
+      button.dataset.filterTone = tone;
+    } else {
+      delete button.dataset.filterTone;
+    }
+  }
+
   function prepareTableControls(config, panel) {
     const toolbar = query(config.toolbar, panel);
 
