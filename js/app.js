@@ -21,6 +21,8 @@
     sidebarCollapsed: "garagehubSidebarCollapsed",
   });
 
+  const TABLE_TOOLBAR_SELECTOR = "[data-table-toolbar]";
+
   const VIEW_CHROME = Object.freeze({
     dashboard: {
       search: "Search customers, vehicles, repair orders...",
@@ -80,7 +82,7 @@
       id: "customers",
       panel: ".customers-panel",
       table: ".customers-table",
-      toolbar: ".customer-toolbar",
+      toolbar: TABLE_TOOLBAR_SELECTOR,
       label: "customers",
       compactTargets: ".customer-avatar",
       filters: [
@@ -124,7 +126,7 @@
       id: "vehicles",
       panel: ".vehicles-panel",
       table: ".vehicles-table",
-      toolbar: ".vehicle-toolbar",
+      toolbar: TABLE_TOOLBAR_SELECTOR,
       label: "vehicles",
       compactTargets: ".vehicle-thumb",
       filters: [
@@ -174,7 +176,7 @@
       id: "repair-orders",
       panel: ".repair-orders-panel",
       table: ".repair-orders-table",
-      toolbar: ".repair-toolbar",
+      toolbar: TABLE_TOOLBAR_SELECTOR,
       label: "repair orders",
       compactTargets: ".vehicle-thumb",
       filters: [
@@ -259,7 +261,7 @@
       id: "invoices",
       panel: ".invoice-list-panel",
       table: ".invoice-table",
-      toolbar: ".invoice-toolbar",
+      toolbar: TABLE_TOOLBAR_SELECTOR,
       label: "invoices",
       compactTargets: ".customer-avatar",
       filters: [
@@ -336,7 +338,7 @@
       id: "inventory",
       panel: ".inventory-list-panel",
       table: ".inventory-table",
-      toolbar: ".inventory-toolbar",
+      toolbar: TABLE_TOOLBAR_SELECTOR,
       label: "items",
       compactTargets: ".part-thumb",
       filters: [
@@ -386,7 +388,7 @@
       id: "staff",
       panel: ".staff-list-panel",
       table: ".staff-table",
-      toolbar: ".staff-toolbar",
+      toolbar: TABLE_TOOLBAR_SELECTOR,
       label: "staff members",
       compactTargets: ".staff-photo",
       filters: [

@@ -759,28 +759,36 @@ input:focus-visible,
   box-shadow: var(--shadow-soft);
 }
 
-.customer-toolbar {
+.app-toolbar {
   display: grid;
+  gap: var(--space-3);
+  padding: var(--toolbar-pad);
+  background: var(--surface-toolbar);
+  border-bottom: 1px solid var(--line);
+}
+
+.app-toolbar[data-toolbar-layout="customers"] {
   grid-template-columns: minmax(320px, 1fr) 190px 190px 170px 56px;
-  gap: 18px;
-  padding: 22px;
-  border-bottom: 1px solid var(--line);
 }
 
-.repair-toolbar {
-  display: grid;
-  grid-template-columns: minmax(360px, 1fr) 180px 210px 250px 130px 56px;
-  gap: 18px;
-  padding: 22px;
-  border-bottom: 1px solid var(--line);
-}
-
-.vehicle-toolbar {
-  display: grid;
+.app-toolbar[data-toolbar-layout="vehicles"] {
   grid-template-columns: minmax(360px, 1fr) 180px 170px 170px 170px 56px;
-  gap: 18px;
-  padding: 22px;
-  border-bottom: 1px solid var(--line);
+}
+
+.app-toolbar[data-toolbar-layout="repair-orders"] {
+  grid-template-columns: minmax(360px, 1fr) 180px 210px 250px 130px 56px;
+}
+
+.app-toolbar[data-toolbar-layout="invoices"] {
+  grid-template-columns: minmax(300px, 1fr) 154px 238px 132px 52px;
+}
+
+.app-toolbar[data-toolbar-layout="inventory"] {
+  grid-template-columns: minmax(300px, 1fr) 172px 160px 160px 112px 52px;
+}
+
+.app-toolbar[data-toolbar-layout="staff"] {
+  grid-template-columns: minmax(300px, 1fr) 170px 170px 112px 52px;
 }
 
 .customer-search,
@@ -817,12 +825,7 @@ input:focus-visible,
 }
 
 .filter-button.active,
-.repair-toolbar .icon-button.active,
-.staff-toolbar .icon-button.active,
-.customer-toolbar .icon-button.active,
-.vehicle-toolbar .icon-button.active,
-.invoice-toolbar .icon-button.active,
-.inventory-toolbar .icon-button.active {
+.app-toolbar .icon-button.active {
   color: var(--blue-ink);
   border-color: rgba(23, 92, 255, .58);
   background: var(--blue-soft);
@@ -2344,9 +2347,7 @@ td {
   margin: 0 28px 34px;
 }
 
-.customer-toolbar,
-.vehicle-toolbar,
-.repair-toolbar {
+.app-toolbar {
   gap: 12px;
   padding: 16px;
   background: #fbfdff;
@@ -2610,15 +2611,6 @@ td {
 .invoice-list-panel {
   min-width: 0;
   overflow: hidden;
-}
-
-.invoice-toolbar {
-  display: grid;
-  grid-template-columns: minmax(300px, 1fr) 160px 240px 128px 52px;
-  gap: 12px;
-  padding: 16px;
-  background: #fbfdff;
-  border-bottom: 1px solid var(--line);
 }
 
 .invoice-table-wrap {
@@ -3107,15 +3099,6 @@ td {
   border: 1px solid var(--line);
   border-radius: var(--radius);
   box-shadow: var(--shadow-soft);
-}
-
-.inventory-toolbar {
-  display: grid;
-  grid-template-columns: minmax(280px, 1fr) 180px 160px 160px 112px 52px;
-  gap: 12px;
-  padding: 16px;
-  background: #fbfdff;
-  border-bottom: 1px solid var(--line);
 }
 
 .inventory-table-wrap {
@@ -3756,15 +3739,6 @@ td {
   border: 1px solid var(--line);
   border-radius: var(--radius);
   box-shadow: var(--shadow-soft);
-}
-
-.staff-toolbar {
-  display: grid;
-  grid-template-columns: minmax(320px, 1fr) 180px 180px 120px 52px;
-  gap: 12px;
-  padding: 16px;
-  background: #fbfdff;
-  border-bottom: 1px solid var(--line);
 }
 
 .staff-table-wrap {
@@ -4711,11 +4685,11 @@ td {
     grid-template-columns: repeat(6, minmax(150px, 1fr));
   }
 
-  .customer-toolbar {
+  .app-toolbar[data-toolbar-layout="customers"] {
     grid-template-columns: minmax(320px, 1fr) 170px 170px 160px 52px;
   }
 
-  .vehicle-toolbar {
+  .app-toolbar[data-toolbar-layout="vehicles"] {
     grid-template-columns: minmax(320px, 1fr) 160px 160px 160px 154px 52px;
   }
 
@@ -4743,19 +4717,19 @@ td {
     grid-template-columns: repeat(2, minmax(220px, 1fr));
   }
 
-  .inventory-toolbar {
+  .app-toolbar[data-toolbar-layout="inventory"] {
     grid-template-columns: minmax(280px, 1fr) 160px 150px 150px 108px 52px;
   }
 
-  .staff-toolbar {
+  .app-toolbar[data-toolbar-layout="staff"] {
     grid-template-columns: minmax(280px, 1fr) 160px 160px 108px 52px;
   }
 
-  .repair-toolbar {
+  .app-toolbar[data-toolbar-layout="repair-orders"] {
     grid-template-columns: minmax(320px, 1fr) 170px 190px 52px;
   }
 
-  .repair-toolbar .date-filter {
+  .app-toolbar[data-toolbar-layout="repair-orders"] .date-filter {
     grid-column: 1 / 3;
   }
 
@@ -4917,67 +4891,67 @@ td {
     grid-template-columns: repeat(2, minmax(220px, 1fr));
   }
 
-  .customer-toolbar {
+  .app-toolbar[data-toolbar-layout="customers"] {
     grid-template-columns: minmax(0, 1fr) 150px 150px 52px;
   }
 
-  .customer-toolbar .filter-button:nth-of-type(3) {
+  .app-toolbar[data-toolbar-layout="customers"] .filter-button:nth-of-type(3) {
     grid-column: 2 / 4;
   }
 
-  .vehicle-toolbar {
+  .app-toolbar[data-toolbar-layout="vehicles"] {
     grid-template-columns: repeat(3, minmax(0, 1fr)) 52px;
   }
 
-  .vehicle-toolbar .customer-search {
+  .app-toolbar[data-toolbar-layout="vehicles"] .customer-search {
     grid-column: 1 / -1;
   }
 
-  .vehicle-toolbar .filter-button:nth-of-type(4) {
+  .app-toolbar[data-toolbar-layout="vehicles"] .filter-button:nth-of-type(4) {
     grid-column: 1 / 4;
   }
 
-  .repair-toolbar {
+  .app-toolbar[data-toolbar-layout="repair-orders"] {
     grid-template-columns: repeat(3, minmax(0, 1fr)) 52px;
   }
 
-  .repair-toolbar .customer-search {
+  .app-toolbar[data-toolbar-layout="repair-orders"] .customer-search {
     grid-column: 1 / -1;
   }
 
-  .repair-toolbar .date-filter {
+  .app-toolbar[data-toolbar-layout="repair-orders"] .date-filter {
     grid-column: 1 / 3;
   }
 
-  .invoice-toolbar {
+  .app-toolbar[data-toolbar-layout="invoices"] {
     grid-template-columns: repeat(3, minmax(0, 1fr)) 52px;
   }
 
-  .invoice-toolbar .customer-search {
+  .app-toolbar[data-toolbar-layout="invoices"] .customer-search {
     grid-column: 1 / -1;
   }
 
-  .invoice-toolbar .date-filter {
+  .app-toolbar[data-toolbar-layout="invoices"] .date-filter {
     grid-column: 1 / 3;
   }
 
-  .inventory-toolbar {
+  .app-toolbar[data-toolbar-layout="inventory"] {
     grid-template-columns: repeat(3, minmax(0, 1fr)) 52px;
   }
 
-  .inventory-toolbar .customer-search {
+  .app-toolbar[data-toolbar-layout="inventory"] .customer-search {
     grid-column: 1 / -1;
   }
 
-  .inventory-toolbar .filter-button:nth-of-type(4) {
+  .app-toolbar[data-toolbar-layout="inventory"] .filter-button:nth-of-type(4) {
     grid-column: 1 / 4;
   }
 
-  .staff-toolbar {
+  .app-toolbar[data-toolbar-layout="staff"] {
     grid-template-columns: repeat(3, minmax(0, 1fr)) 52px;
   }
 
-  .staff-toolbar .customer-search {
+  .app-toolbar[data-toolbar-layout="staff"] .customer-search {
     grid-column: 1 / -1;
   }
 
@@ -5071,25 +5045,13 @@ td {
     grid-template-columns: 1fr;
   }
 
-  .customer-toolbar,
-  .vehicle-toolbar,
-  .repair-toolbar,
-  .invoice-toolbar,
-  .inventory-toolbar,
-  .staff-toolbar {
+  .app-toolbar {
     grid-template-columns: 1fr;
   }
 
-  .customer-toolbar .filter-button:nth-of-type(3),
-  .vehicle-toolbar .filter-button:nth-of-type(4),
-  .vehicle-toolbar .customer-search,
-  .repair-toolbar .customer-search,
-  .repair-toolbar .date-filter,
-  .invoice-toolbar .customer-search,
-  .invoice-toolbar .date-filter,
-  .inventory-toolbar .customer-search,
-  .inventory-toolbar .filter-button:nth-of-type(4),
-  .staff-toolbar .customer-search {
+  .app-toolbar .customer-search,
+  .app-toolbar .filter-button,
+  .app-toolbar .date-filter {
     grid-column: auto;
   }
 
@@ -5562,12 +5524,7 @@ td {
 }
 
 .filter-button.active,
-.repair-toolbar .icon-button.active,
-.staff-toolbar .icon-button.active,
-.customer-toolbar .icon-button.active,
-.vehicle-toolbar .icon-button.active,
-.invoice-toolbar .icon-button.active,
-.inventory-toolbar .icon-button.active {
+.app-toolbar .icon-button.active {
   color: #163b73;
   border-color: rgba(47, 114, 232, .55);
   background: linear-gradient(180deg, #f8fbff 0%, var(--select-soft) 100%);
@@ -5957,12 +5914,7 @@ td {
   white-space: nowrap;
 }
 
-.customer-toolbar,
-.vehicle-toolbar,
-.repair-toolbar,
-.invoice-toolbar,
-.inventory-toolbar,
-.staff-toolbar {
+.app-toolbar {
   gap: var(--space-3);
   padding: var(--toolbar-pad);
   background: var(--surface-toolbar);
