@@ -763,10 +763,53 @@ input:focus-visible,
   font-weight: 760;
 }
 
+.filter-button.active,
+.repair-toolbar .icon-button.active {
+  color: var(--blue);
+  border-color: rgba(29, 100, 242, .45);
+  background: #f5f8ff;
+}
+
 .filter-button :is(svg, .ti) {
   width: 18px;
   height: 18px;
   font-size: 18px;
+}
+
+.toolbar-menu {
+  position: fixed;
+  z-index: 40;
+  display: grid;
+  gap: 4px;
+  padding: 6px;
+  background: #fff;
+  border: 1px solid #d7e0ea;
+  border-radius: var(--radius);
+  box-shadow: 0 16px 32px rgba(15, 23, 42, .1);
+}
+
+.toolbar-menu[hidden] {
+  display: none;
+}
+
+.toolbar-menu button {
+  display: flex;
+  align-items: center;
+  min-height: 38px;
+  padding: 0 12px;
+  color: #334155;
+  text-align: left;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  cursor: pointer;
+  font-weight: 620;
+}
+
+.toolbar-menu button:hover,
+.toolbar-menu button.active {
+  color: var(--blue);
+  background: #f1f6ff;
 }
 
 .customers-table-wrap {
@@ -858,6 +901,24 @@ input:focus-visible,
 
 .vehicles-table td a {
   color: #075df0;
+}
+
+.repair-orders-panel.is-compact .repair-orders-table {
+  min-width: 1220px;
+}
+
+.repair-orders-panel.is-compact .repair-orders-table th,
+.repair-orders-panel.is-compact .repair-orders-table td {
+  height: 54px;
+  padding-inline: 14px;
+}
+
+.repair-orders-panel.is-compact .repair-vehicle-cell {
+  gap: 10px;
+}
+
+.repair-orders-panel.is-compact .vehicle-thumb {
+  display: none;
 }
 
 .vehicle-cell,

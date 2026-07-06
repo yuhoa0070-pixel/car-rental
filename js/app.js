@@ -7,6 +7,7 @@
     quickAddButton: "#quickAddButton",
     quickAddLabel: "#quickAddLabel",
     quickAddModal: "#quickAddModal",
+    repairOrdersPanel: ".repair-orders-panel",
     searchInput: "#dashboardSearch",
     searchable: "[data-search]",
     toast: "#toast",
@@ -51,6 +52,14 @@
   });
 
   const state = {
+    repairFilters: {
+      advanced: "all",
+      date: "range",
+      mechanic: "all",
+      query: "",
+      status: "all",
+    },
+    toolbarMenu: undefined,
     toastTimer: undefined,
   };
 
@@ -256,6 +265,325 @@
     });
   }
 
+  function getToolbarMenu() {
+    if (state.toolbarMenu) {
+      return state.toolbarMenu;
+    }
+
+    const menu = document.createElement("div");
+    menu.className = "toolbar-menu";
+    menu.setAttribute("role", "menu");
+    menu.hidden = true;
+    document.body.append(menu);
+    state.toolbarMenu = menu;
+    return menu;
+  }
+
+  function closeToolbarMenu() {
+    if (!state.toolbarMenu) {
+      return;
+    }
+
+    state.toolbarMenu.hidden = true;
+    queryAll("[data-filter-control]").forEach((button) => button.setAttribute("aria-expanded", "false"));
+  }
+
+  function positionToolbarMenu(menu, button) {
+    const rect = button.getBoundingClientRect();
+    const menuWidth = Math.max(rect.width, 220);
+    const left = Math.min(rect.left, window.innerWidth - menuWidth - 16);
+
+    menu.style.minWidth = `${Math.round(menuWidth)}px`;
+    menu.style.left = `${Math.max(16, Math.round(left))}px`;
+    menu.style.top = `${Math.round(rect.bottom + 8)}px`;
+  }
+
+  function openToolbarMenu(button, options, onSelect) {
+    const menu = getToolbarMenu();
+
+    closeToolbarMenu();
+    menu.replaceChildren();
+
+    options.forEach((option) => {
+      const item = document.createElement("button");
+      item.type = "button";
+      item.setAttribute("role", "menuitemradio");
+      item.setAttribute("aria-checked", String(option.active));
+      item.className = option.active ? "active" : "";
+      item.textContent = option.label;
+      item.addEventListener("click", () => {
+        onSelect(option);
+        closeToolbarMenu();
+      });
+      menu.append(item);
+    });
+
+    positionToolbarMenu(menu, button);
+    menu.hidden = false;
+    button.setAttribute("aria-expanded", "true");
+  }
+
+  function getRepairRows(panel) {
+    return queryAll(".repair-orders-table tbody tr", panel);
+  }
+
+  function getCellText(row, index) {
+    return row.cells[index]?.textContent.trim().replace(/\s+/g, " ") || "";
+  }
+
+  function getDateKey(dateText) {
+    const months = {
+      Jan: "01",
+      Feb: "02",
+      Mar: "03",
+      Apr: "04",
+      May: "05",
+      Jun: "06",
+      Jul: "07",
+      Aug: "08",
+      Sep: "09",
+      Oct: "10",
+      Nov: "11",
+      Dec: "12",
+    };
+    const match = dateText.match(/^([A-Z][a-z]{2})\s+(\d{1,2}),\s+(\d{4})$/);
+
+    if (!match || !months[match[1]]) {
+      return "";
+    }
+
+    return `${match[3]}-${months[match[1]]}-${match[2].padStart(2, "0")}`;
+  }
+
+  function getRepairRowData(row) {
+    const mechanicCell = query(".mechanic-cell", row);
+    const mechanic = mechanicCell?.textContent.trim().replace(/^[A-Z]{2}/, "").trim() || getCellText(row, 3);
+    const dateText = query("td:nth-child(7) strong", row)?.textContent.trim() || getCellText(row, 6);
+    const amount = Number(getCellText(row, 5).replace(/[^0-9.]/g, "")) || 0;
+
+    return {
+      amount,
+      dateKey: getDateKey(dateText),
+      dateText,
+      mechanic,
+      searchText: row.textContent.toLowerCase(),
+      status: query("td:nth-child(5) .tag", row)?.textContent.trim() || getCellText(row, 4),
+    };
+  }
+
+  function getUniqueRepairValues(panel, key) {
+    return [...new Set(getRepairRows(panel).map((row) => getRepairRowData(row)[key]).filter(Boolean))];
+  }
+
+  function getRepairFilterOptions(panel, filterType) {
+    const filters = state.repairFilters;
+
+    if (filterType === "status") {
+      return [
+        { label: "All Status", value: "all", active: filters.status === "all" },
+        ...getUniqueRepairValues(panel, "status").map((status) => ({
+          label: status,
+          value: status,
+          active: filters.status === status,
+        })),
+      ];
+    }
+
+    if (filterType === "mechanic") {
+      return [
+        { label: "All Mechanics", value: "all", active: filters.mechanic === "all" },
+        ...getUniqueRepairValues(panel, "mechanic").map((mechanic) => ({
+          label: mechanic,
+          value: mechanic,
+          active: filters.mechanic === mechanic,
+        })),
+      ];
+    }
+
+    if (filterType === "date") {
+      const dateOptions = getRepairRows(panel)
+        .map(getRepairRowData)
+        .filter((row) => row.dateKey)
+        .sort((a, b) => b.dateKey.localeCompare(a.dateKey))
+        .filter((row, index, rows) => rows.findIndex((item) => item.dateKey === row.dateKey) === index)
+        .map((row) => ({
+          label: row.dateText,
+          value: row.dateKey,
+          active: filters.date === row.dateKey,
+        }));
+
+      return [
+        { label: "May 1 - May 16, 2024", value: "range", active: filters.date === "range" },
+        { label: "All Dates", value: "all", active: filters.date === "all" },
+        ...dateOptions,
+      ];
+    }
+
+    return [
+      { label: "All Orders", value: "all", active: filters.advanced === "all" },
+      { label: "Open Orders", value: "open", active: filters.advanced === "open" },
+      { label: "Completed Only", value: "completed", active: filters.advanced === "completed" },
+      { label: "High Value ($1,000+)", value: "high-value", active: filters.advanced === "high-value" },
+      { label: "Reset Filters", value: "reset", active: false },
+    ];
+  }
+
+  function setRepairButtonLabel(button, label, isActive) {
+    const labelElement = query("[data-filter-label]", button);
+
+    if (labelElement) {
+      labelElement.textContent = label;
+    }
+
+    button.classList.toggle("active", isActive);
+  }
+
+  function resetRepairFilters(panel) {
+    state.repairFilters = {
+      advanced: "all",
+      date: "range",
+      mechanic: "all",
+      query: "",
+      status: "all",
+    };
+
+    const input = query("[data-table-search]", panel);
+    if (input) {
+      input.value = "";
+    }
+  }
+
+  function updateRepairFilterButtons(panel) {
+    queryAll("[data-filter-control]", panel).forEach((button) => {
+      const type = button.dataset.filterControl;
+      const selectedValue = state.repairFilters[type];
+      const defaultLabel = button.dataset.defaultLabel || button.textContent.trim();
+      const option = getRepairFilterOptions(panel, type).find((item) => item.value === selectedValue);
+      const isActive = selectedValue && !["all", "range"].includes(selectedValue);
+      const label = type === "advanced" && selectedValue === "all" ? defaultLabel : option?.label || defaultLabel;
+
+      setRepairButtonLabel(button, label, Boolean(isActive));
+    });
+  }
+
+  function updateRepairPagination(panel, visibleCount) {
+    const pagination = query(".customer-pagination > span", panel);
+
+    if (!pagination) {
+      return;
+    }
+
+    pagination.textContent = visibleCount === getRepairRows(panel).length
+      ? "Showing 1 to 8 of 236 repair orders"
+      : `Showing ${visibleCount} of 8 repair orders`;
+  }
+
+  function rowMatchesAdvancedFilter(rowData) {
+    if (state.repairFilters.advanced === "open") {
+      return !["Completed", "Cancelled"].includes(rowData.status);
+    }
+
+    if (state.repairFilters.advanced === "completed") {
+      return rowData.status === "Completed";
+    }
+
+    if (state.repairFilters.advanced === "high-value") {
+      return rowData.amount >= 1000;
+    }
+
+    return true;
+  }
+
+  function rowMatchesDateFilter(rowData) {
+    const dateFilter = state.repairFilters.date;
+
+    if (dateFilter === "all") {
+      return true;
+    }
+
+    if (dateFilter === "range") {
+      return rowData.dateKey >= "2024-05-01" && rowData.dateKey <= "2024-05-16";
+    }
+
+    return rowData.dateKey === dateFilter;
+  }
+
+  function applyRepairFilters(panel, elements) {
+    const rows = getRepairRows(panel);
+    const filters = state.repairFilters;
+    let visibleCount = 0;
+
+    rows.forEach((row) => {
+      const rowData = getRepairRowData(row);
+      const isVisible =
+        (!filters.query || rowData.searchText.includes(filters.query)) &&
+        (filters.status === "all" || rowData.status === filters.status) &&
+        (filters.mechanic === "all" || rowData.mechanic === filters.mechanic) &&
+        rowMatchesDateFilter(rowData) &&
+        rowMatchesAdvancedFilter(rowData);
+
+      row.classList.toggle("is-hidden", !isVisible);
+      visibleCount += isVisible ? 1 : 0;
+    });
+
+    updateRepairPagination(panel, visibleCount);
+    updateRepairFilterButtons(panel);
+    showToast(`${visibleCount} repair orders visible.`, elements);
+  }
+
+  function bindRepairToolbar(elements) {
+    const panel = query(SELECTORS.repairOrdersPanel);
+
+    if (!panel) {
+      return;
+    }
+
+    query("[data-table-search]", panel)?.addEventListener("input", (event) => {
+      state.repairFilters.query = event.target.value.trim().toLowerCase();
+      applyRepairFilters(panel, elements);
+    });
+
+    queryAll("[data-filter-control]", panel).forEach((button) => {
+      button.addEventListener("click", (event) => {
+        event.stopPropagation();
+        const filterType = button.dataset.filterControl;
+        const options = getRepairFilterOptions(panel, filterType);
+
+        openToolbarMenu(button, options, (option) => {
+          if (option.value === "reset") {
+            resetRepairFilters(panel);
+          } else {
+            state.repairFilters[filterType] = option.value;
+          }
+
+          applyRepairFilters(panel, elements);
+        });
+      });
+    });
+
+    query("[data-view-toggle]", panel)?.addEventListener("click", (event) => {
+      const button = event.currentTarget;
+      const isCompact = !panel.classList.contains("is-compact");
+
+      panel.classList.toggle("is-compact", isCompact);
+      button.classList.toggle("active", isCompact);
+      button.setAttribute("aria-pressed", String(isCompact));
+      showToast(isCompact ? "Compact table view enabled." : "Comfortable table view enabled.", elements);
+    });
+
+    document.addEventListener("click", (event) => {
+      if (!state.toolbarMenu || state.toolbarMenu.hidden) {
+        return;
+      }
+
+      if (!state.toolbarMenu.contains(event.target) && !event.target.closest("[data-filter-control]")) {
+        closeToolbarMenu();
+      }
+    });
+
+    updateRepairFilterButtons(panel);
+  }
+
   function bindNavigation(elements) {
     const navList = query(".nav-list");
 
@@ -284,6 +612,10 @@
 
   function bindKeyboardShortcuts(elements) {
     document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") {
+        closeToolbarMenu();
+      }
+
       if (event.key === "Escape" && elements.quickAddModal?.classList.contains("open")) {
         closeQuickAdd(elements);
       }
@@ -296,6 +628,7 @@
     bindSidebar(elements);
     bindSearch(elements);
     bindQuickAdd(elements);
+    bindRepairToolbar(elements);
     bindNavigation(elements);
     bindKeyboardShortcuts(elements);
     activateView(getInitialViewName(), elements);
