@@ -78,6 +78,7 @@
     },
     tableStates: {},
     toolbarMenu: undefined,
+    toolbarMenuButton: undefined,
     toastTimer: undefined,
   };
 
@@ -744,7 +745,12 @@
     }
 
     state.toolbarMenu.hidden = true;
+    state.toolbarMenuButton = undefined;
     queryAll("[data-filter-control]").forEach((button) => button.setAttribute("aria-expanded", "false"));
+  }
+
+  function isToolbarMenuOpenFor(button) {
+    return Boolean(state.toolbarMenu && !state.toolbarMenu.hidden && state.toolbarMenuButton === button);
   }
 
   function positionToolbarMenu(menu, button, menuOptions = {}) {
@@ -815,6 +821,7 @@
 
     positionToolbarMenu(menu, button, menuOptions);
     menu.hidden = false;
+    state.toolbarMenuButton = button;
     button.setAttribute("aria-expanded", "true");
   }
 
@@ -1343,6 +1350,12 @@
     queryAll("[data-filter-control]", panel).forEach((button) => {
       button.addEventListener("click", (event) => {
         event.stopPropagation();
+
+        if (isToolbarMenuOpenFor(button)) {
+          closeToolbarMenu();
+          return;
+        }
+
         const filter = config.filters.find((item) => item.key === button.dataset.filterControl);
 
         if (!filter) {
