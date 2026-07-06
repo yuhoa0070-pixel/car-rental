@@ -410,7 +410,7 @@
             <div class="customer-toolbar">
               <label class="customer-search">
                 <svg aria-hidden="true"><use href="#icon-search"></use></svg>
-                <input type="search" placeholder="Search by name, phone, email or address..." />
+                <input type="search" placeholder="Search by name, phone, Telegram or address..." />
               </label>
               <button class="filter-button" type="button">All Status <svg aria-hidden="true"><use href="#icon-chevron"></use></svg></button>
               <button class="filter-button" type="button">All Tags <svg aria-hidden="true"><use href="#icon-chevron"></use></svg></button>
@@ -1598,12 +1598,12 @@
                 <div class="staff-toolbar">
                   <label class="customer-search">
                     <svg aria-hidden="true"><use href="#icon-search"></use></svg>
-                    <input type="search" placeholder="Search staff by name, role, email or phone..." />
+                    <input data-table-search type="search" placeholder="Search staff by name, role, Telegram or phone..." />
                   </label>
-                  <button class="filter-button" type="button">All Roles <svg aria-hidden="true"><use href="#icon-chevron"></use></svg></button>
-                  <button class="filter-button" type="button">All Status <svg aria-hidden="true"><use href="#icon-chevron"></use></svg></button>
-                  <button class="filter-button" type="button"><svg aria-hidden="true"><use href="#icon-filter"></use></svg>Filters</button>
-                  <button class="icon-button" type="button" aria-label="Table view options">
+                  <button class="filter-button" data-filter-control="role" data-default-label="All Roles" type="button" aria-haspopup="menu" aria-expanded="false"><span data-filter-label>All Roles</span><svg aria-hidden="true"><use href="#icon-chevron"></use></svg></button>
+                  <button class="filter-button" data-filter-control="status" data-default-label="All Status" type="button" aria-haspopup="menu" aria-expanded="false"><span data-filter-label>All Status</span><svg aria-hidden="true"><use href="#icon-chevron"></use></svg></button>
+                  <button class="filter-button" data-filter-control="advanced" data-default-label="Filters" type="button" aria-haspopup="menu" aria-expanded="false"><svg aria-hidden="true"><use href="#icon-filter"></use></svg><span data-filter-label>Filters</span></button>
+                  <button class="icon-button" data-view-toggle type="button" aria-label="Toggle compact table view" aria-pressed="false">
                     <svg aria-hidden="true"><use href="#icon-list"></use></svg>
                   </button>
                 </div>
@@ -1741,7 +1741,7 @@
             </div>
 
             <aside class="staff-side">
-              <article class="staff-profile-card" data-search="arun kumar service manager profile email phone employee">
+              <article class="staff-profile-card" data-search="arun kumar service manager profile telegram phone employee">
                 <button class="icon-button staff-close" type="button" aria-label="Close staff profile">
                   <svg aria-hidden="true"><use href="#icon-x"></use></svg>
                 </button>

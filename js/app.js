@@ -9,6 +9,7 @@
     quickAddModal: "#quickAddModal",
     repairOrdersPanel: ".repair-orders-panel",
     searchInput: "#dashboardSearch",
+    staffListPanel: ".staff-list-panel",
     searchable: "[data-search]",
     toast: "#toast",
     view: "[data-view-panel]",
@@ -57,6 +58,12 @@
       date: "range",
       mechanic: "all",
       query: "",
+      status: "all",
+    },
+    staffFilters: {
+      advanced: "all",
+      query: "",
+      role: "all",
       status: "all",
     },
     toolbarMenu: undefined,
@@ -584,6 +591,165 @@
     updateRepairFilterButtons(panel);
   }
 
+  function getStaffRows(panel) {
+    return queryAll(".staff-table tbody tr", panel);
+  }
+
+  function getStaffRowData(row) {
+    return {
+      department: getCellText(row, 3),
+      role: query("td:nth-child(3) .role-tag", row)?.textContent.trim() || getCellText(row, 2),
+      searchText: row.textContent.toLowerCase(),
+      status: query("td:nth-child(6) .tag", row)?.textContent.trim() || getCellText(row, 5),
+    };
+  }
+
+  function getUniqueStaffValues(panel, key) {
+    return [...new Set(getStaffRows(panel).map((row) => getStaffRowData(row)[key]).filter(Boolean))];
+  }
+
+  function getStaffFilterOptions(panel, filterType) {
+    const filters = state.staffFilters;
+
+    if (filterType === "role") {
+      return [
+        { label: "All Roles", value: "all", active: filters.role === "all" },
+        ...getUniqueStaffValues(panel, "role").map((role) => ({
+          label: role,
+          value: role,
+          active: filters.role === role,
+        })),
+      ];
+    }
+
+    if (filterType === "status") {
+      return [
+        { label: "All Status", value: "all", active: filters.status === "all" },
+        ...getUniqueStaffValues(panel, "status").map((status) => ({
+          label: status,
+          value: status,
+          active: filters.status === status,
+        })),
+      ];
+    }
+
+    return [
+      { label: "All Staff", value: "all", active: filters.advanced === "all" },
+      { label: "Service Department", value: "Service", active: filters.advanced === "Service" },
+      { label: "Workshop Department", value: "Workshop", active: filters.advanced === "Workshop" },
+      { label: "Parts Department", value: "Parts", active: filters.advanced === "Parts" },
+      { label: "Reset Filters", value: "reset", active: false },
+    ];
+  }
+
+  function resetStaffFilters(panel) {
+    state.staffFilters = {
+      advanced: "all",
+      query: "",
+      role: "all",
+      status: "all",
+    };
+
+    const input = query("[data-table-search]", panel);
+    if (input) {
+      input.value = "";
+    }
+  }
+
+  function updateStaffFilterButtons(panel) {
+    queryAll("[data-filter-control]", panel).forEach((button) => {
+      const type = button.dataset.filterControl;
+      const selectedValue = state.staffFilters[type];
+      const defaultLabel = button.dataset.defaultLabel || button.textContent.trim();
+      const option = getStaffFilterOptions(panel, type).find((item) => item.value === selectedValue);
+      const isActive = selectedValue && selectedValue !== "all";
+      const label = type === "advanced" && selectedValue === "all" ? defaultLabel : option?.label || defaultLabel;
+
+      setRepairButtonLabel(button, label, Boolean(isActive));
+    });
+  }
+
+  function updateStaffPagination(panel, visibleCount) {
+    const pagination = query(".customer-pagination > span", panel);
+
+    if (!pagination) {
+      return;
+    }
+
+    pagination.textContent = visibleCount === getStaffRows(panel).length
+      ? "Showing 1 to 10 of 18 staff members"
+      : `Showing ${visibleCount} of 10 staff members`;
+  }
+
+  function rowMatchesStaffAdvancedFilter(rowData) {
+    return state.staffFilters.advanced === "all" || rowData.department === state.staffFilters.advanced;
+  }
+
+  function applyStaffFilters(panel, elements) {
+    const rows = getStaffRows(panel);
+    const filters = state.staffFilters;
+    let visibleCount = 0;
+
+    rows.forEach((row) => {
+      const rowData = getStaffRowData(row);
+      const isVisible =
+        (!filters.query || rowData.searchText.includes(filters.query)) &&
+        (filters.role === "all" || rowData.role === filters.role) &&
+        (filters.status === "all" || rowData.status === filters.status) &&
+        rowMatchesStaffAdvancedFilter(rowData);
+
+      row.classList.toggle("is-hidden", !isVisible);
+      visibleCount += isVisible ? 1 : 0;
+    });
+
+    updateStaffPagination(panel, visibleCount);
+    updateStaffFilterButtons(panel);
+    showToast(`${visibleCount} staff members visible.`, elements);
+  }
+
+  function bindStaffToolbar(elements) {
+    const panel = query(SELECTORS.staffListPanel);
+
+    if (!panel) {
+      return;
+    }
+
+    query("[data-table-search]", panel)?.addEventListener("input", (event) => {
+      state.staffFilters.query = event.target.value.trim().toLowerCase();
+      applyStaffFilters(panel, elements);
+    });
+
+    queryAll("[data-filter-control]", panel).forEach((button) => {
+      button.addEventListener("click", (event) => {
+        event.stopPropagation();
+        const filterType = button.dataset.filterControl;
+        const options = getStaffFilterOptions(panel, filterType);
+
+        openToolbarMenu(button, options, (option) => {
+          if (option.value === "reset") {
+            resetStaffFilters(panel);
+          } else {
+            state.staffFilters[filterType] = option.value;
+          }
+
+          applyStaffFilters(panel, elements);
+        });
+      });
+    });
+
+    query("[data-view-toggle]", panel)?.addEventListener("click", (event) => {
+      const button = event.currentTarget;
+      const isCompact = !panel.classList.contains("is-compact");
+
+      panel.classList.toggle("is-compact", isCompact);
+      button.classList.toggle("active", isCompact);
+      button.setAttribute("aria-pressed", String(isCompact));
+      showToast(isCompact ? "Compact staff view enabled." : "Comfortable staff view enabled.", elements);
+    });
+
+    updateStaffFilterButtons(panel);
+  }
+
   function bindNavigation(elements) {
     const navList = query(".nav-list");
 
@@ -629,6 +795,7 @@
     bindSearch(elements);
     bindQuickAdd(elements);
     bindRepairToolbar(elements);
+    bindStaffToolbar(elements);
     bindNavigation(elements);
     bindKeyboardShortcuts(elements);
     activateView(getInitialViewName(), elements);
