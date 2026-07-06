@@ -6037,6 +6037,36 @@ td {
   box-shadow: inset 0 -2px 0 rgba(47, 114, 232, .1);
 }
 
+.filter-button.active[data-filter-tone="green"] {
+  color: #087443;
+  border-color: rgba(8, 116, 67, .24);
+  background: #e7f7ee;
+}
+
+.filter-button.active[data-filter-tone="amber"] {
+  color: #a75505;
+  border-color: rgba(167, 85, 5, .24);
+  background: #fff4df;
+}
+
+.filter-button.active[data-filter-tone="red"] {
+  color: #b42332;
+  border-color: rgba(180, 35, 50, .24);
+  background: #ffe8ec;
+}
+
+.filter-button.active[data-filter-tone="gray"] {
+  color: #596579;
+  border-color: rgba(89, 101, 121, .24);
+  background: #eef2f7;
+}
+
+.filter-button.active[data-filter-tone="purple"] {
+  color: #5d35a7;
+  border-color: rgba(93, 53, 167, .24);
+  background: #f5f0ff;
+}
+
 .toolbar-menu {
   gap: 6px;
   min-width: min(236px, calc(100vw - 32px));
@@ -6074,6 +6104,31 @@ td {
   background: #eef3ff;
 }
 
+.toolbar-menu button.active[data-filter-tone="green"] {
+  color: #087443;
+  background: #e7f7ee;
+}
+
+.toolbar-menu button.active[data-filter-tone="amber"] {
+  color: #a75505;
+  background: #fff4df;
+}
+
+.toolbar-menu button.active[data-filter-tone="red"] {
+  color: #b42332;
+  background: #ffe8ec;
+}
+
+.toolbar-menu button.active[data-filter-tone="gray"] {
+  color: #596579;
+  background: #eef2f7;
+}
+
+.toolbar-menu button.active[data-filter-tone="purple"] {
+  color: #5d35a7;
+  background: #f5f0ff;
+}
+
 .toolbar-menu button.active::before,
 .toolbar-menu button.active[data-filter-tone]::before {
   display: none;
@@ -6101,6 +6156,31 @@ td {
   color: #ffffff;
   border-color: #2f72e8;
   background: #2f72e8;
+}
+
+.toolbar-menu button.active[data-filter-tone="green"] .toolbar-menu-check {
+  border-color: #087443;
+  background: #087443;
+}
+
+.toolbar-menu button.active[data-filter-tone="amber"] .toolbar-menu-check {
+  border-color: #a75505;
+  background: #a75505;
+}
+
+.toolbar-menu button.active[data-filter-tone="red"] .toolbar-menu-check {
+  border-color: #b42332;
+  background: #b42332;
+}
+
+.toolbar-menu button.active[data-filter-tone="gray"] .toolbar-menu-check {
+  border-color: #596579;
+  background: #596579;
+}
+
+.toolbar-menu button.active[data-filter-tone="purple"] .toolbar-menu-check {
+  border-color: #5d35a7;
+  background: #5d35a7;
 }
 
 .toolbar-menu-radio-check {
