@@ -25,6 +25,7 @@ const tablerIconMap = {
   "icon-user-check": "user-check",
   "icon-crown": "crown",
   "icon-mail": "mail",
+  "icon-telegram": "brand-telegram",
   "icon-phone": "phone",
   "icon-id-card": "id",
   "icon-pen": "pencil",

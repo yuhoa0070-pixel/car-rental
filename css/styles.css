@@ -1124,10 +1124,16 @@ input:focus-visible,
   background: #ffe8ef;
 }
 
-.whatsapp {
+.telegram-status {
   margin-left: 8px;
-  color: var(--green);
+  color: #1d64f2;
   font-size: 14px;
+}
+
+.telegram-handle {
+  color: #1d64f2;
+  font-weight: 620;
+  white-space: nowrap;
 }
 
 .tag.gray {
