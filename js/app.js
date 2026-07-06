@@ -419,6 +419,10 @@
   const query = (selector, scope = document) => scope.querySelector(selector);
   const queryAll = (selector, scope = document) => [...scope.querySelectorAll(selector)];
 
+  function closestElement(target, selector) {
+    return target instanceof Element ? target.closest(selector) : null;
+  }
+
   const getElements = () => ({
     appShell: query(SELECTORS.appShell),
     closeModalButton: query(SELECTORS.closeModalButton),
@@ -607,7 +611,7 @@
     });
 
     elements.quickActions?.addEventListener("click", (event) => {
-      const action = event.target.closest("button");
+      const action = closestElement(event.target, "button");
 
       if (!action || !elements.quickActions.contains(action)) {
         return;
@@ -985,8 +989,8 @@
     tableState.page = Math.min(Math.max(1, tableState.page), pageCount);
 
     const pageRows = getPageRows(filteredRows, tableState);
-    const summary = query(":scope > span", pagination);
-    const controls = query(":scope > div", pagination);
+    const summary = pagination.querySelector("span");
+    const controls = pagination.querySelector("div");
     const start = filteredRows.length === 0 ? 0 : (tableState.page - 1) * (tableState.pageSize === "all" ? filteredRows.length : tableState.pageSize) + 1;
     const end = filteredRows.length === 0 ? 0 : start + pageRows.length - 1;
 
@@ -1180,7 +1184,11 @@
         return;
       }
 
-      if (!state.toolbarMenu.contains(event.target) && !event.target.closest("[data-filter-control], .per-page")) {
+      if (!(event.target instanceof Node)) {
+        return;
+      }
+
+      if (!state.toolbarMenu.contains(event.target) && !closestElement(event.target, "[data-filter-control], .per-page")) {
         closeToolbarMenu();
       }
     });
@@ -1194,7 +1202,7 @@
     }
 
     navList.addEventListener("click", (event) => {
-      const item = event.target.closest(SELECTORS.navItem);
+      const item = closestElement(event.target, SELECTORS.navItem);
 
       if (!item || !navList.contains(item)) {
         return;
