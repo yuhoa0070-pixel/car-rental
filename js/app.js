@@ -52,6 +52,10 @@
       search: "Search staff by name, role, phone or Telegram...",
       action: "Add Staff",
     },
+    reminders: {
+      search: "Search reminders, customers, vehicles...",
+      action: "Add Reminder",
+    },
     settings: {
       search: "Search settings, roles, Telegram, billing...",
       action: "Save Changes",
@@ -418,6 +422,90 @@
       },
       advancedMatch(value, rowData) {
         return rowData.department === value;
+      },
+    },
+    {
+      id: "reminders",
+      panel: ".reminders-list-panel",
+      table: ".reminders-table",
+      toolbar: TABLE_TOOLBAR_SELECTOR,
+      label: "reminders",
+      compactTargets: ".reminder-icon, .staff-photo, .avatar",
+      filters: [
+        { key: "type", label: "All Types", buttonIndex: 0 },
+        { key: "status", label: "All Status", buttonIndex: 1 },
+        { key: "date", label: "May 1 - May 31, 2024", buttonIndex: 2, icon: "calendar" },
+        {
+          key: "advanced",
+          label: "Filters",
+          buttonIndex: 3,
+          icon: "filter",
+          options: [
+            { label: "All Reminders", value: "all" },
+            { label: "Assigned to Me", value: "assigned-me" },
+            { label: "Needs Attention", value: "needs-attention" },
+            { label: "This Week", value: "this-week" },
+            { label: "Reset Filters", value: "reset" },
+          ],
+        },
+      ],
+      getRowData(row) {
+        const dateText = query("td:nth-child(5) strong", row)?.textContent.trim() || getCellText(row, 4);
+
+        return {
+          assignee: getCellText(row, 6),
+          date: dateText,
+          dateKey: getDateKey(dateText),
+          searchText: row.textContent.toLowerCase(),
+          status: query("td:nth-child(8) .tag", row)?.textContent.trim() || getCellText(row, 7),
+          type: query("td:nth-child(4) .reminder-type", row)?.textContent.trim() || getCellText(row, 3),
+        };
+      },
+      optionsFor(config, filterKey, rows) {
+        if (filterKey !== "date") {
+          return undefined;
+        }
+
+        return [
+          { label: "May 1 - May 31, 2024", value: "range" },
+          { label: "All Dates", value: "all" },
+          ...rows
+            .map((row) => config.getRowData(row))
+            .filter((rowData) => rowData.dateKey)
+            .sort((a, b) => a.dateKey.localeCompare(b.dateKey))
+            .filter((rowData, index, allRows) => allRows.findIndex((item) => item.dateKey === rowData.dateKey) === index)
+            .map((rowData) => ({ label: rowData.date, value: rowData.dateKey })),
+        ];
+      },
+      filterMatch(filterKey, value, rowData) {
+        if (filterKey === "date") {
+          if (value === "range") {
+            return rowData.dateKey >= "2024-05-01" && rowData.dateKey <= "2024-05-31";
+          }
+
+          if (value === "all") {
+            return true;
+          }
+
+          return rowData.dateKey === value;
+        }
+
+        return rowData[filterKey] === value;
+      },
+      advancedMatch(value, rowData) {
+        if (value === "assigned-me") {
+          return rowData.assignee.includes("John Smith");
+        }
+
+        if (value === "needs-attention") {
+          return ["Overdue", "Pending"].includes(rowData.status);
+        }
+
+        if (value === "this-week") {
+          return rowData.dateKey >= "2024-05-17" && rowData.dateKey <= "2024-05-24";
+        }
+
+        return true;
       },
     },
   ];

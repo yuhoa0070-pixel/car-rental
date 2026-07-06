@@ -54,7 +54,7 @@
             <svg aria-hidden="true"><use href="#icon-chart"></use></svg>
             Reports
           </a>
-          <a class="nav-item" href="#">
+          <a class="nav-item" href="#reminders" data-view="reminders">
             <svg aria-hidden="true"><use href="#icon-bell"></use></svg>
             Reminders
           </a>
@@ -1808,6 +1808,240 @@
                 <button class="outline-action" type="button"><svg aria-hidden="true"><use href="#icon-message"></use></svg>Message</button>
                 <button class="primary-action" type="button"><svg aria-hidden="true"><use href="#icon-pen"></use></svg>Edit Profile</button>
               </div>
+            </aside>
+          </section>
+        </section>
+
+        <section class="view reminders-view" data-view-panel="reminders">
+          <section class="page-heading reminders-heading">
+            <div>
+              <h1>Reminders</h1>
+              <p>Stay on top of important tasks, follow-ups and maintenance alerts.</p>
+            </div>
+            <button class="primary-action" type="button">
+              <svg aria-hidden="true"><use href="#icon-plus"></use></svg>
+              New Reminder
+            </button>
+          </section>
+
+          <section class="reminders-layout">
+            <div class="reminders-main">
+              <section class="reminders-overview" aria-label="Reminder summary">
+                <article class="reminder-stat" data-search="all reminders">
+                  <span class="metric-icon blue"><svg aria-hidden="true"><use href="#icon-bell"></use></svg></span>
+                  <div>
+                    <p>All Reminders</p>
+                    <strong>56</strong>
+                    <small class="reminder-trend up"><span>12.5%</span> vs last month</small>
+                  </div>
+                </article>
+                <article class="reminder-stat" data-search="completed reminders">
+                  <span class="metric-icon green"><svg aria-hidden="true"><use href="#icon-check-circle"></use></svg></span>
+                  <div>
+                    <p>Completed</p>
+                    <strong>22</strong>
+                    <small class="reminder-trend up"><span>15.8%</span> vs last month</small>
+                  </div>
+                </article>
+                <article class="reminder-stat" data-search="pending reminders">
+                  <span class="metric-icon orange"><svg aria-hidden="true"><use href="#icon-clock"></use></svg></span>
+                  <div>
+                    <p>Pending</p>
+                    <strong>28</strong>
+                    <small class="reminder-trend down"><span>4.2%</span> vs last month</small>
+                  </div>
+                </article>
+                <article class="reminder-stat" data-search="overdue reminders">
+                  <span class="metric-icon red"><svg aria-hidden="true"><use href="#icon-calendar"></use></svg></span>
+                  <div>
+                    <p>Overdue</p>
+                    <strong>6</strong>
+                    <small class="reminder-trend up"><span>20.0%</span> vs last month</small>
+                  </div>
+                </article>
+              </section>
+
+              <section class="reminders-list-panel" data-search="reminders table follow up service invoice registration renewal low stock team meeting inspection warranty">
+                <div class="app-toolbar" data-table-toolbar data-toolbar-layout="reminders">
+                  <label class="customer-search">
+                    <svg aria-hidden="true"><use href="#icon-search"></use></svg>
+                    <input data-table-search type="search" placeholder="Search reminders by title, customer or type..." />
+                  </label>
+                  <button class="filter-button" data-filter-control="type" data-default-label="All Types" type="button" aria-haspopup="menu" aria-expanded="false"><span data-filter-label>All Types</span><svg aria-hidden="true"><use href="#icon-chevron"></use></svg></button>
+                  <button class="filter-button" data-filter-control="status" data-default-label="All Status" type="button" aria-haspopup="menu" aria-expanded="false"><span data-filter-label>All Status</span><svg aria-hidden="true"><use href="#icon-chevron"></use></svg></button>
+                  <button class="filter-button date-filter" data-filter-control="date" data-default-label="May 1 - May 31, 2024" type="button" aria-haspopup="menu" aria-expanded="false"><svg aria-hidden="true"><use href="#icon-calendar"></use></svg><span data-filter-label>May 1 - May 31, 2024</span><svg aria-hidden="true"><use href="#icon-chevron"></use></svg></button>
+                  <button class="filter-button" data-filter-control="advanced" data-default-label="Filters" type="button" aria-haspopup="menu" aria-expanded="false"><svg aria-hidden="true"><use href="#icon-filter"></use></svg><span data-filter-label>Filters</span></button>
+                  <button class="icon-button" data-view-toggle type="button" aria-label="Toggle compact table view" aria-pressed="false">
+                    <svg aria-hidden="true"><use href="#icon-list"></use></svg>
+                  </button>
+                </div>
+
+                <div class="reminders-table-wrap">
+                  <table class="reminders-table">
+                    <thead>
+                      <tr>
+                        <th><input type="checkbox" aria-label="Select all reminders" /></th>
+                        <th>Reminder</th>
+                        <th>Related To</th>
+                        <th>Type</th>
+                        <th>Due Date</th>
+                        <th>Time</th>
+                        <th>Assigned To</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td><input type="checkbox" aria-label="Select follow up on quote" /></td>
+                        <td><div class="reminder-cell"><span class="reminder-icon orange"><svg aria-hidden="true"><use href="#icon-clipboard"></use></svg></span><div><strong>Follow up on Quote</strong><small>Call customer to follow up on estimate</small></div></div></td>
+                        <td><strong>Rahul Sharma</strong><small>RO-2024-064</small></td>
+                        <td><span class="reminder-type blue">Follow Up</span></td>
+                        <td><strong>May 16, 2024</strong><small class="due-label red">(Overdue)</small></td>
+                        <td>10:00 AM</td>
+                        <td><div class="assigned-cell"><span class="staff-photo mini warm" aria-hidden="true"></span>Arun Kumar</div></td>
+                        <td><span class="tag red">Overdue</span></td>
+                        <td><button class="dots-button" type="button" aria-label="Reminder actions">⋮</button></td>
+                      </tr>
+                      <tr>
+                        <td><input type="checkbox" aria-label="Select vehicle service reminder" /></td>
+                        <td><div class="reminder-cell"><span class="reminder-icon purple"><svg aria-hidden="true"><use href="#icon-wrench"></use></svg></span><div><strong>Vehicle Service Reminder</strong><small>Remind customer for next service</small></div></div></td>
+                        <td><strong>Toyota Camry</strong><small>ABC-1234</small></td>
+                        <td><span class="reminder-type green">Service</span></td>
+                        <td><strong>May 17, 2024</strong><small class="due-label orange">(Today)</small></td>
+                        <td>09:00 AM</td>
+                        <td><div class="assigned-cell"><span class="staff-photo mini cap" aria-hidden="true"></span>Imran Ali</div></td>
+                        <td><span class="tag orange">Pending</span></td>
+                        <td><button class="dots-button" type="button" aria-label="Reminder actions">⋮</button></td>
+                      </tr>
+                      <tr>
+                        <td><input type="checkbox" aria-label="Select send invoice reminder" /></td>
+                        <td><div class="reminder-cell"><span class="reminder-icon blue"><svg aria-hidden="true"><use href="#icon-mail"></use></svg></span><div><strong>Send Invoice</strong><small>Send invoice INV-2024-098</small></div></div></td>
+                        <td><strong>Amit Verma</strong><small>INV-2024-098</small></td>
+                        <td><span class="reminder-type blue">Payment</span></td>
+                        <td><strong>May 18, 2024</strong><small class="due-label blue">(Tomorrow)</small></td>
+                        <td>11:30 AM</td>
+                        <td><div class="assigned-cell"><span class="staff-photo mini rose" aria-hidden="true"></span>Pooja Sharma</div></td>
+                        <td><span class="tag orange">Pending</span></td>
+                        <td><button class="dots-button" type="button" aria-label="Reminder actions">⋮</button></td>
+                      </tr>
+                      <tr>
+                        <td><input type="checkbox" aria-label="Select registration renewal reminder" /></td>
+                        <td><div class="reminder-cell"><span class="reminder-icon green"><svg aria-hidden="true"><use href="#icon-car"></use></svg></span><div><strong>Registration Renewal</strong><small>Vehicle registration is expiring</small></div></div></td>
+                        <td><strong>Honda City</strong><small>DEF-5678</small></td>
+                        <td><span class="reminder-type purple">Reminder</span></td>
+                        <td><strong>May 20, 2024</strong></td>
+                        <td>-</td>
+                        <td><div class="assigned-cell"><span class="staff-photo mini rose" aria-hidden="true"></span>Neha Kapoor</div></td>
+                        <td><span class="tag orange">Pending</span></td>
+                        <td><button class="dots-button" type="button" aria-label="Reminder actions">⋮</button></td>
+                      </tr>
+                      <tr>
+                        <td><input type="checkbox" aria-label="Select low stock alert" /></td>
+                        <td><div class="reminder-cell"><span class="reminder-icon orange"><svg aria-hidden="true"><use href="#icon-box"></use></svg></span><div><strong>Low Stock Alert</strong><small>Brake Pads (Front) low in stock</small></div></div></td>
+                        <td><strong>Brake Pads (Front)</strong><small>BRM-BP-FR001</small></td>
+                        <td><span class="reminder-type orange">Inventory</span></td>
+                        <td><strong>May 21, 2024</strong></td>
+                        <td>-</td>
+                        <td><div class="assigned-cell"><span class="staff-photo mini warm" aria-hidden="true"></span>Vikash Yadav</div></td>
+                        <td><span class="tag orange">Pending</span></td>
+                        <td><button class="dots-button" type="button" aria-label="Reminder actions">⋮</button></td>
+                      </tr>
+                      <tr>
+                        <td><input type="checkbox" aria-label="Select team meeting reminder" /></td>
+                        <td><div class="reminder-cell"><span class="reminder-icon purple"><svg aria-hidden="true"><use href="#icon-team"></use></svg></span><div><strong>Team Meeting</strong><small>Weekly team meeting</small></div></div></td>
+                        <td><strong>All Staff</strong><small>-</small></td>
+                        <td><span class="reminder-type green">Meeting</span></td>
+                        <td><strong>May 22, 2024</strong></td>
+                        <td>04:00 PM</td>
+                        <td><div class="assigned-cell"><span class="avatar mini">JS</span>John Smith</div></td>
+                        <td><span class="tag orange">Pending</span></td>
+                        <td><button class="dots-button" type="button" aria-label="Reminder actions">⋮</button></td>
+                      </tr>
+                      <tr>
+                        <td><input type="checkbox" aria-label="Select vehicle inspection reminder" /></td>
+                        <td><div class="reminder-cell"><span class="reminder-icon red"><svg aria-hidden="true"><use href="#icon-calendar"></use></svg></span><div><strong>Vehicle Inspection</strong><small>Post repair quality inspection</small></div></div></td>
+                        <td><strong>Hyundai i20</strong><small>GHI-9012 (RO-2024-062)</small></td>
+                        <td><span class="reminder-type blue">Inspection</span></td>
+                        <td><strong>May 23, 2024</strong></td>
+                        <td>02:00 PM</td>
+                        <td><div class="assigned-cell"><span class="staff-photo mini warm" aria-hidden="true"></span>Ramesh Singh</div></td>
+                        <td><span class="tag orange">Pending</span></td>
+                        <td><button class="dots-button" type="button" aria-label="Reminder actions">⋮</button></td>
+                      </tr>
+                      <tr>
+                        <td><input type="checkbox" aria-label="Select warranty expiring reminder" /></td>
+                        <td><div class="reminder-cell"><span class="reminder-icon orange"><svg aria-hidden="true"><use href="#icon-bell"></use></svg></span><div><strong>Warranty Expiring</strong><small>Warranty expiring in 7 days</small></div></div></td>
+                        <td><strong>Maruti Swift</strong><small>PQR-2345</small></td>
+                        <td><span class="reminder-type red">Warranty</span></td>
+                        <td><strong>May 24, 2024</strong></td>
+                        <td>-</td>
+                        <td><div class="assigned-cell"><span class="staff-photo mini olive" aria-hidden="true"></span>Sanjay Patel</div></td>
+                        <td><span class="tag orange">Pending</span></td>
+                        <td><button class="dots-button" type="button" aria-label="Reminder actions">⋮</button></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+
+                <div class="customer-pagination">
+                  <span>Showing 1 to 8 of 56 reminders</span>
+                  <div>
+                    <button type="button" disabled><svg aria-hidden="true"><use href="#icon-chevron-left"></use></svg></button>
+                    <button class="active" type="button">1</button>
+                    <button type="button">2</button>
+                    <button type="button">3</button>
+                    <button type="button">...</button>
+                    <button type="button">7</button>
+                    <button type="button"><svg aria-hidden="true"><use href="#icon-chevron-right"></use></svg></button>
+                    <button class="per-page" type="button">10 / page <svg aria-hidden="true"><use href="#icon-chevron"></use></svg></button>
+                  </div>
+                </div>
+              </section>
+            </div>
+
+            <aside class="reminders-side">
+              <article class="reminder-side-card" data-search="upcoming reminders service invoice registration meeting inspection">
+                <div class="side-card-title">
+                  <h2>Upcoming Reminders</h2>
+                  <a href="#">View all</a>
+                </div>
+                <ul class="upcoming-reminder-list">
+                  <li><span class="reminder-icon purple"><svg aria-hidden="true"><use href="#icon-wrench"></use></svg></span><div><strong>Vehicle Service Reminder</strong><small>Toyota Camry (ABC-1234)</small></div><time>May 17, 2024<br />09:00 AM</time></li>
+                  <li><span class="reminder-icon blue"><svg aria-hidden="true"><use href="#icon-mail"></use></svg></span><div><strong>Send Invoice</strong><small>INV-2024-098</small></div><time>May 18, 2024<br />11:30 AM</time></li>
+                  <li><span class="reminder-icon green"><svg aria-hidden="true"><use href="#icon-car"></use></svg></span><div><strong>Registration Renewal</strong><small>Honda City (DEF-5678)</small></div><time>May 20, 2024<br />All day</time></li>
+                  <li><span class="reminder-icon purple"><svg aria-hidden="true"><use href="#icon-team"></use></svg></span><div><strong>Team Meeting</strong><small>Weekly team meeting</small></div><time>May 22, 2024<br />04:00 PM</time></li>
+                  <li><span class="reminder-icon red"><svg aria-hidden="true"><use href="#icon-calendar"></use></svg></span><div><strong>Vehicle Inspection</strong><small>Hyundai i20 (RO-2024-062)</small></div><time>May 23, 2024<br />02:00 PM</time></li>
+                </ul>
+              </article>
+
+              <article class="reminder-side-card" data-search="calendar view may 2024 reminders">
+                <div class="side-card-title calendar-title">
+                  <h2>Calendar View</h2>
+                  <span><svg aria-hidden="true"><use href="#icon-chevron-left"></use></svg><svg aria-hidden="true"><use href="#icon-chevron-right"></use></svg></span>
+                </div>
+                <div class="mini-calendar" aria-label="May 2024 reminder calendar">
+                  <strong>May 2024</strong>
+                  <div class="calendar-grid calendar-weekdays"><span>Sun</span><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span></div>
+                  <div class="calendar-grid">
+                    <span class="muted">28</span><span class="muted">29</span><span class="muted">30</span><span>1</span><span>2</span><span>3</span><span>4</span>
+                    <span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>10</span><span>11</span>
+                    <span>12</span><span>13</span><span class="has-dot green">14</span><span>15</span><span class="has-dot red">16</span><span class="active">17</span><span class="has-dot blue">18</span>
+                    <span>19</span><span>20</span><span class="has-dot blue">21</span><span class="selected">22</span><span class="has-dot green">23</span><span>24</span><span>25</span>
+                    <span>26</span><span>27</span><span class="has-dot blue">28</span><span>29</span><span class="has-dot blue">30</span><span>31</span><span class="muted">1</span>
+                  </div>
+                </div>
+              </article>
+
+              <article class="reminder-side-card" data-search="reminder settings notifications before due">
+                <h2>Reminder Settings</h2>
+                <ul class="reminder-settings-list">
+                  <li><span><svg aria-hidden="true"><use href="#icon-telegram"></use></svg>Telegram Notifications</span><strong>Enabled</strong><svg aria-hidden="true"><use href="#icon-chevron-right"></use></svg></li>
+                  <li><span><svg aria-hidden="true"><use href="#icon-message"></use></svg>SMS Notifications</span><strong>Enabled</strong><svg aria-hidden="true"><use href="#icon-chevron-right"></use></svg></li>
+                  <li><span><svg aria-hidden="true"><use href="#icon-bell"></use></svg>Push Notifications</span><strong>Enabled</strong><svg aria-hidden="true"><use href="#icon-chevron-right"></use></svg></li>
+                  <li><span><svg aria-hidden="true"><use href="#icon-calendar"></use></svg>Reminder Before Due</span><strong>1 day before</strong><svg aria-hidden="true"><use href="#icon-chevron-right"></use></svg></li>
+                </ul>
+              </article>
             </aside>
           </section>
         </section>
