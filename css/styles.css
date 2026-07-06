@@ -774,6 +774,41 @@ input:focus-visible,
   box-shadow: inset 0 0 0 1px rgba(23, 92, 255, .12);
 }
 
+.filter-button.active[data-filter-tone="green"] {
+  color: #087443;
+  border-color: rgba(22, 163, 95, .38);
+  background: #eefaf4;
+  box-shadow: inset 0 0 0 1px rgba(22, 163, 95, .1);
+}
+
+.filter-button.active[data-filter-tone="amber"] {
+  color: #9a5b05;
+  border-color: rgba(240, 138, 36, .42);
+  background: #fff7e8;
+  box-shadow: inset 0 0 0 1px rgba(240, 138, 36, .12);
+}
+
+.filter-button.active[data-filter-tone="red"] {
+  color: #a21f2d;
+  border-color: rgba(227, 58, 69, .34);
+  background: #fff1f3;
+  box-shadow: inset 0 0 0 1px rgba(227, 58, 69, .1);
+}
+
+.filter-button.active[data-filter-tone="purple"] {
+  color: #5d35a7;
+  border-color: rgba(123, 76, 226, .34);
+  background: #f5f0ff;
+  box-shadow: inset 0 0 0 1px rgba(123, 76, 226, .1);
+}
+
+.filter-button.active[data-filter-tone="gray"] {
+  color: #475569;
+  border-color: rgba(100, 116, 139, .32);
+  background: #f5f7fa;
+  box-shadow: inset 0 0 0 1px rgba(100, 116, 139, .08);
+}
+
 .filter-button :is(svg, .ti) {
   width: 18px;
   height: 18px;
@@ -839,6 +874,71 @@ input:focus-visible,
   width: 3px;
   border-radius: 999px;
   background: var(--blue);
+}
+
+.toolbar-menu button.active[data-filter-tone="green"] {
+  color: #087443;
+  background: #eefaf4;
+}
+
+.toolbar-menu button.active[data-filter-tone="green"]::before {
+  background: var(--green);
+}
+
+.toolbar-menu button.active[data-filter-tone="green"] em {
+  color: #087443;
+}
+
+.toolbar-menu button.active[data-filter-tone="amber"] {
+  color: #9a5b05;
+  background: #fff7e8;
+}
+
+.toolbar-menu button.active[data-filter-tone="amber"]::before {
+  background: var(--orange);
+}
+
+.toolbar-menu button.active[data-filter-tone="amber"] em {
+  color: #9a5b05;
+}
+
+.toolbar-menu button.active[data-filter-tone="red"] {
+  color: #a21f2d;
+  background: #fff1f3;
+}
+
+.toolbar-menu button.active[data-filter-tone="red"]::before {
+  background: var(--red);
+}
+
+.toolbar-menu button.active[data-filter-tone="red"] em {
+  color: #a21f2d;
+}
+
+.toolbar-menu button.active[data-filter-tone="purple"] {
+  color: #5d35a7;
+  background: #f5f0ff;
+}
+
+.toolbar-menu button.active[data-filter-tone="purple"]::before {
+  background: var(--purple);
+}
+
+.toolbar-menu button.active[data-filter-tone="purple"] em {
+  color: #5d35a7;
+}
+
+.toolbar-menu button.active[data-filter-tone="gray"] {
+  color: #475569;
+  background: #f5f7fa;
+}
+
+.toolbar-menu button.active[data-filter-tone="gray"]::before {
+  background: #64748b;
+}
+
+.toolbar-menu button.active[data-filter-tone="gray"] em {
+  color: #475569;
 }
 
 .customers-table-wrap {
@@ -3681,28 +3781,28 @@ td {
 }
 
 .role-tag.service {
-  color: #0f4ee8;
-  background: #eaf2ff;
+  color: var(--blue-ink);
+  background: var(--blue-soft);
 }
 
 .role-tag.senior {
   color: #087443;
-  background: #e5f8ee;
+  background: #e7f7ee;
 }
 
 .role-tag.mechanic {
-  color: #1d5fd6;
-  background: #edf4ff;
+  color: #5d35a7;
+  background: #f5f0ff;
 }
 
 .role-tag.technician {
-  color: #6b35c9;
-  background: #f1ebff;
+  color: #5d35a7;
+  background: #f5f0ff;
 }
 
 .role-tag.parts {
-  color: #d54b16;
-  background: #fff0df;
+  color: #9a5b05;
+  background: #fff7e8;
 }
 
 .role-tag.advisor {
@@ -3711,8 +3811,8 @@ td {
 }
 
 .role-tag.store {
-  color: #a45c00;
-  background: #fff4dd;
+  color: #9a5b05;
+  background: #fff7e8;
 }
 
 .role-tag.junior,

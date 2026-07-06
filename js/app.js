@@ -313,10 +313,15 @@
 
     options.forEach((option) => {
       const item = document.createElement("button");
+      const tone = getFilterTone(button.dataset.filterControl, option.value);
+
       item.type = "button";
       item.setAttribute("role", "menuitemradio");
       item.setAttribute("aria-checked", String(option.active));
       item.className = option.active ? "active" : "";
+      if (tone) {
+        item.dataset.filterTone = tone;
+      }
 
       const label = document.createElement("span");
       label.textContent = option.label;
@@ -338,6 +343,58 @@
     positionToolbarMenu(menu, button);
     menu.hidden = false;
     button.setAttribute("aria-expanded", "true");
+  }
+
+  function getFilterTone(filterType, value) {
+    const normalizedValue = String(value || "").toLowerCase();
+
+    if (!normalizedValue || normalizedValue === "all" || normalizedValue === "range") {
+      return "";
+    }
+
+    if (filterType === "status") {
+      if (["active", "completed", "paid", "in stock"].includes(normalizedValue)) {
+        return "green";
+      }
+
+      if (["waiting approval", "pending", "due soon", "on leave", "low stock"].includes(normalizedValue)) {
+        return "amber";
+      }
+
+      if (["cancelled", "overdue", "out of stock"].includes(normalizedValue)) {
+        return "red";
+      }
+
+      if (["inactive", "others"].includes(normalizedValue)) {
+        return "gray";
+      }
+
+      return "blue";
+    }
+
+    if (filterType === "role" || filterType === "advanced") {
+      if (normalizedValue.includes("service")) {
+        return "blue";
+      }
+
+      if (normalizedValue.includes("mechanic") || normalizedValue.includes("technician") || normalizedValue.includes("workshop")) {
+        return "purple";
+      }
+
+      if (normalizedValue.includes("parts") || normalizedValue.includes("store")) {
+        return "amber";
+      }
+
+      if (normalizedValue.includes("accountant")) {
+        return "red";
+      }
+
+      if (normalizedValue.includes("cleaner") || normalizedValue.includes("maintenance")) {
+        return "gray";
+      }
+    }
+
+    return "blue";
   }
 
   function getRepairRows(panel) {
@@ -445,7 +502,7 @@
     ];
   }
 
-  function setRepairButtonLabel(button, label, isActive) {
+  function setRepairButtonLabel(button, label, isActive, selectedValue) {
     const labelElement = query("[data-filter-label]", button);
 
     if (labelElement) {
@@ -453,6 +510,18 @@
     }
 
     button.classList.toggle("active", isActive);
+
+    if (isActive) {
+      const tone = getFilterTone(button.dataset.filterControl, selectedValue);
+
+      if (tone) {
+        button.dataset.filterTone = tone;
+      } else {
+        delete button.dataset.filterTone;
+      }
+    } else {
+      delete button.dataset.filterTone;
+    }
   }
 
   function resetRepairFilters(panel) {
@@ -479,7 +548,7 @@
       const isActive = selectedValue && !["all", "range"].includes(selectedValue);
       const label = type === "advanced" && selectedValue === "all" ? defaultLabel : option?.label || defaultLabel;
 
-      setRepairButtonLabel(button, label, Boolean(isActive));
+      setRepairButtonLabel(button, label, Boolean(isActive), selectedValue);
     });
   }
 
@@ -675,7 +744,7 @@
       const isActive = selectedValue && selectedValue !== "all";
       const label = type === "advanced" && selectedValue === "all" ? defaultLabel : option?.label || defaultLabel;
 
-      setRepairButtonLabel(button, label, Boolean(isActive));
+      setRepairButtonLabel(button, label, Boolean(isActive), selectedValue);
     });
   }
 
