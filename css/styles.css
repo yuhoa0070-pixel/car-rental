@@ -1,5 +1,5 @@
 :root {
-  --bg: #f4f7fb;
+  --bg: #ffffff;
   --surface: #ffffff;
   --surface-soft: #f8fafc;
   --ink: #0f172a;
@@ -44,7 +44,7 @@ body {
   font-weight: 400;
   line-height: 1.5;
   letter-spacing: 0;
-  background: linear-gradient(180deg, #fbfcff 0%, #f5f8fc 46%, #eef3f8 100%);
+  background: #ffffff;
   -webkit-font-smoothing: antialiased;
   font-optical-sizing: auto;
   text-rendering: optimizeLegibility;
