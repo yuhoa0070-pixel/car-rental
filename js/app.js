@@ -1021,7 +1021,27 @@
     }
   }
 
-  function setFilterButtonLabel(button, label, isActive, value) {
+  function renderFilterLabel(labelElement, label, chips = []) {
+    labelElement.replaceChildren();
+    labelElement.classList.toggle("filter-chip-list", chips.length > 0);
+
+    if (!chips.length) {
+      labelElement.textContent = label;
+      return;
+    }
+
+    chips.forEach((chip) => {
+      const chipElement = document.createElement("span");
+      chipElement.className = "filter-chip";
+      chipElement.textContent = chip.label;
+      if (chip.tone) {
+        chipElement.dataset.filterTone = chip.tone;
+      }
+      labelElement.append(chipElement);
+    });
+  }
+
+  function setFilterButtonLabel(button, label, isActive, value, chips = []) {
     let labelElement = query("[data-filter-label]", button);
 
     if (!labelElement) {
@@ -1030,11 +1050,11 @@
       button.prepend(labelElement);
     }
 
-    labelElement.textContent = label;
+    renderFilterLabel(labelElement, label, chips);
     button.classList.toggle("active", isActive);
     button.setAttribute("aria-label", `${label} filter`);
 
-    const tone = isActive ? getFilterTone(button.dataset.filterControl, value) : "";
+    const tone = isActive && !chips.length ? getFilterTone(button.dataset.filterControl, value) : "";
     if (tone) {
       button.dataset.filterTone = tone;
     } else {
@@ -1091,8 +1111,18 @@
           : selectedLabels.join(", ") || filter.label
         : filter.key === "advanced" && selectedValue === "all" ? filter.label : option?.label || filter.label;
       const toneValue = isMultiple && selectedValues.length === 1 ? selectedValues[0] : selectedValue;
+      const selectedOptions = options.filter((item) => item.value !== "all" && selectedValues.includes(item.value));
+      const filterChips = filter.key === "status" && selectedOptions.length > 1
+        ? [
+            ...selectedOptions.slice(0, 2).map((item) => ({
+              label: item.label,
+              tone: getFilterTone(filter.key, item.value),
+            })),
+            ...(selectedOptions.length > 2 ? [{ label: `+${selectedOptions.length - 2}`, tone: "gray" }] : []),
+          ]
+        : [];
 
-      setFilterButtonLabel(button, label, isActive, toneValue);
+      setFilterButtonLabel(button, label, isActive, toneValue, filterChips);
     });
   }
 

@@ -884,6 +884,63 @@ input:focus-visible,
   white-space: nowrap;
 }
 
+.filter-button .filter-chip-list {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: clip;
+  white-space: nowrap;
+}
+
+.filter-chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+  max-width: 84px;
+  height: 24px;
+  padding: 0 9px;
+  overflow: hidden;
+  border-radius: var(--radius-sm);
+  font-size: 12px;
+  font-weight: 620;
+  line-height: 1;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.filter-chip[data-filter-tone="blue"] {
+  color: #175cff;
+  background: #eaf2ff;
+}
+
+.filter-chip[data-filter-tone="green"] {
+  color: #087443;
+  background: #e7f7ee;
+}
+
+.filter-chip[data-filter-tone="amber"] {
+  color: #a75505;
+  background: #fff4df;
+}
+
+.filter-chip[data-filter-tone="red"] {
+  color: #b42332;
+  background: #ffe8ec;
+}
+
+.filter-chip[data-filter-tone="gray"] {
+  color: #596579;
+  background: #eef2f7;
+}
+
+.filter-chip[data-filter-tone="purple"] {
+  color: #5d35a7;
+  background: #f5f0ff;
+}
+
 .toolbar-menu {
   position: fixed;
   z-index: 40;
