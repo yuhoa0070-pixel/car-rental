@@ -66,6 +66,30 @@
     },
   });
 
+  const VEHICLE_MODELS = Object.freeze({
+    Toyota: ["Camry LE", "Corolla", "Fortuner", "Hilux", "RAV4", "Land Cruiser"],
+    Honda: ["City ZX", "Civic", "Accord", "CR-V", "HR-V", "BR-V"],
+    Hyundai: ["i20 Asta", "Creta", "Tucson", "Venue", "Verna", "Santa Fe"],
+    Ford: ["EcoSport Titanium", "Ranger", "Everest", "Focus", "Escape", "Mustang"],
+    Mahindra: ["XUV700 AX7", "Scorpio N", "Thar", "Bolero", "XUV300", "Marazzo"],
+    "Maruti Suzuki": ["Swift VXI", "Baleno", "Dzire", "Ertiga", "Brezza", "Wagon R"],
+    Kia: ["Seltos HTX", "Sonet", "Carens", "Carnival", "Sportage", "Sorento"],
+    Skoda: ["Octavia Style", "Kushaq", "Slavia", "Superb", "Kodiaq", "Rapid"],
+    Nissan: ["Almera", "Navara", "X-Trail", "Kicks", "Patrol", "Terra"],
+    Mitsubishi: ["Triton", "Pajero Sport", "Outlander", "Xpander", "Attrage", "ASX"],
+    "Mercedes-Benz": ["C-Class", "E-Class", "GLC", "GLE", "A-Class", "S-Class"],
+    BMW: ["3 Series", "5 Series", "X1", "X3", "X5", "7 Series"],
+    Audi: ["A3", "A4", "A6", "Q3", "Q5", "Q7"],
+    Volkswagen: ["Polo", "Vento", "Tiguan", "Passat", "Golf", "Taigun"],
+    Lexus: ["ES", "RX", "NX", "LX", "UX", "IS"],
+    Isuzu: ["D-Max", "MU-X", "V-Cross", "N-Series", "F-Series"],
+    Mazda: ["Mazda2", "Mazda3", "CX-3", "CX-5", "CX-8", "BT-50"],
+    Subaru: ["Forester", "Outback", "XV", "Impreza", "WRX", "BRZ"],
+    Suzuki: ["Jimny", "Vitara", "Ciaz", "Ertiga", "Carry", "Swift"],
+    Tesla: ["Model 3", "Model Y", "Model S", "Model X", "Cybertruck"],
+    Chevrolet: ["Colorado", "Trailblazer", "Cruze", "Captiva", "Malibu", "Tahoe"],
+  });
+
   const state = {
     repairFilters: {
       advanced: "all",
@@ -600,7 +624,7 @@
 
     elements.addVehicleModal.classList.add("open");
     elements.addVehicleModal.setAttribute("aria-hidden", "false");
-    elements.addVehicleForm?.querySelector("input")?.focus();
+    elements.addVehicleForm?.querySelector("select[name='make'], input")?.focus();
   }
 
   function closeAddVehicleModal(elements) {
@@ -751,7 +775,35 @@
     return row;
   }
 
+  function syncVehicleModelOptions(form, preferredModel) {
+    const makeSelect = form?.elements.make;
+    const modelSelect = form?.elements.model;
+
+    if (!(makeSelect instanceof HTMLSelectElement) || !(modelSelect instanceof HTMLSelectElement)) {
+      return;
+    }
+
+    const models = VEHICLE_MODELS[makeSelect.value] || [];
+    const selectedModel = preferredModel && models.includes(preferredModel) ? preferredModel : models[0];
+
+    modelSelect.replaceChildren(
+      ...models.map((model) => {
+        const option = document.createElement("option");
+        option.value = model;
+        option.textContent = model;
+        option.selected = model === selectedModel;
+        return option;
+      }),
+    );
+  }
+
   function bindVehiclePage(elements) {
+    syncVehicleModelOptions(elements.addVehicleForm, "Camry LE");
+
+    elements.addVehicleForm?.elements.make?.addEventListener("change", () => {
+      syncVehicleModelOptions(elements.addVehicleForm);
+    });
+
     elements.addVehicleButton?.addEventListener("click", () => {
       openAddVehicleModal(elements);
     });
@@ -800,6 +852,7 @@
         applyTableState(vehicleConfig, vehiclePanel, { elements, announce: false });
       }
       elements.addVehicleForm.reset();
+      syncVehicleModelOptions(elements.addVehicleForm, "Camry LE");
       closeAddVehicleModal(elements);
       showToast(`${vehicleName} added to vehicles.`, elements);
     });
