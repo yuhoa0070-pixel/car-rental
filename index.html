@@ -2217,7 +2217,8 @@
     <div class="modal-backdrop vehicle-modal-backdrop" id="addVehicleModal" aria-hidden="true">
       <section class="vehicle-form-card vehicle-modal" role="dialog" aria-modal="true" aria-labelledby="addVehicleTitle">
         <div class="panel-title-row">
-          <div>
+          <div class="vehicle-modal-title">
+            <span class="vehicle-modal-title-icon"><svg aria-hidden="true"><use href="#icon-car"></use></svg></span>
             <h2 id="addVehicleTitle">Add Vehicle</h2>
             <p>Create a vehicle profile and connect it to a customer.</p>
           </div>
@@ -2227,37 +2228,38 @@
         </div>
         <form id="addVehicleForm">
           <div class="vehicle-form-section">
-            <div>
+            <div class="vehicle-form-copy">
+              <span class="vehicle-form-section-icon"><svg aria-hidden="true"><use href="#icon-car"></use></svg></span>
               <h2>Vehicle Details</h2>
               <p>Basic vehicle information used across repair orders, invoices and reminders.</p>
             </div>
             <div class="vehicle-form-grid">
               <label>
-                <span>Make</span>
+                <span><svg aria-hidden="true"><use href="#icon-shop"></use></svg>Make</span>
                 <input name="make" type="text" placeholder="Toyota" required />
               </label>
               <label>
-                <span>Model</span>
+                <span><svg aria-hidden="true"><use href="#icon-car"></use></svg>Model</span>
                 <input name="model" type="text" placeholder="Camry LE" required />
               </label>
               <label>
-                <span>Year</span>
+                <span><svg aria-hidden="true"><use href="#icon-calendar"></use></svg>Year</span>
                 <input name="year" type="number" min="1980" max="2026" placeholder="2024" required />
               </label>
               <label>
-                <span>Plate Number</span>
+                <span><svg aria-hidden="true"><use href="#icon-id-card"></use></svg>Plate Number</span>
                 <input name="plate" type="text" placeholder="ABC-1234" required />
               </label>
               <label class="vehicle-form-wide">
-                <span>VIN</span>
+                <span><svg aria-hidden="true"><use href="#icon-clipboard"></use></svg>VIN</span>
                 <input name="vin" type="text" placeholder="Enter vehicle identification number" required />
               </label>
               <label>
-                <span>Mileage</span>
+                <span><svg aria-hidden="true"><use href="#icon-gauge"></use></svg>Mileage</span>
                 <input name="mileage" type="number" min="0" placeholder="24500" required />
               </label>
               <label>
-                <span>Status</span>
+                <span><svg aria-hidden="true"><use href="#icon-check-circle"></use></svg>Status</span>
                 <select name="status">
                   <option>Active</option>
                   <option>Due Soon</option>
@@ -2268,29 +2270,30 @@
           </div>
 
           <div class="vehicle-form-section">
-            <div>
+            <div class="vehicle-form-copy">
+              <span class="vehicle-form-section-icon"><svg aria-hidden="true"><use href="#icon-users"></use></svg></span>
               <h2>Owner & Service</h2>
               <p>Assign the customer and capture the last known service activity.</p>
             </div>
             <div class="vehicle-form-grid">
               <label>
-                <span>Customer Name</span>
+                <span><svg aria-hidden="true"><use href="#icon-users"></use></svg>Customer Name</span>
                 <input name="customer" type="text" placeholder="Rahul Sharma" required />
               </label>
               <label>
-                <span>Phone</span>
+                <span><svg aria-hidden="true"><use href="#icon-phone"></use></svg>Phone</span>
                 <input name="phone" type="tel" placeholder="+1 (555) 123-4567" required />
               </label>
               <label>
-                <span>Last Service Date</span>
+                <span><svg aria-hidden="true"><use href="#icon-calendar"></use></svg>Last Service Date</span>
                 <input name="lastServiceDate" type="date" required />
               </label>
               <label>
-                <span>Last Service Type</span>
+                <span><svg aria-hidden="true"><use href="#icon-wrench"></use></svg>Last Service Type</span>
                 <input name="lastServiceType" type="text" placeholder="General Service" required />
               </label>
               <label>
-                <span>Vehicle Color</span>
+                <span><svg aria-hidden="true"><use href="#icon-box"></use></svg>Vehicle Color</span>
                 <select name="color">
                   <option value="silver">Silver</option>
                   <option value="pearl">Pearl</option>
