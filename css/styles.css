@@ -4754,7 +4754,7 @@ td {
 }
 
 .vehicle-modal {
-  width: min(920px, 100%);
+  width: min(980px, 100%);
   max-height: calc(100vh - 40px);
   min-width: 0;
   overflow-y: auto;
@@ -4796,13 +4796,86 @@ td {
 
 .vehicle-modal form {
   display: grid;
+  grid-template-columns: 240px minmax(0, 1fr);
+  gap: 22px;
+}
+
+.vehicle-modal-rail {
+  display: grid;
+  align-content: start;
+  gap: 14px;
+  min-width: 0;
+  padding: 18px;
+  color: var(--text-muted-strong);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-card);
+  background: linear-gradient(180deg, #f8fafc 0%, #ffffff 100%);
+}
+
+.vehicle-rail-icon {
+  display: inline-grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  color: #ffffff;
+  border-radius: var(--radius-control);
+  background: var(--blue);
+}
+
+.vehicle-rail-icon :is(svg, .ti) {
+  width: 18px;
+  height: 18px;
+  font-size: 18px;
+}
+
+.vehicle-modal-rail strong {
+  color: var(--text-strong);
+  font-size: 15px;
+  line-height: 1.25;
+}
+
+.vehicle-modal-rail p {
+  margin: 0;
+  font-size: var(--text-sm);
+  line-height: 1.55;
+}
+
+.vehicle-modal-rail ul {
+  display: grid;
+  gap: 10px;
+  padding: 12px 0 0;
+  margin: 0;
+  border-top: 1px solid var(--line);
+  list-style: none;
+}
+
+.vehicle-modal-rail li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  color: var(--text-body);
+  font-size: var(--text-sm);
+  font-weight: 560;
+}
+
+.vehicle-modal-rail li :is(svg, .ti) {
+  width: 16px;
+  height: 16px;
+  color: var(--blue);
+  font-size: 16px;
+}
+
+.vehicle-form-main {
+  display: grid;
   gap: 20px;
+  min-width: 0;
 }
 
 .vehicle-form-section {
   display: grid;
-  grid-template-columns: minmax(180px, .34fr) minmax(0, 1fr);
-  gap: var(--content-gap);
+  grid-template-columns: 1fr;
+  gap: 14px;
   padding-bottom: var(--content-gap);
   border-bottom: 1px solid var(--line);
 }
@@ -4813,7 +4886,7 @@ td {
 }
 
 .vehicle-form-section h2 {
-  margin: 12px 0 8px;
+  margin: 0 0 6px;
   color: var(--text-strong);
   font-size: 16px;
   font-weight: 680;
@@ -4821,7 +4894,7 @@ td {
 }
 
 .vehicle-form-section p {
-  max-width: 260px;
+  max-width: 520px;
   margin: 0;
   color: var(--text-muted-strong);
   font-size: var(--text-sm);
@@ -4831,7 +4904,7 @@ td {
 .vehicle-form-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 16px;
+  gap: 14px;
 }
 
 .vehicle-form-grid label {
@@ -4887,7 +4960,7 @@ td {
   display: flex;
   justify-content: flex-end;
   gap: 12px;
-  padding-top: 4px;
+  padding-top: 0;
 }
 
 .vehicle-form-actions .primary-action,
@@ -5781,9 +5854,20 @@ td {
   .settings-side,
   .reminders-side,
   .settings-form-grid,
+  .vehicle-modal form,
   .vehicle-form-section,
   .vehicle-form-grid {
     grid-template-columns: 1fr;
+  }
+
+  .vehicle-modal-rail {
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: center;
+  }
+
+  .vehicle-modal-rail p,
+  .vehicle-modal-rail ul {
+    grid-column: 1 / -1;
   }
 
   .settings-wide,
