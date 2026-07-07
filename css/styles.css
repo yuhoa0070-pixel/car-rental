@@ -35,7 +35,10 @@
   --toolbar-pad: 16px;
   --control-h: 44px;
   --table-head-h: 48px;
-  --table-row-h: 60px;
+  --table-row-h: 54px;
+  --table-border: #e4e4e4;
+  --table-head-bg: #f5f5f5;
+  --table-hover: #fafafa;
   --panel-bg: rgba(255, 255, 255, .98);
   --panel-border: var(--line);
   --panel-shadow: var(--shadow-soft);
@@ -7037,6 +7040,203 @@ td {
 .invoice-pill,
 .permission-block em {
   border-radius: var(--radius-sm);
+}
+
+.customers-table-wrap,
+.vehicles-table-wrap,
+.repair-orders-table-wrap,
+.invoice-table-wrap,
+.inventory-table-wrap,
+.staff-table-wrap,
+.reminders-table-wrap {
+  overflow-x: auto;
+  border: 1px solid var(--table-border);
+  border-radius: var(--radius-card);
+  background: #ffffff;
+}
+
+.customers-table,
+.vehicles-table,
+.repair-orders-table,
+.invoice-table,
+.inventory-table,
+.staff-table,
+.reminders-table {
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+.customers-table th,
+.vehicles-table th,
+.repair-orders-table th,
+.invoice-table th,
+.inventory-table th,
+.staff-table th,
+.reminders-table th {
+  height: var(--table-head-h);
+  padding: 0 16px;
+  color: #111111;
+  font-size: 13px;
+  font-weight: 520;
+  background: var(--table-head-bg);
+  border-bottom: 1px solid var(--table-border);
+}
+
+.customers-table td,
+.vehicles-table td,
+.repair-orders-table td,
+.invoice-table td,
+.inventory-table td,
+.staff-table td,
+.reminders-table td {
+  height: var(--table-row-h);
+  padding: 0 16px;
+  color: #111111;
+  font-size: 14px;
+  font-weight: 430;
+  border-bottom: 1px solid var(--table-border);
+}
+
+.customers-table tbody tr:last-child td,
+.vehicles-table tbody tr:last-child td,
+.repair-orders-table tbody tr:last-child td,
+.invoice-table tbody tr:last-child td,
+.inventory-table tbody tr:last-child td,
+.staff-table tbody tr:last-child td,
+.reminders-table tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.customers-table tbody tr:hover,
+.vehicles-table tbody tr:hover,
+.repair-orders-table tbody tr:hover,
+.invoice-table tbody tr:hover,
+.inventory-table tbody tr:hover,
+.staff-table tbody tr:hover,
+.reminders-table tbody tr:hover {
+  background: var(--table-hover);
+}
+
+.customers-table strong,
+.vehicles-table strong,
+.repair-orders-table strong,
+.invoice-table strong,
+.inventory-table strong,
+.staff-table strong,
+.reminders-table strong {
+  color: #111111;
+  font-weight: 520;
+}
+
+.customers-table small,
+.vehicles-table small,
+.repair-orders-table small,
+.invoice-table small,
+.inventory-table small,
+.staff-table small,
+.reminders-table small {
+  color: #666666;
+  font-size: 12px;
+  font-weight: 430;
+}
+
+.customers-table input[type="checkbox"],
+.vehicles-table input[type="checkbox"],
+.repair-orders-table input[type="checkbox"],
+.invoice-table input[type="checkbox"],
+.inventory-table input[type="checkbox"],
+.staff-table input[type="checkbox"],
+.reminders-table input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  margin: 0;
+  accent-color: var(--blue);
+}
+
+.tag,
+.customer-tag,
+.role-tag,
+.reminder-type,
+.invoice-pill {
+  min-height: 24px;
+  padding: 0 9px;
+  color: #666666;
+  border: 1px solid var(--table-border);
+  border-radius: var(--radius-pill);
+  background: #fafafa;
+  font-size: 12px;
+  font-weight: 460;
+}
+
+.tag.green {
+  color: #148a4b;
+  border-color: #d6eadf;
+  background: #f5fbf7;
+}
+
+.tag.orange {
+  color: #9a5a12;
+  border-color: #f2dfc5;
+  background: #fff9f1;
+}
+
+.tag.red {
+  color: #b4232d;
+  border-color: #efd2d5;
+  background: #fff7f8;
+}
+
+.tag.blue {
+  color: #3d5678;
+  border-color: #d9e2ec;
+  background: #f7f9fb;
+}
+
+.tag.gray {
+  color: #666666;
+  border-color: var(--table-border);
+  background: #fafafa;
+}
+
+.dots-button {
+  width: 28px;
+  height: 28px;
+  color: #666666;
+  border-radius: var(--radius-control);
+  font-size: 18px;
+}
+
+.dots-button:hover {
+  color: #111111;
+  background: #f5f5f5;
+}
+
+.customer-pagination {
+  min-height: 56px;
+  padding: 12px 16px;
+  color: #666666;
+  font-size: 14px;
+}
+
+.customer-pagination button,
+.customer-pagination .per-page {
+  height: 36px;
+  min-width: 36px;
+  color: #111111;
+  border-color: var(--table-border);
+  background: #ffffff;
+  box-shadow: none;
+}
+
+.customer-pagination button:hover:not(:disabled),
+.customer-pagination .per-page:hover {
+  background: #f7f7f7;
+}
+
+.customer-pagination button.active {
+  color: #ffffff;
+  border-color: var(--blue);
+  background: var(--blue);
 }
 
 @media (max-width: 1120px) {
