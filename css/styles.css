@@ -6953,7 +6953,40 @@ td {
 .reminder-trend,
 .metric-card .trend {
   max-width: 100%;
+  font-size: 11px;
+  font-weight: 560;
   line-height: 1.3;
+}
+
+.vehicle-trend::before,
+.repair-trend::before,
+.invoice-trend::before,
+.inventory-trend::before,
+.staff-trend::before,
+.reminder-trend::before,
+.metric-card .trend::before {
+  border-left-width: 3px;
+  border-right-width: 3px;
+}
+
+.vehicle-trend.up::before,
+.vehicle-trend.alert::before,
+.repair-trend.up::before,
+.invoice-trend.up::before,
+.inventory-trend.up::before,
+.inventory-trend.alert::before,
+.staff-trend.up::before,
+.reminder-trend.up::before,
+.metric-card .trend.up::before {
+  border-bottom-width: 6px;
+}
+
+.repair-trend.down::before,
+.invoice-trend.down::before,
+.inventory-trend.down::before,
+.reminder-trend.down::before,
+.metric-card .trend.down::before {
+  border-top-width: 6px;
 }
 
 .app-toolbar {
