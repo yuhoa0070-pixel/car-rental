@@ -4775,20 +4775,14 @@ td {
 }
 
 .vehicle-modal-title {
-  display: grid;
-  grid-template-columns: 36px minmax(0, 1fr);
-  align-items: center;
-  gap: 12px;
   min-width: 0;
 }
 
 .vehicle-modal-title h2,
 .vehicle-modal-title p {
-  grid-column: 2;
   min-width: 0;
 }
 
-.vehicle-modal-title-icon,
 .vehicle-form-section-icon {
   display: inline-grid;
   place-items: center;
@@ -4798,10 +4792,6 @@ td {
   border: 1px solid var(--icon-container-border);
   border-radius: var(--radius-control);
   background: var(--icon-container);
-}
-
-.vehicle-modal-title-icon {
-  grid-row: 1 / 3;
 }
 
 .vehicle-modal form {
@@ -4860,8 +4850,7 @@ td {
 }
 
 .vehicle-form-grid label > span :is(svg, .ti),
-.vehicle-form-section-icon :is(svg, .ti),
-.vehicle-modal-title-icon :is(svg, .ti) {
+.vehicle-form-section-icon :is(svg, .ti) {
   width: 16px;
   height: 16px;
   font-size: 16px;
@@ -5931,10 +5920,6 @@ td {
   .vehicle-modal .panel-title-row {
     display: grid;
     grid-template-columns: minmax(0, 1fr) 44px;
-    align-items: start;
-  }
-
-  .vehicle-modal-title {
     align-items: start;
   }
 
