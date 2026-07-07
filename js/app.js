@@ -108,6 +108,17 @@
     "Li Auto": ["L6", "L7", "L8", "L9", "Mega"],
   });
 
+  const VEHICLE_PHOTOS = Object.freeze([
+    "https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&w=160&q=80",
+    "https://images.unsplash.com/photo-1494976388531-d1058494cdd8?auto=format&fit=crop&w=160&q=80",
+    "https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=160&q=80",
+    "https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?auto=format&fit=crop&w=160&q=80",
+    "https://images.unsplash.com/photo-1542362567-b07e54358753?auto=format&fit=crop&w=160&q=80",
+    "https://images.unsplash.com/photo-1525609004556-c46c7d6cf023?auto=format&fit=crop&w=160&q=80",
+    "https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&w=160&q=80",
+    "https://images.unsplash.com/photo-1503736334956-4c8f8e92946d?auto=format&fit=crop&w=160&q=80",
+  ]);
+
   const state = {
     repairFilters: {
       advanced: "all",
@@ -767,6 +778,12 @@
     return amount.toLocaleString("en-US", { style: "currency", currency: "USD" });
   }
 
+  function getVehiclePhoto(make, model) {
+    const key = `${make} ${model}`;
+    const hash = [...key].reduce((total, character) => total + character.charCodeAt(0), 0);
+    return VEHICLE_PHOTOS[hash % VEHICLE_PHOTOS.length];
+  }
+
   function getTagClass(status) {
     const normalizedStatus = status.toLowerCase();
 
@@ -798,14 +815,14 @@
     const plate = formData.get("plate").trim().toUpperCase();
     const vin = formData.get("vin").trim().toUpperCase();
     const status = formData.get("status");
-    const color = formData.get("color");
+    const photo = getVehiclePhoto(make, model);
     const row = document.createElement("tr");
 
     row.innerHTML = `
       <td><input type="checkbox" aria-label="Select ${escapeHtml(`${make} ${model}`)}" /></td>
       <td>
         <div class="vehicle-cell">
-          <span class="vehicle-thumb ${escapeHtml(color)}" aria-hidden="true"><span></span></span>
+          <span class="vehicle-thumb" aria-hidden="true"><img src="${escapeHtml(photo)}" alt="" loading="lazy" /></span>
           <div><strong>${escapeHtml(`${make} ${model}`)}</strong><small>VIN: ${escapeHtml(vin)}</small></div>
         </div>
       </td>
