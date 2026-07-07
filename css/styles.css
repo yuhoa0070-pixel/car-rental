@@ -6710,6 +6710,32 @@ td {
   min-height: var(--control-h);
 }
 
+.search-field,
+.customer-search {
+  gap: 12px;
+  padding: 0 16px;
+  color: #52617d;
+  border: 1px solid var(--line);
+  background: #ffffff;
+  box-shadow: none;
+}
+
+.search-field input,
+.customer-search input {
+  width: 100%;
+  min-width: 0;
+  color: var(--ink);
+  border: 0;
+  outline: 0;
+  background: transparent;
+  appearance: none;
+}
+
+.search-field input:focus-visible,
+.customer-search input:focus-visible {
+  outline: 0;
+}
+
 .customers-table th,
 .vehicles-table th,
 .repair-orders-table th,
