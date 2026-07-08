@@ -4,10 +4,14 @@
     addCustomerButton: "#addCustomerButton",
     addCustomerForm: "#addCustomerForm",
     addCustomerModal: "#addCustomerModal",
+    addRepairOrderButton: "#addRepairOrderButton",
+    addRepairOrderForm: "#addRepairOrderForm",
+    addRepairOrderModal: "#addRepairOrderModal",
     closeModalButton: "#closeModalButton",
     closeCustomerModalButton: "#closeCustomerModalButton",
     closeInventoryItemModalButton: "#closeInventoryItemModalButton",
     closeInviteStaffModalButton: "#closeInviteStaffModalButton",
+    closeRepairOrderModalButton: "#closeRepairOrderModalButton",
     closeVehicleModalButton: "#closeVehicleModalButton",
     inviteStaffButton: "#inviteStaffButton",
     inviteStaffForm: "#inviteStaffForm",
@@ -605,9 +609,13 @@
     addCustomerButton: query(SELECTORS.addCustomerButton),
     addCustomerForm: query(SELECTORS.addCustomerForm),
     addCustomerModal: query(SELECTORS.addCustomerModal),
+    addRepairOrderButton: query(SELECTORS.addRepairOrderButton),
+    addRepairOrderForm: query(SELECTORS.addRepairOrderForm),
+    addRepairOrderModal: query(SELECTORS.addRepairOrderModal),
     closeCustomerModalButton: query(SELECTORS.closeCustomerModalButton),
     closeInventoryItemModalButton: query(SELECTORS.closeInventoryItemModalButton),
     closeInviteStaffModalButton: query(SELECTORS.closeInviteStaffModalButton),
+    closeRepairOrderModalButton: query(SELECTORS.closeRepairOrderModalButton),
     addInventoryItemButton: query(SELECTORS.addInventoryItemButton),
     addInventoryItemForm: query(SELECTORS.addInventoryItemForm),
     addInventoryItemModal: query(SELECTORS.addInventoryItemModal),
@@ -730,6 +738,27 @@
     elements.addCustomerModal.classList.remove("open");
     elements.addCustomerModal.setAttribute("aria-hidden", "true");
     elements.addCustomerButton?.focus();
+  }
+
+  function openAddRepairOrderModal(elements) {
+    if (!elements.addRepairOrderModal) {
+      return;
+    }
+
+    setRepairOrderDefaults(elements.addRepairOrderForm);
+    elements.addRepairOrderModal.classList.add("open");
+    elements.addRepairOrderModal.setAttribute("aria-hidden", "false");
+    elements.addRepairOrderForm?.querySelector("input, select")?.focus();
+  }
+
+  function closeAddRepairOrderModal(elements) {
+    if (!elements.addRepairOrderModal) {
+      return;
+    }
+
+    elements.addRepairOrderModal.classList.remove("open");
+    elements.addRepairOrderModal.setAttribute("aria-hidden", "true");
+    elements.addRepairOrderButton?.focus();
   }
 
   function openInviteStaffModal(elements) {
@@ -885,6 +914,17 @@
     return `$${amount.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
   }
 
+  function formatTime(value) {
+    if (!value) {
+      return new Date().toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit" });
+    }
+
+    const [hours = "0", minutes = "0"] = value.split(":");
+    const date = new Date();
+    date.setHours(Number(hours), Number(minutes), 0, 0);
+    return date.toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit" });
+  }
+
   function getVehiclePhoto(make, model) {
     const key = `${make} ${model}`;
     const hash = [...key].reduce((total, character) => total + character.charCodeAt(0), 0);
@@ -915,6 +955,22 @@
     }
 
     return "green";
+  }
+
+  function getRepairStatusClass(status) {
+    if (status === "Completed") {
+      return "green";
+    }
+
+    if (status === "Waiting Approval") {
+      return "orange";
+    }
+
+    if (status === "Cancelled") {
+      return "red";
+    }
+
+    return "blue";
   }
 
   function getPartThumbClass(category) {
@@ -1007,6 +1063,102 @@
     `;
 
     return row;
+  }
+
+  function getNextRepairOrderNumber() {
+    const maxOrderNumber = queryAll(".repair-orders-table .ro-number strong")
+      .map((item) => Number(item.textContent.replace(/[^0-9]/g, "").slice(-3)))
+      .filter((value) => Number.isFinite(value))
+      .reduce((max, value) => Math.max(max, value), 0);
+
+    return `#RO-2024-${String(maxOrderNumber + 1).padStart(3, "0")}`;
+  }
+
+  function getMechanicAvatarClass(mechanic) {
+    const classes = ["warm", "cap"];
+    const hash = [...mechanic].reduce((total, character) => total + character.charCodeAt(0), 0);
+    return classes[hash % classes.length];
+  }
+
+  function setRepairOrderDefaults(form) {
+    if (!form) {
+      return;
+    }
+
+    const now = new Date();
+    const dateInput = form.elements.createdDate;
+    const timeInput = form.elements.createdTime;
+
+    if (dateInput instanceof HTMLInputElement && !dateInput.value) {
+      dateInput.value = now.toISOString().slice(0, 10);
+    }
+
+    if (timeInput instanceof HTMLInputElement && !timeInput.value) {
+      timeInput.value = now.toTimeString().slice(0, 5);
+    }
+  }
+
+  function createRepairOrderRow(formData) {
+    const vehicle = String(formData.get("vehicle") || "").trim();
+    const plate = String(formData.get("plate") || "").trim().toUpperCase();
+    const customer = String(formData.get("customer") || "").trim();
+    const problem = String(formData.get("problem") || "").trim();
+    const services = String(formData.get("services") || "").trim();
+    const mechanic = String(formData.get("mechanic") || "").trim();
+    const status = String(formData.get("status") || "In Progress").trim();
+    const amount = formData.get("amount");
+    const [make = vehicle, ...modelParts] = vehicle.split(/\s+/);
+    const photo = getVehiclePhoto(make, modelParts.join(" "));
+    const row = document.createElement("tr");
+
+    row.innerHTML = `
+      <td><div class="ro-number"><strong>${escapeHtml(getNextRepairOrderNumber())}</strong></div></td>
+      <td>
+        <div class="repair-vehicle-cell">
+          <span class="vehicle-thumb" aria-hidden="true"><img src="${escapeHtml(photo)}" alt="" loading="lazy" /></span>
+          <div><strong>${escapeHtml(vehicle)}</strong><small>${escapeHtml(plate)}</small><span><em class="customer-avatar blue-soft">${escapeHtml(getInitials(customer))}</em> ${escapeHtml(customer)}</span></div>
+        </div>
+      </td>
+      <td><strong>${escapeHtml(problem)}</strong><small>${escapeHtml(services)}</small></td>
+      <td><div class="mechanic-cell"><span class="mechanic-avatar ${escapeHtml(getMechanicAvatarClass(mechanic))}">${escapeHtml(getInitials(mechanic))}</span>${escapeHtml(mechanic)}</div></td>
+      <td><span class="tag ${escapeHtml(getRepairStatusClass(status))}">${escapeHtml(status)}</span></td>
+      <td><strong>${escapeHtml(formatMoney(amount))}</strong></td>
+      <td><strong>${escapeHtml(formatDate(formData.get("createdDate")))}</strong><small>${escapeHtml(formatTime(formData.get("createdTime")))}</small></td>
+      <td><button class="dots-button" type="button" aria-label="Repair order actions">⋮</button></td>
+    `;
+
+    return row;
+  }
+
+  function addRepairOrderRow(formData, elements) {
+    const config = TABLE_CONFIGS.find((item) => item.id === "repair-orders");
+    const panel = query(".repair-orders-panel");
+    const tableBody = query(".repair-orders-table tbody");
+    const tableState = config ? getTableState(config) : undefined;
+    const row = createRepairOrderRow(formData);
+
+    if (!tableBody) {
+      return "";
+    }
+
+    query(".dots-button", row)?.addEventListener("click", () => {
+      showToast("Repair order actions opened.", elements);
+    });
+
+    tableBody.prepend(row);
+
+    if (tableState) {
+      tableState.page = 1;
+      if (tableState.filters.date === "range") {
+        tableState.filters.date = "all";
+      }
+    }
+
+    if (config && panel) {
+      applyTableState(config, panel, { elements, announce: false });
+    }
+
+    return query(".ro-number strong", row)?.textContent.trim() || "";
   }
 
   function createInventoryRow(item) {
@@ -1232,6 +1384,38 @@
       syncVehicleModelOptions(elements.addVehicleForm, "Camry LE");
       closeAddVehicleModal(elements);
       showToast(`${vehicleName} added to vehicles.`, elements);
+    });
+  }
+
+  function bindRepairOrderPage(elements) {
+    elements.addRepairOrderButton?.addEventListener("click", () => {
+      openAddRepairOrderModal(elements);
+    });
+
+    queryAll("[data-repair-order-cancel]").forEach((button) => {
+      button.addEventListener("click", () => closeAddRepairOrderModal(elements));
+    });
+
+    elements.closeRepairOrderModalButton?.addEventListener("click", () => closeAddRepairOrderModal(elements));
+
+    elements.addRepairOrderModal?.addEventListener("click", (event) => {
+      if (event.target === elements.addRepairOrderModal) {
+        closeAddRepairOrderModal(elements);
+      }
+    });
+
+    elements.addRepairOrderForm?.addEventListener("submit", (event) => {
+      event.preventDefault();
+
+      if (!elements.addRepairOrderForm.reportValidity()) {
+        return;
+      }
+
+      const formData = new FormData(elements.addRepairOrderForm);
+      const repairOrderNumber = addRepairOrderRow(formData, elements);
+      elements.addRepairOrderForm.reset();
+      closeAddRepairOrderModal(elements);
+      showToast(`${repairOrderNumber} created.`, elements);
     });
   }
 
@@ -1496,6 +1680,13 @@
       const action = closestElement(event.target, "button");
 
       if (!action || !elements.quickActions.contains(action)) {
+        return;
+      }
+
+      if (action.textContent.trim().toLowerCase() === "new repair order") {
+        activateView("repair-orders", elements);
+        closeQuickAdd(elements);
+        openAddRepairOrderModal(elements);
         return;
       }
 
@@ -2375,6 +2566,10 @@
         closeAddCustomerModal(elements);
       }
 
+      if (event.key === "Escape" && elements.addRepairOrderModal?.classList.contains("open")) {
+        closeAddRepairOrderModal(elements);
+      }
+
       if (event.key === "Escape" && elements.inviteStaffModal?.classList.contains("open")) {
         closeInviteStaffModal(elements);
       }
@@ -2426,6 +2621,7 @@
     bindCustomerPage(elements);
     bindInviteStaff(elements);
     bindVehiclePage(elements);
+    bindRepairOrderPage(elements);
     bindInventoryPage(elements);
     bindNavigation(elements);
     bindKeyboardShortcuts(elements);

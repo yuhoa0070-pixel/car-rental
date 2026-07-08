@@ -793,7 +793,7 @@
               <h1>Repair Orders</h1>
               <p>Create, manage and track all repair orders in your workshop.</p>
             </div>
-            <button class="primary-action" type="button">
+            <button class="primary-action" id="addRepairOrderButton" type="button">
               <svg aria-hidden="true"><use href="#icon-plus"></use></svg>
               New Repair Order
             </button>
@@ -2229,6 +2229,102 @@
           <button type="button"><svg aria-hidden="true"><use href="#icon-receipt"></use></svg>Create invoice</button>
           <button type="button"><svg aria-hidden="true"><use href="#icon-box"></use></svg>Add stock item</button>
         </div>
+      </section>
+    </div>
+
+    <div class="modal-backdrop vehicle-modal-backdrop" id="addRepairOrderModal" aria-hidden="true">
+      <section class="vehicle-form-card vehicle-modal" role="dialog" aria-modal="true" aria-labelledby="addRepairOrderTitle">
+        <div class="panel-title-row">
+          <div class="vehicle-modal-title">
+            <h2 id="addRepairOrderTitle">New Repair Order</h2>
+            <p>Create a workshop job, assign a mechanic and track service status.</p>
+          </div>
+          <button class="icon-button" id="closeRepairOrderModalButton" type="button" aria-label="Close new repair order">
+            <svg aria-hidden="true"><use href="#icon-x"></use></svg>
+          </button>
+        </div>
+        <form id="addRepairOrderForm">
+          <div class="vehicle-form-main">
+            <div class="vehicle-form-section">
+              <div class="vehicle-form-copy">
+                <span class="vehicle-form-section-icon"><svg aria-hidden="true"><use href="#icon-wrench"></use></svg></span>
+                <h2>Job Details</h2>
+                <p>Capture the repair problem, service items and expected amount.</p>
+              </div>
+              <div class="vehicle-form-grid">
+                <label>
+                  <span><svg aria-hidden="true"><use href="#icon-car"></use></svg>Vehicle</span>
+                  <input name="vehicle" type="text" placeholder="Toyota Camry" required />
+                </label>
+                <label>
+                  <span><svg aria-hidden="true"><use href="#icon-id-card"></use></svg>Plate Number</span>
+                  <input name="plate" type="text" placeholder="ABC-1234" required />
+                </label>
+                <label>
+                  <span><svg aria-hidden="true"><use href="#icon-users"></use></svg>Customer</span>
+                  <input name="customer" type="text" placeholder="Rahul Sharma" required />
+                </label>
+                <label>
+                  <span><svg aria-hidden="true"><use href="#icon-wrench"></use></svg>Problem</span>
+                  <input name="problem" type="text" placeholder="Engine Oil Change" required />
+                </label>
+                <label class="vehicle-form-wide">
+                  <span><svg aria-hidden="true"><use href="#icon-clipboard"></use></svg>Services / Parts</span>
+                  <input name="services" type="text" placeholder="Oil Filter, Engine Oil 5W-30" required />
+                </label>
+                <label>
+                  <span><svg aria-hidden="true"><use href="#icon-dollar"></use></svg>Total Amount</span>
+                  <input name="amount" type="number" min="0" step="0.01" placeholder="450.00" required />
+                </label>
+                <label>
+                  <span><svg aria-hidden="true"><use href="#icon-check-circle"></use></svg>Status</span>
+                  <select name="status">
+                    <option>In Progress</option>
+                    <option>Waiting Approval</option>
+                    <option>Completed</option>
+                    <option>Cancelled</option>
+                  </select>
+                </label>
+              </div>
+            </div>
+
+            <div class="vehicle-form-section">
+              <div class="vehicle-form-copy">
+                <span class="vehicle-form-section-icon"><svg aria-hidden="true"><use href="#icon-users"></use></svg></span>
+                <h2>Assignment</h2>
+                <p>Set the mechanic and creation time for the service desk.</p>
+              </div>
+              <div class="vehicle-form-grid">
+                <label>
+                  <span><svg aria-hidden="true"><use href="#icon-users"></use></svg>Mechanic</span>
+                  <select name="mechanic">
+                    <option>Arun Kumar</option>
+                    <option>Imran Ali</option>
+                    <option>Vikash Yadav</option>
+                    <option>Ramesh Singh</option>
+                    <option>Sanjay Patel</option>
+                  </select>
+                </label>
+                <label>
+                  <span><svg aria-hidden="true"><use href="#icon-calendar"></use></svg>Created Date</span>
+                  <input name="createdDate" type="date" required />
+                </label>
+                <label>
+                  <span><svg aria-hidden="true"><use href="#icon-clock"></use></svg>Created Time</span>
+                  <input name="createdTime" type="time" required />
+                </label>
+              </div>
+            </div>
+
+            <div class="vehicle-form-actions">
+              <button class="outline-action" data-repair-order-cancel type="button">Cancel</button>
+              <button class="primary-action" type="submit">
+                <svg aria-hidden="true"><use href="#icon-plus"></use></svg>
+                Save Repair Order
+              </button>
+            </div>
+          </div>
+        </form>
       </section>
     </div>
 
