@@ -7455,6 +7455,26 @@ td {
   box-shadow: -24px 0 60px rgba(15, 23, 42, .14);
 }
 
+.topbar-actions .quick-add {
+  min-width: 0;
+  padding: 0 16px;
+  color: var(--button-outline-fg);
+  border-color: var(--button-border);
+  background: var(--button-outline-bg);
+}
+
+.topbar-actions .quick-add:hover {
+  color: var(--button-outline-fg);
+  border-color: #c8d4e1;
+  background: var(--button-outline-bg-hover);
+  box-shadow: none;
+  transform: none;
+}
+
+.topbar-actions .quick-add :is(svg, .ti) {
+  color: currentColor;
+}
+
 @media (max-width: 580px) {
   .invoice-preview {
     width: 100vw;
