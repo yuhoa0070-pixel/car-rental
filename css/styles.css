@@ -781,11 +781,11 @@ input:focus-visible,
 }
 
 .app-toolbar[data-toolbar-layout="customers"] {
-  grid-template-columns: minmax(320px, 1fr) 190px 190px 170px 56px;
+  grid-template-columns: minmax(320px, 1fr) 170px 170px 150px 170px 56px;
 }
 
 .app-toolbar[data-toolbar-layout="vehicles"] {
-  grid-template-columns: minmax(360px, 1fr) 180px 170px 170px 170px 56px;
+  grid-template-columns: minmax(360px, 1fr) 170px 160px 160px 150px 170px 56px;
 }
 
 .app-toolbar[data-toolbar-layout="repair-orders"] {
@@ -5636,23 +5636,19 @@ td {
   }
 
   .app-toolbar[data-toolbar-layout="customers"] {
-    grid-template-columns: minmax(0, 1fr) 150px 150px 52px;
+    grid-template-columns: repeat(4, minmax(0, 1fr)) 52px;
   }
 
-  .app-toolbar[data-toolbar-layout="customers"] .filter-button:nth-of-type(3) {
-    grid-column: 2 / 4;
+  .app-toolbar[data-toolbar-layout="customers"] .customer-search {
+    grid-column: 1 / -1;
   }
 
   .app-toolbar[data-toolbar-layout="vehicles"] {
-    grid-template-columns: repeat(3, minmax(0, 1fr)) 52px;
+    grid-template-columns: repeat(5, minmax(0, 1fr)) 52px;
   }
 
   .app-toolbar[data-toolbar-layout="vehicles"] .customer-search {
     grid-column: 1 / -1;
-  }
-
-  .app-toolbar[data-toolbar-layout="vehicles"] .filter-button:nth-of-type(4) {
-    grid-column: 1 / 4;
   }
 
   .app-toolbar[data-toolbar-layout="repair-orders"] {
@@ -7188,12 +7184,12 @@ td {
 
 .customers-table {
   table-layout: fixed;
-  min-width: 1180px;
+  min-width: 1300px;
 }
 
 .vehicles-table {
   table-layout: fixed;
-  min-width: 1450px;
+  min-width: 1560px;
 }
 
 .reminders-table {
@@ -7230,10 +7226,14 @@ td {
 }
 
 .customers-table :is(th, td):nth-child(8) {
-  width: 130px;
+  width: 120px;
 }
 
 .customers-table :is(th, td):nth-child(9) {
+  width: 130px;
+}
+
+.customers-table :is(th, td):nth-child(10) {
   width: 90px;
 }
 
@@ -7274,6 +7274,10 @@ td {
 }
 
 .vehicles-table :is(th, td):nth-child(10) {
+  width: 120px;
+}
+
+.vehicles-table :is(th, td):nth-child(11) {
   width: 90px;
 }
 

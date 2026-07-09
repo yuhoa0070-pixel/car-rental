@@ -176,10 +176,11 @@
       filters: [
         { key: "status", label: "All Status", buttonIndex: 0 },
         { key: "tag", label: "All Tags", buttonIndex: 1 },
+        { key: "priority", label: "All Priority", buttonIndex: 2 },
         {
           key: "advanced",
           label: "More Filters",
-          buttonIndex: 2,
+          buttonIndex: 3,
           icon: "filter",
           options: [
             { label: "All Customers", value: "all" },
@@ -192,7 +193,8 @@
       getRowData(row) {
         return {
           searchText: row.textContent.toLowerCase(),
-          status: query("td:nth-child(8) .tag", row)?.textContent.trim() || getCellText(row, 7),
+          priority: query("td:nth-child(8) .priority-pill", row)?.textContent.trim() || getCellText(row, 7),
+          status: query("td:nth-child(9) .tag", row)?.textContent.trim() || getCellText(row, 8),
           tag: query(".customer-tag", row)?.textContent.trim() || "No Tag",
           vehicles: Number(getCellText(row, 4)) || 0,
           total: getMoneyValue(getCellText(row, 6)),
@@ -221,10 +223,11 @@
         { key: "make", label: "All Makes", buttonIndex: 0 },
         { key: "model", label: "All Models", buttonIndex: 1 },
         { key: "status", label: "All Status", buttonIndex: 2 },
+        { key: "priority", label: "All Priority", buttonIndex: 3 },
         {
           key: "advanced",
           label: "More Filters",
-          buttonIndex: 3,
+          buttonIndex: 4,
           icon: "filter",
           options: [
             { label: "All Vehicles", value: "all" },
@@ -240,7 +243,8 @@
           searchText: row.textContent.toLowerCase(),
           make: query("td:nth-child(5) strong", row)?.textContent.trim() || "",
           model: query("td:nth-child(5) small", row)?.textContent.trim() || "",
-          status: query("td:nth-child(9) .tag", row)?.textContent.trim() || getCellText(row, 8),
+          priority: query("td:nth-child(9) .priority-pill", row)?.textContent.trim() || getCellText(row, 8),
+          status: query("td:nth-child(10) .tag", row)?.textContent.trim() || getCellText(row, 9),
           mileage: Number(getCellText(row, 6).replace(/[^0-9]/g, "")) || 0,
         };
       },
@@ -778,12 +782,18 @@
     ];
     const options = {
       customer: [
+        { label: "Set High Priority", icon: "flag", priority: "High" },
+        { label: "Set Medium Priority", icon: "flag", priority: "Medium" },
+        { label: "Set Low Priority", icon: "flag", priority: "Low" },
         { label: "View profile", icon: "user" },
         { label: "Edit customer", icon: "pencil" },
         { label: "Message on Telegram", icon: "message" },
         { label: "Delete customer", icon: "trash", danger: true },
       ],
       vehicle: [
+        { label: "Set High Priority", icon: "flag", priority: "High" },
+        { label: "Set Medium Priority", icon: "flag", priority: "Medium" },
+        { label: "Set Low Priority", icon: "flag", priority: "Low" },
         { label: "View vehicle", icon: "car" },
         { label: "Create repair order", icon: "tools" },
         { label: "Edit vehicle", icon: "pencil" },
@@ -874,8 +884,13 @@
             priorityPill.textContent = option.priority;
           }
 
-          const config = TABLE_CONFIGS.find((item) => item.id === "reminders");
-          const panel = query(".reminders-list-panel");
+          const configId = {
+            customer: "customers",
+            vehicle: "vehicles",
+            reminder: "reminders",
+          }[type];
+          const config = TABLE_CONFIGS.find((item) => item.id === configId);
+          const panel = config ? query(config.panel) : undefined;
           if (config && panel) {
             applyTableState(config, panel, { elements, announce: false });
           }
@@ -1233,6 +1248,7 @@
       <td>${escapeHtml(formData.get("year"))}</td>
       <td>${escapeHtml(formatMileage(formData.get("mileage")))}</td>
       <td><strong>${escapeHtml(formatDate(formData.get("lastServiceDate")))}</strong><a href="#">${escapeHtml(formData.get("lastServiceType").trim())}</a></td>
+      <td><span class="priority-pill medium">Medium</span></td>
       <td><span class="tag ${escapeHtml(getTagClass(status))}">${escapeHtml(status)}</span></td>
       <td><button class="dots-button" type="button" aria-label="Vehicle actions">⋮</button></td>
     `;
@@ -1270,6 +1286,7 @@
       <td>${escapeHtml(vehicles)}</td>
       <td>${escapeHtml(lastVisit)}</td>
       <td><strong>${escapeHtml(totalSpent)}</strong></td>
+      <td><span class="priority-pill medium">Medium</span></td>
       <td><span class="tag ${escapeHtml(statusClass)}">${escapeHtml(status)}</span></td>
       <td><button class="dots-button" type="button" aria-label="Customer actions">⋮</button></td>
     `;
