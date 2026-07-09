@@ -7202,23 +7202,23 @@ td {
 }
 
 .customers-table :is(th, td):nth-child(2) {
-  width: 250px;
+  width: 120px;
 }
 
 .customers-table :is(th, td):nth-child(3) {
-  width: 210px;
+  width: 250px;
 }
 
 .customers-table :is(th, td):nth-child(4) {
-  width: 190px;
+  width: 210px;
 }
 
 .customers-table :is(th, td):nth-child(5) {
-  width: 110px;
+  width: 190px;
 }
 
 .customers-table :is(th, td):nth-child(6) {
-  width: 160px;
+  width: 110px;
 }
 
 .customers-table :is(th, td):nth-child(7) {
@@ -7226,7 +7226,7 @@ td {
 }
 
 .customers-table :is(th, td):nth-child(8) {
-  width: 120px;
+  width: 160px;
 }
 
 .customers-table :is(th, td):nth-child(9) {
@@ -7242,35 +7242,35 @@ td {
 }
 
 .vehicles-table :is(th, td):nth-child(2) {
-  width: 310px;
+  width: 120px;
 }
 
 .vehicles-table :is(th, td):nth-child(3) {
-  width: 150px;
+  width: 310px;
 }
 
 .vehicles-table :is(th, td):nth-child(4) {
-  width: 230px;
+  width: 150px;
 }
 
 .vehicles-table :is(th, td):nth-child(5) {
-  width: 170px;
+  width: 230px;
 }
 
 .vehicles-table :is(th, td):nth-child(6) {
-  width: 80px;
-}
-
-.vehicles-table :is(th, td):nth-child(7) {
-  width: 130px;
-}
-
-.vehicles-table :is(th, td):nth-child(8) {
   width: 170px;
 }
 
+.vehicles-table :is(th, td):nth-child(7) {
+  width: 80px;
+}
+
+.vehicles-table :is(th, td):nth-child(8) {
+  width: 130px;
+}
+
 .vehicles-table :is(th, td):nth-child(9) {
-  width: 120px;
+  width: 170px;
 }
 
 .vehicles-table :is(th, td):nth-child(10) {
@@ -7286,19 +7286,19 @@ td {
 }
 
 .reminders-table :is(th, td):nth-child(2) {
-  width: 260px;
+  width: 110px;
 }
 
 .reminders-table :is(th, td):nth-child(3) {
-  width: 170px;
+  width: 260px;
 }
 
 .reminders-table :is(th, td):nth-child(4) {
-  width: 120px;
+  width: 170px;
 }
 
 .reminders-table :is(th, td):nth-child(5) {
-  width: 110px;
+  width: 120px;
 }
 
 .reminders-table :is(th, td):nth-child(6) {

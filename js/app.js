@@ -193,11 +193,11 @@
       getRowData(row) {
         return {
           searchText: row.textContent.toLowerCase(),
-          priority: query("td:nth-child(8) .priority-pill", row)?.textContent.trim() || getCellText(row, 7),
+          priority: query("td:nth-child(2) .priority-pill", row)?.textContent.trim() || getCellText(row, 1),
           status: query("td:nth-child(9) .tag", row)?.textContent.trim() || getCellText(row, 8),
           tag: query(".customer-tag", row)?.textContent.trim() || "No Tag",
-          vehicles: Number(getCellText(row, 4)) || 0,
-          total: getMoneyValue(getCellText(row, 6)),
+          vehicles: Number(getCellText(row, 5)) || 0,
+          total: getMoneyValue(getCellText(row, 7)),
         };
       },
       advancedMatch(value, rowData) {
@@ -241,11 +241,11 @@
       getRowData(row) {
         return {
           searchText: row.textContent.toLowerCase(),
-          make: query("td:nth-child(5) strong", row)?.textContent.trim() || "",
-          model: query("td:nth-child(5) small", row)?.textContent.trim() || "",
-          priority: query("td:nth-child(9) .priority-pill", row)?.textContent.trim() || getCellText(row, 8),
+          make: query("td:nth-child(6) strong", row)?.textContent.trim() || "",
+          model: query("td:nth-child(6) small", row)?.textContent.trim() || "",
+          priority: query("td:nth-child(2) .priority-pill", row)?.textContent.trim() || getCellText(row, 1),
           status: query("td:nth-child(10) .tag", row)?.textContent.trim() || getCellText(row, 9),
-          mileage: Number(getCellText(row, 6).replace(/[^0-9]/g, "")) || 0,
+          mileage: Number(getCellText(row, 7).replace(/[^0-9]/g, "")) || 0,
         };
       },
       advancedMatch(value, rowData) {
@@ -545,10 +545,10 @@
           assignee: getCellText(row, 7),
           date: dateText,
           dateKey: getDateKey(dateText),
-          priority: query("td:nth-child(5) .priority-pill", row)?.textContent.trim() || getCellText(row, 4),
+          priority: query("td:nth-child(2) .priority-pill", row)?.textContent.trim() || getCellText(row, 1),
           searchText: row.textContent.toLowerCase(),
           status: query("td:nth-child(9) .tag", row)?.textContent.trim() || getCellText(row, 8),
-          type: query("td:nth-child(4) .reminder-type", row)?.textContent.trim() || getCellText(row, 3),
+          type: query("td:nth-child(5) .reminder-type", row)?.textContent.trim() || getCellText(row, 4),
         };
       },
       optionsFor(config, filterKey, rows) {
@@ -602,6 +602,7 @@
 
   const query = (selector, scope = document) => scope.querySelector(selector);
   const queryAll = (selector, scope = document) => [...scope.querySelectorAll(selector)];
+  const PRIORITY_ORDER = { High: 0, Medium: 1, Low: 2 };
 
   function closestElement(target, selector) {
     return target instanceof Element ? target.closest(selector) : null;
@@ -892,6 +893,7 @@
           const config = TABLE_CONFIGS.find((item) => item.id === configId);
           const panel = config ? query(config.panel) : undefined;
           if (config && panel) {
+            sortRowsByPriority(config, panel);
             applyTableState(config, panel, { elements, announce: false });
           }
 
@@ -1236,6 +1238,7 @@
 
     row.innerHTML = `
       <td><input type="checkbox" aria-label="Select ${escapeHtml(`${make} ${model}`)}" /></td>
+      <td><span class="priority-pill medium">Medium</span></td>
       <td>
         <div class="vehicle-cell">
           <span class="vehicle-thumb" aria-hidden="true"><img src="${escapeHtml(photo)}" alt="" loading="lazy" /></span>
@@ -1248,7 +1251,6 @@
       <td>${escapeHtml(formData.get("year"))}</td>
       <td>${escapeHtml(formatMileage(formData.get("mileage")))}</td>
       <td><strong>${escapeHtml(formatDate(formData.get("lastServiceDate")))}</strong><a href="#">${escapeHtml(formData.get("lastServiceType").trim())}</a></td>
-      <td><span class="priority-pill medium">Medium</span></td>
       <td><span class="tag ${escapeHtml(getTagClass(status))}">${escapeHtml(status)}</span></td>
       <td><button class="dots-button" type="button" aria-label="Vehicle actions">⋮</button></td>
     `;
@@ -1280,13 +1282,13 @@
 
     row.innerHTML = `
       <td><input type="checkbox" aria-label="Select ${escapeHtml(name)}" /></td>
+      <td><span class="priority-pill medium">Medium</span></td>
       <td><div class="customer-cell"><span class="customer-avatar blue-soft">${escapeHtml(getInitials(name))}</span><strong>${escapeHtml(name)}</strong>${tagMarkup}</div></td>
       <td>${escapeHtml(phone)} <span class="telegram-status">●</span></td>
       <td><span class="telegram-handle">${escapeHtml(telegram)}</span></td>
       <td>${escapeHtml(vehicles)}</td>
       <td>${escapeHtml(lastVisit)}</td>
       <td><strong>${escapeHtml(totalSpent)}</strong></td>
-      <td><span class="priority-pill medium">Medium</span></td>
       <td><span class="tag ${escapeHtml(statusClass)}">${escapeHtml(status)}</span></td>
       <td><button class="dots-button" type="button" aria-label="Customer actions">⋮</button></td>
     `;
@@ -1517,6 +1519,7 @@
         tableState.page = 1;
       }
       if (customerConfig && customerPanel) {
+        sortRowsByPriority(customerConfig, customerPanel);
         applyTableState(customerConfig, customerPanel, { elements, announce: false });
       }
       elements.addCustomerForm.reset();
@@ -1596,6 +1599,7 @@
         tableState.page = 1;
       }
       if (vehicleConfig && vehiclePanel) {
+        sortRowsByPriority(vehicleConfig, vehiclePanel);
         applyTableState(vehicleConfig, vehiclePanel, { elements, announce: false });
       }
       elements.addVehicleForm.reset();
@@ -2177,6 +2181,53 @@
     return row.cells[index]?.textContent.trim().replace(/\s+/g, " ") || "";
   }
 
+  function getPriorityRank(row) {
+    const priority = query(".priority-pill", row)?.textContent.trim() || "Low";
+    return PRIORITY_ORDER[priority] ?? PRIORITY_ORDER.Low;
+  }
+
+  function moveColumnAfterFirst(table, columnIndex) {
+    const rows = queryAll("tr", table);
+
+    rows.forEach((row) => {
+      const cell = row.children[columnIndex];
+      const firstCell = row.children[0];
+
+      if (cell && firstCell && cell !== row.children[1]) {
+        firstCell.after(cell);
+      }
+    });
+  }
+
+  function normalizePriorityColumns() {
+    queryAll(".customers-table, .vehicles-table, .reminders-table").forEach((table) => {
+      const priorityHeader = queryAll("thead th", table).findIndex((cell) => cell.textContent.trim() === "Priority");
+
+      if (priorityHeader > 1) {
+        moveColumnAfterFirst(table, priorityHeader);
+      }
+    });
+  }
+
+  function sortRowsByPriority(config, panel) {
+    if (!["customers", "vehicles", "reminders"].includes(config.id)) {
+      return;
+    }
+
+    const body = query(`${config.table} tbody`, panel);
+    if (!body) {
+      return;
+    }
+
+    queryAll("tr", body).forEach((row, index) => {
+      row.dataset.priorityOrder ||= String(index);
+    });
+
+    queryAll("tr", body)
+      .sort((a, b) => getPriorityRank(a) - getPriorityRank(b) || Number(a.dataset.priorityOrder) - Number(b.dataset.priorityOrder))
+      .forEach((row) => body.append(row));
+  }
+
   function getDateKey(dateText) {
     const months = {
       Jan: "01",
@@ -2727,6 +2778,10 @@
   function bindDataTables(elements) {
     TABLE_CONFIGS.forEach((config) => {
       try {
+        const panel = query(config.panel);
+        if (panel) {
+          sortRowsByPriority(config, panel);
+        }
         bindTableController(config, elements);
       } catch (error) {
         console.error(`GarageHub could not initialize ${config.id} controls.`, error);
@@ -2876,6 +2931,7 @@
     bindNavigation(elements);
     bindKeyboardShortcuts(elements);
     bindSettingsPage(elements);
+    normalizePriorityColumns();
     activateView(getInitialViewName(), elements);
     bindDataTables(elements);
   }
