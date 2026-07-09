@@ -4844,6 +4844,75 @@ td {
   box-shadow: 0 0 0 3px rgba(23, 92, 255, .08);
 }
 
+.customer-modal {
+  width: min(760px, 100%);
+  padding: 22px 24px;
+}
+
+.customer-modal .panel-title-row {
+  padding-bottom: 0;
+}
+
+.customer-modal .vehicle-modal-title h2 {
+  font-size: 22px;
+}
+
+.customer-modal .vehicle-modal-title p {
+  margin-top: 6px;
+  max-width: 520px;
+}
+
+.customer-modal form,
+.customer-modal .vehicle-form-main {
+  gap: 16px;
+}
+
+.customer-modal .vehicle-form-section {
+  gap: 12px;
+  padding-bottom: 16px;
+}
+
+.customer-modal .vehicle-form-copy {
+  display: grid;
+  grid-template-columns: 32px minmax(0, 1fr);
+  column-gap: 10px;
+  align-items: center;
+}
+
+.customer-modal .vehicle-form-section-icon {
+  grid-row: span 2;
+  width: 32px;
+  height: 32px;
+}
+
+.customer-modal .vehicle-form-section h2 {
+  margin-bottom: 2px;
+  font-size: 15px;
+}
+
+.customer-modal .vehicle-form-section p {
+  max-width: none;
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.customer-modal .vehicle-form-grid {
+  gap: 12px;
+}
+
+.customer-modal .vehicle-form-grid label {
+  gap: 6px;
+}
+
+.customer-modal .vehicle-form-grid input,
+.customer-modal .vehicle-form-grid select {
+  min-height: 38px;
+}
+
+.customer-modal .vehicle-form-actions {
+  padding-top: 2px;
+}
+
 .vehicle-form-wide {
   grid-column: 1 / -1;
 }
