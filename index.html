@@ -1848,6 +1848,7 @@
                   </label>
                   <button class="filter-button" data-filter-control="type" data-default-label="All Types" type="button" aria-haspopup="menu" aria-expanded="false"><span data-filter-label>All Types</span><svg aria-hidden="true"><use href="#icon-chevron"></use></svg></button>
                   <button class="filter-button" data-filter-control="status" data-default-label="All Status" type="button" aria-haspopup="menu" aria-expanded="false"><span data-filter-label>All Status</span><svg aria-hidden="true"><use href="#icon-chevron"></use></svg></button>
+                  <button class="filter-button" data-filter-control="priority" data-default-label="All Priority" type="button" aria-haspopup="menu" aria-expanded="false"><span data-filter-label>All Priority</span><svg aria-hidden="true"><use href="#icon-chevron"></use></svg></button>
                   <button class="filter-button date-filter" data-filter-control="date" data-default-label="May 1 - May 31, 2024" type="button" aria-haspopup="menu" aria-expanded="false"><svg aria-hidden="true"><use href="#icon-calendar"></use></svg><span data-filter-label>May 1 - May 31, 2024</span><svg aria-hidden="true"><use href="#icon-chevron"></use></svg></button>
                   <button class="filter-button" data-filter-control="advanced" data-default-label="Filters" type="button" aria-haspopup="menu" aria-expanded="false"><svg aria-hidden="true"><use href="#icon-filter"></use></svg><span data-filter-label>Filters</span></button>
                   <button class="icon-button" data-view-toggle type="button" aria-label="Toggle compact table view" aria-pressed="false">
@@ -1863,6 +1864,7 @@
                         <th>Reminder</th>
                         <th>Related To</th>
                         <th>Type</th>
+                        <th>Priority</th>
                         <th>Due Date</th>
                         <th>Time</th>
                         <th>Assigned To</th>
@@ -1876,6 +1878,7 @@
                         <td><div class="reminder-cell"><span class="reminder-icon orange"><svg aria-hidden="true"><use href="#icon-clipboard"></use></svg></span><div><strong>Follow up on Quote</strong><small>Call customer to follow up on estimate</small></div></div></td>
                         <td><strong>Rahul Sharma</strong><small>RO-2024-064</small></td>
                         <td><span class="reminder-type blue">Follow Up</span></td>
+                        <td><span class="priority-pill high">High</span></td>
                         <td><strong>May 16, 2024</strong><small class="due-label red">(Overdue)</small></td>
                         <td>10:00 AM</td>
                         <td><div class="assigned-cell"><span class="staff-photo mini warm" aria-hidden="true"></span>Arun Kumar</div></td>
@@ -1887,6 +1890,7 @@
                         <td><div class="reminder-cell"><span class="reminder-icon purple"><svg aria-hidden="true"><use href="#icon-wrench"></use></svg></span><div><strong>Vehicle Service Reminder</strong><small>Remind customer for next service</small></div></div></td>
                         <td><strong>Toyota Camry</strong><small>ABC-1234</small></td>
                         <td><span class="reminder-type green">Service</span></td>
+                        <td><span class="priority-pill medium">Medium</span></td>
                         <td><strong>May 17, 2024</strong><small class="due-label orange">(Today)</small></td>
                         <td>09:00 AM</td>
                         <td><div class="assigned-cell"><span class="staff-photo mini cap" aria-hidden="true"></span>Imran Ali</div></td>
@@ -1898,6 +1902,7 @@
                         <td><div class="reminder-cell"><span class="reminder-icon blue"><svg aria-hidden="true"><use href="#icon-mail"></use></svg></span><div><strong>Send Invoice</strong><small>Send invoice INV-2024-098</small></div></div></td>
                         <td><strong>Amit Verma</strong><small>INV-2024-098</small></td>
                         <td><span class="reminder-type blue">Payment</span></td>
+                        <td><span class="priority-pill high">High</span></td>
                         <td><strong>May 18, 2024</strong><small class="due-label blue">(Tomorrow)</small></td>
                         <td>11:30 AM</td>
                         <td><div class="assigned-cell"><span class="staff-photo mini rose" aria-hidden="true"></span>Pooja Sharma</div></td>
@@ -1909,6 +1914,7 @@
                         <td><div class="reminder-cell"><span class="reminder-icon green"><svg aria-hidden="true"><use href="#icon-car"></use></svg></span><div><strong>Registration Renewal</strong><small>Vehicle registration is expiring</small></div></div></td>
                         <td><strong>Honda City</strong><small>DEF-5678</small></td>
                         <td><span class="reminder-type purple">Reminder</span></td>
+                        <td><span class="priority-pill medium">Medium</span></td>
                         <td><strong>May 20, 2024</strong></td>
                         <td>-</td>
                         <td><div class="assigned-cell"><span class="staff-photo mini rose" aria-hidden="true"></span>Neha Kapoor</div></td>
@@ -1920,6 +1926,7 @@
                         <td><div class="reminder-cell"><span class="reminder-icon orange"><svg aria-hidden="true"><use href="#icon-box"></use></svg></span><div><strong>Low Stock Alert</strong><small>Brake Pads (Front) low in stock</small></div></div></td>
                         <td><strong>Brake Pads (Front)</strong><small>BRM-BP-FR001</small></td>
                         <td><span class="reminder-type orange">Inventory</span></td>
+                        <td><span class="priority-pill high">High</span></td>
                         <td><strong>May 21, 2024</strong></td>
                         <td>-</td>
                         <td><div class="assigned-cell"><span class="staff-photo mini warm" aria-hidden="true"></span>Vikash Yadav</div></td>
@@ -1931,6 +1938,7 @@
                         <td><div class="reminder-cell"><span class="reminder-icon purple"><svg aria-hidden="true"><use href="#icon-team"></use></svg></span><div><strong>Team Meeting</strong><small>Weekly team meeting</small></div></div></td>
                         <td><strong>All Staff</strong><small>-</small></td>
                         <td><span class="reminder-type green">Meeting</span></td>
+                        <td><span class="priority-pill low">Low</span></td>
                         <td><strong>May 22, 2024</strong></td>
                         <td>04:00 PM</td>
                         <td><div class="assigned-cell"><span class="avatar mini">JS</span>John Smith</div></td>
@@ -1942,6 +1950,7 @@
                         <td><div class="reminder-cell"><span class="reminder-icon red"><svg aria-hidden="true"><use href="#icon-calendar"></use></svg></span><div><strong>Vehicle Inspection</strong><small>Post repair quality inspection</small></div></div></td>
                         <td><strong>Hyundai i20</strong><small>GHI-9012 (RO-2024-062)</small></td>
                         <td><span class="reminder-type blue">Inspection</span></td>
+                        <td><span class="priority-pill medium">Medium</span></td>
                         <td><strong>May 23, 2024</strong></td>
                         <td>02:00 PM</td>
                         <td><div class="assigned-cell"><span class="staff-photo mini warm" aria-hidden="true"></span>Ramesh Singh</div></td>
@@ -1953,6 +1962,7 @@
                         <td><div class="reminder-cell"><span class="reminder-icon orange"><svg aria-hidden="true"><use href="#icon-bell"></use></svg></span><div><strong>Warranty Expiring</strong><small>Warranty expiring in 7 days</small></div></div></td>
                         <td><strong>Maruti Swift</strong><small>PQR-2345</small></td>
                         <td><span class="reminder-type red">Warranty</span></td>
+                        <td><span class="priority-pill low">Low</span></td>
                         <td><strong>May 24, 2024</strong></td>
                         <td>-</td>
                         <td><div class="assigned-cell"><span class="staff-photo mini olive" aria-hidden="true"></span>Sanjay Patel</div></td>

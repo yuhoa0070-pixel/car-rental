@@ -518,11 +518,12 @@
       filters: [
         { key: "type", label: "All Types", buttonIndex: 0 },
         { key: "status", label: "All Status", buttonIndex: 1 },
-        { key: "date", label: "May 1 - May 31, 2024", buttonIndex: 2, icon: "calendar" },
+        { key: "priority", label: "All Priority", buttonIndex: 2 },
+        { key: "date", label: "May 1 - May 31, 2024", buttonIndex: 3, icon: "calendar" },
         {
           key: "advanced",
           label: "Filters",
-          buttonIndex: 3,
+          buttonIndex: 4,
           icon: "filter",
           options: [
             { label: "All Reminders", value: "all" },
@@ -534,14 +535,15 @@
         },
       ],
       getRowData(row) {
-        const dateText = query("td:nth-child(5) strong", row)?.textContent.trim() || getCellText(row, 4);
+        const dateText = query("td:nth-child(6) strong", row)?.textContent.trim() || getCellText(row, 5);
 
         return {
-          assignee: getCellText(row, 6),
+          assignee: getCellText(row, 7),
           date: dateText,
           dateKey: getDateKey(dateText),
+          priority: query("td:nth-child(5) .priority-pill", row)?.textContent.trim() || getCellText(row, 4),
           searchText: row.textContent.toLowerCase(),
-          status: query("td:nth-child(8) .tag", row)?.textContent.trim() || getCellText(row, 7),
+          status: query("td:nth-child(9) .tag", row)?.textContent.trim() || getCellText(row, 8),
           type: query("td:nth-child(4) .reminder-type", row)?.textContent.trim() || getCellText(row, 3),
         };
       },
@@ -582,7 +584,7 @@
         }
 
         if (value === "needs-attention") {
-          return ["Overdue", "Pending"].includes(rowData.status);
+          return rowData.priority === "High" || ["Overdue", "Pending"].includes(rowData.status);
         }
 
         if (value === "this-week") {
@@ -812,6 +814,9 @@
         { label: "Deactivate staff", icon: "user-off", danger: true },
       ],
       reminder: [
+        { label: "Set High Priority", icon: "flag", priority: "High" },
+        { label: "Set Medium Priority", icon: "flag", priority: "Medium" },
+        { label: "Set Low Priority", icon: "flag", priority: "Low" },
         { label: "Mark complete", icon: "circle-check" },
         { label: "Snooze reminder", icon: "clock" },
         { label: "Edit reminder", icon: "pencil" },
@@ -861,6 +866,24 @@
         const row = closestElement(button, "tr");
 
         closeRowActionMenu();
+        if (option.priority && row) {
+          const priorityPill = query(".priority-pill", row);
+
+          if (priorityPill) {
+            priorityPill.className = `priority-pill ${option.priority.toLowerCase()}`;
+            priorityPill.textContent = option.priority;
+          }
+
+          const config = TABLE_CONFIGS.find((item) => item.id === "reminders");
+          const panel = query(".reminders-list-panel");
+          if (config && panel) {
+            applyTableState(config, panel, { elements, announce: false });
+          }
+
+          showToast(`${title} priority set to ${option.priority}.`, elements);
+          return;
+        }
+
         if (option.danger && row) {
           row.remove();
           showToast(`${title} removed.`, elements);
