@@ -67,6 +67,19 @@ export async function GET() {
       .single();
 
     if (error) {
+      if (error.code === 'PGRST116') {
+        console.log('Row "db_state" not found. Auto-seeding Supabase with default mock database...');
+        const { error: insertError } = await supabase
+          .from('garage_store')
+          .insert({ key: 'db_state', data: DEFAULT_DB });
+        
+        if (!insertError) {
+          return NextResponse.json(DEFAULT_DB);
+        } else {
+          console.error('Failed to seed Supabase:', insertError);
+        }
+      }
+
       console.error('Supabase query error, falling back to local:', error);
       const db = readLocalDB();
       return NextResponse.json(db);
