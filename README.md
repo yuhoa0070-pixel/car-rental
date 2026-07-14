@@ -1,35 +1,36 @@
-# GarageHub
+This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-Static GarageHub workshop dashboard prototype.
+## Getting Started
 
-## Structure
-
-- `index.html` contains the app shell and view markup.
-- `css/styles.css` contains design tokens, layout, components, page sections, and responsive rules.
-- `js/app.js` owns navigation, search, quick-add modal behavior, toast messages, and sidebar state.
-- `js/icons.js` adapts legacy `#icon-*` sprite references to Tabler icon classes.
-
-## Adding A New Tab
-
-1. Add a sidebar link with a unique `data-view` value.
-2. Add a matching view section with `data-view-panel="<same-value>"`.
-3. Add page-specific search text with `data-search` on cards, panels, or tables that should be searchable.
-4. Add the tab label and search placeholder in `VIEW_CHROME` inside `js/app.js`.
-
-## Adding An Icon
-
-Use the existing SVG placeholder pattern in `index.html`:
-
-```html
-<svg aria-hidden="true"><use href="#icon-example"></use></svg>
-```
-
-Then add the matching Tabler icon name in `TABLER_ICON_MAP` inside `js/icons.js`.
-
-## Local Checks
+First, run the development server:
 
 ```bash
-node --check js/app.js
-node --check js/icons.js
-git diff --check
+npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+# or
+bun dev
 ```
+
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+
+You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+
+This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+
+## Learn More
+
+To learn more about Next.js, take a look at the following resources:
+
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+
+You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+
+## Deploy on Vercel
+
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+
+Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.

@@ -1,0 +1,114 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  --background: #fafafa;
+  --foreground: #111111;
+}
+
+.dark {
+  --background: #09090b;
+  --foreground: #f4f4f5;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-sans);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  transition-property: background-color, border-color, text-decoration-color, fill, stroke;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 200ms;
+}
+
+/* Dark Mode CSS Fallback Layer */
+.dark {
+  color-scheme: dark;
+}
+
+.dark .bg-white {
+  background-color: #09090b !important; /* zinc-950 */
+}
+
+.dark .bg-gray-50,
+.dark .bg-neutral-50,
+.dark .bg-neutral-100,
+.dark .bg-gray-50\/20,
+.dark .bg-gray-50\/40 {
+  background-color: #18181b !important; /* zinc-900 */
+}
+
+.dark .border-gray-100,
+.dark .border-gray-200,
+.dark .border-neutral-200,
+.dark .border-neutral-200\/50,
+.dark .border-gray-150 {
+  border-color: #27272a !important; /* zinc-800 */
+}
+
+.dark .text-gray-900,
+.dark .text-gray-800,
+.dark .text-gray-700 {
+  color: #f4f4f5 !important; /* zinc-100 */
+}
+
+.dark .text-gray-600,
+.dark .text-gray-500 {
+  color: #a1a1aa !important; /* zinc-400 */
+}
+
+.dark .text-gray-400 {
+  color: #52525b !important; /* zinc-600 */
+}
+
+/* Form elements */
+.dark input[type="text"],
+.dark input[type="number"],
+.dark input[type="email"],
+.dark input[type="password"],
+.dark input[type="date"],
+.dark select,
+.dark textarea {
+  background-color: #09090b !important;
+  color: #f4f4f5 !important;
+  border-color: #27272a !important;
+}
+
+.dark input:focus,
+.dark select:focus,
+.dark textarea:focus {
+  border-color: #3f3f46 !important;
+  --tw-ring-color: #f4f4f5 !important;
+}
+
+/* Modals overlays */
+.dark .bg-gray-900\/30 {
+  background-color: rgba(9, 9, 11, 0.6) !important;
+  backdrop-filter: blur(4px);
+}
+
+/* Table headers */
+.dark thead.bg-gray-50 {
+  background-color: #18181b !important;
+}
+
+/* Scrollbars */
+.dark ::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+.dark ::-webkit-scrollbar-track {
+  background: #09090b;
+}
+.dark ::-webkit-scrollbar-thumb {
+  background: #27272a;
+  border-radius: 4px;
+}
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: #3f3f46;
+}
