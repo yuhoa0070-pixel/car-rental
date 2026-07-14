@@ -40,14 +40,14 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
       {/* Brand header */}
       <div className="flex items-center justify-between px-6 py-5 border-b border-gray-100 dark:border-zinc-900">
         <div className="flex items-center gap-2.5">
-          <div className="flex items-center justify-center w-9 h-9 rounded-xl bg-gradient-to-tr from-neutral-950 via-neutral-900 to-neutral-800 text-white shadow-xs border border-neutral-800/80 dark:border-zinc-700/80">
-            <CarFront className="h-5 w-5 text-neutral-100" />
+          <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-gradient-to-tr from-neutral-950 via-neutral-900 to-neutral-800 text-white shadow-xs border border-neutral-800/80 dark:border-zinc-700/80">
+            <CarFront className="h-5.5 w-5.5 text-neutral-100" />
           </div>
           <div>
-            <span className="font-semibold text-sm text-gray-900 dark:text-zinc-100 tracking-tight block">
+            <span className="font-bold text-base text-gray-900 dark:text-zinc-100 tracking-tight block">
               {settings.businessName}
             </span>
-            <span className="text-[10px] text-gray-500 dark:text-zinc-400 font-medium tracking-wider uppercase block">
+            <span className="text-xs text-gray-500 dark:text-zinc-400 font-bold tracking-wider uppercase block">
               {t('staffPortal')}
             </span>
           </div>
@@ -76,13 +76,13 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
               onClick={() => {
                 if (isOpen) onClose();
               }}
-              className={`flex items-center gap-3 px-3 py-2.5 text-xs font-semibold rounded-lg transition-all border ${
+              className={`flex items-center gap-3.5 px-4 py-3 text-sm font-semibold rounded-lg transition-all border ${
                 isActive 
                   ? 'bg-blue-50/60 dark:bg-blue-950/20 text-blue-600 dark:text-blue-400 border-blue-100/60 dark:border-blue-900/30 shadow-2xs' 
                   : 'text-gray-500 dark:text-zinc-400 hover:bg-gray-50/80 dark:hover:bg-zinc-900/50 hover:text-gray-900 dark:hover:text-zinc-100 border-transparent'
               }`}
             >
-              <Icon className={`h-4.5 w-4.5 shrink-0 ${isActive ? 'text-blue-600 dark:text-blue-400' : 'text-gray-400 dark:text-zinc-500'}`} />
+              <Icon className={`h-5 w-5 shrink-0 ${isActive ? 'text-blue-600 dark:text-blue-400' : 'text-gray-400 dark:text-zinc-500'}`} />
               {item.name}
             </Link>
           );
@@ -92,14 +92,14 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
       {/* Footer / Account indicator */}
       <div className="p-4 border-t border-gray-100 dark:border-zinc-900 flex flex-col gap-2 bg-gray-50/20">
         <div className="flex items-center gap-3 p-2 bg-gray-50 dark:bg-zinc-900/50 rounded-lg">
-          <div className="w-8 h-8 rounded-full bg-gray-200 dark:bg-zinc-800 flex items-center justify-center text-xs font-semibold text-gray-700 dark:text-zinc-300">
+          <div className="w-9 h-9 rounded-full bg-gray-200 dark:bg-zinc-800 flex items-center justify-center text-sm font-bold text-gray-700 dark:text-zinc-300">
             S
           </div>
-          <div className="min-w-0 flex-1">
-            <p className="text-[11px] font-semibold text-gray-900 dark:text-zinc-100 truncate">
+          <div className="min-w-0 flex-1 text-xs">
+            <p className="font-bold text-gray-900 dark:text-zinc-100 truncate">
               {t('staffMember')}
             </p>
-            <p className="text-[9px] text-gray-500 dark:text-zinc-400 truncate flex items-center gap-0.5">
+            <p className="text-[10px] text-gray-500 dark:text-zinc-400 truncate flex items-center gap-0.5 mt-0.5">
               <ShieldCheck className="h-3 w-3 text-emerald-500 shrink-0 inline" /> {t('adminRole')}
             </p>
           </div>
@@ -110,9 +110,9 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
             logout();
             if (isOpen) onClose();
           }}
-          className="w-full flex items-center gap-2.5 px-3 py-2 text-xs font-semibold text-red-600 hover:bg-red-50/50 dark:hover:bg-red-950/20 hover:text-red-700 rounded-lg transition-all border border-transparent"
+          className="w-full flex items-center gap-2.5 px-4 py-2.5 text-sm font-semibold text-red-600 hover:bg-red-50/50 dark:hover:bg-red-950/20 hover:text-red-700 rounded-lg transition-all border border-transparent"
         >
-          <LogOut className="h-4.5 w-4.5 text-red-500 shrink-0" />
+          <LogOut className="h-5 w-5 text-red-500 shrink-0" />
           <span>{language === 'en' ? 'Log Out' : 'ចាកចេញ'}</span>
         </button>
       </div>

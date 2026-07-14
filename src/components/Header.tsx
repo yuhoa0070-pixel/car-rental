@@ -81,8 +81,8 @@ export const Header: React.FC<HeaderProps> = ({ onMenuToggle }) => {
       {/* Right side */}
       <div className="flex items-center gap-4">
         {/* Date display */}
-        <div className="hidden sm:flex items-center gap-1.5 text-xs text-gray-500 dark:text-zinc-400 bg-gray-50 dark:bg-zinc-900 px-2.5 py-1 rounded-lg border border-gray-100 dark:border-zinc-800">
-          <Calendar className="h-3.5 w-3.5 text-gray-400 dark:text-zinc-500" />
+        <div className="hidden sm:flex items-center gap-1.5 text-sm text-gray-500 dark:text-zinc-400 bg-gray-50 dark:bg-zinc-900 px-3 py-1.5 rounded-lg border border-gray-100 dark:border-zinc-800">
+          <Calendar className="h-4 w-4 text-gray-400 dark:text-zinc-500" />
           <span>{mounted ? getFormattedDate() : '...'}</span>
         </div>
 
@@ -90,17 +90,17 @@ export const Header: React.FC<HeaderProps> = ({ onMenuToggle }) => {
         <div className="relative">
           <button
             onClick={() => setIsLangDropdownOpen(!isLangDropdownOpen)}
-            className="flex items-center gap-1.5 px-2.5 py-1 border border-gray-200 dark:border-zinc-800 rounded-lg bg-gray-50 dark:bg-zinc-900 text-[10px] font-bold text-gray-700 dark:text-zinc-300 hover:bg-gray-100 dark:hover:bg-zinc-800 transition-colors shadow-2xs focus:outline-none"
+            className="flex items-center gap-1.5 px-3 py-1.5 border border-gray-200 dark:border-zinc-800 rounded-lg bg-gray-50 dark:bg-zinc-900 text-xs font-bold text-gray-700 dark:text-zinc-300 hover:bg-gray-100 dark:hover:bg-zinc-800 transition-colors shadow-2xs focus:outline-none"
           >
             {language === 'en' ? <USFlag /> : <KHFlag />}
             <span>{language === 'en' ? 'EN' : 'ខ្មែរ'}</span>
-            <ChevronDown className="h-3 w-3 text-gray-400 dark:text-zinc-500" />
+            <ChevronDown className="h-3.5 w-3.5 text-gray-400 dark:text-zinc-500" />
           </button>
 
           {isLangDropdownOpen && (
             <>
               <div className="fixed inset-0 z-40" onClick={() => setIsLangDropdownOpen(false)} />
-              <div className="absolute right-0 mt-2 w-28 bg-white dark:bg-zinc-950 border border-gray-200 dark:border-zinc-800 rounded-xl shadow-lg py-1 z-50 text-xs font-semibold text-gray-700 dark:text-zinc-300 animate-in fade-in slide-in-from-top-1 duration-100">
+              <div className="absolute right-0 mt-2 w-32 bg-white dark:bg-zinc-950 border border-gray-200 dark:border-zinc-800 rounded-xl shadow-lg py-1.5 z-50 text-sm font-semibold text-gray-700 dark:text-zinc-300 animate-in fade-in slide-in-from-top-1 duration-100">
                 <button
                   onClick={() => {
                     setLanguage('en');
@@ -133,17 +133,17 @@ export const Header: React.FC<HeaderProps> = ({ onMenuToggle }) => {
         {/* Theme Toggle Button */}
         <button
           onClick={toggleTheme}
-          className="p-1.5 border border-gray-200 dark:border-zinc-800 rounded-lg bg-gray-50 dark:bg-zinc-900 text-gray-500 dark:text-zinc-400 hover:text-gray-900 dark:hover:text-zinc-200 transition-colors shadow-2xs focus:outline-none"
+          className="p-2 border border-gray-200 dark:border-zinc-800 rounded-lg bg-gray-50 dark:bg-zinc-900 text-gray-500 dark:text-zinc-400 hover:text-gray-900 dark:hover:text-zinc-200 transition-colors shadow-2xs focus:outline-none"
           title={theme === 'light' ? (language === 'en' ? 'Dark Mode' : 'មុខងារងងឹត') : (language === 'en' ? 'Light Mode' : 'មុខងារពន្លឺ')}
         >
-          {theme === 'light' ? <Moon className="h-4 w-4" /> : <Sun className="h-4 w-4 text-amber-500" />}
+          {theme === 'light' ? <Moon className="h-4.5 w-4.5" /> : <Sun className="h-4.5 w-4.5 text-amber-500" />}
         </button>
 
         {/* User initials bubble & switcher */}
         <div className="relative">
           <button
             onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-            className="w-7 h-7 rounded-full bg-blue-600 hover:bg-blue-700 text-white flex items-center justify-center text-xs font-semibold transition-all hover:scale-105 shrink-0 focus:outline-none"
+            className="w-8.5 h-8.5 rounded-full bg-blue-600 hover:bg-blue-700 text-white flex items-center justify-center text-sm font-bold transition-all hover:scale-105 shrink-0 focus:outline-none shadow-sm"
             title={language === 'en' ? 'Switch Staff Profile' : 'ប្តូរគណនីបុគ្គលិក'}
           >
             {getInitials(currentStaff)}
@@ -152,8 +152,8 @@ export const Header: React.FC<HeaderProps> = ({ onMenuToggle }) => {
           {isDropdownOpen && (
             <>
               <div className="fixed inset-0 z-40" onClick={() => setIsDropdownOpen(false)} />
-              <div className="absolute right-0 mt-2 w-44 bg-white dark:bg-zinc-950 border border-gray-200 dark:border-zinc-800 rounded-xl shadow-lg py-1.5 z-50 text-xs font-semibold text-gray-700 dark:text-zinc-300 animate-in fade-in slide-in-from-top-1 duration-100">
-                <div className="px-3 py-1.5 border-b border-gray-100 dark:border-zinc-900 text-[9px] text-gray-400 dark:text-zinc-500 font-bold uppercase tracking-wider">
+              <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-zinc-950 border border-gray-200 dark:border-zinc-800 rounded-xl shadow-lg py-2 z-50 text-sm font-semibold text-gray-700 dark:text-zinc-300 animate-in fade-in slide-in-from-top-1 duration-100">
+                <div className="px-3.5 py-1.5 border-b border-gray-100 dark:border-zinc-900 text-xs text-gray-400 dark:text-zinc-500 font-bold uppercase tracking-wider">
                   {language === 'en' ? 'Switch Staff' : 'ប្តូរបុគ្គលិក'}
                 </div>
                 <div className="max-h-48 overflow-y-auto">
