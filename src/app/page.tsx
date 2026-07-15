@@ -27,7 +27,7 @@ export default function Dashboard() {
   const { rentals, vehicles, expenses, settings, editVehicle, t, language } = useApp();
 
   const [activeTab, setActiveTab] = useState<'yard' | 'road' | 'workshop'>('yard');
-  const [timeFilter, setTimeFilter] = useState<'thisWeek' | 'lastWeek'>('thisWeek');
+  const [timeFilter, setTimeFilter] = useState<'thisWeek' | 'lastWeek' | 'thisMonth'>('thisWeek');
   const [isTimeFilterOpen, setIsTimeFilterOpen] = useState(false);
 
   // Metrics calculations
@@ -46,8 +46,45 @@ export default function Dashboard() {
   const rentedPct = Math.round((rentedCars.length / fleetTotal) * 100);
 
   // Dynamic Weekly Analytics Calculator
-  const getWeeklyAnalytics = (filter: 'thisWeek' | 'lastWeek') => {
+  const getWeeklyAnalytics = (filter: 'thisWeek' | 'lastWeek' | 'thisMonth') => {
     const today = new Date();
+
+    if (filter === 'thisMonth') {
+      const year = today.getFullYear();
+      const month = today.getMonth(); // 0-11
+      
+      const getWeekData = (startDay: number, endDay: number) => {
+        const inc = rentals
+          .filter(r => {
+            if (r.status !== 'Completed' || !r.returnedAt) return false;
+            const d = new Date(r.returnedAt);
+            return d.getFullYear() === year && d.getMonth() === month && d.getDate() >= startDay && d.getDate() <= endDay;
+          })
+          .reduce((sum, r) => sum + (r.finalTotal || 0), 0);
+          
+        const exp = expenses
+          .filter(e => {
+            const d = new Date(e.date);
+            return d.getFullYear() === year && d.getMonth() === month && d.getDate() >= startDay && d.getDate() <= endDay;
+          })
+          .reduce((sum, e) => sum + e.amount, 0);
+          
+        return { inc, exp };
+      };
+      
+      const w1 = getWeekData(1, 7);
+      const w2 = getWeekData(8, 14);
+      const w3 = getWeekData(15, 21);
+      const lastDay = new Date(year, month + 1, 0).getDate();
+      const w4 = getWeekData(22, lastDay);
+      
+      return [
+        { day: language === 'en' ? 'Wk 1' : 'សប្តាហ៍ ១', inc: w1.inc, exp: w1.exp },
+        { day: language === 'en' ? 'Wk 2' : 'សប្តាហ៍ ២', inc: w2.inc, exp: w2.exp },
+        { day: language === 'en' ? 'Wk 3' : 'សប្តាហ៍ ៣', inc: w3.inc, exp: w3.exp },
+        { day: language === 'en' ? 'Wk 4' : 'សប្តាហ៍ ៤', inc: w4.inc, exp: w4.exp }
+      ];
+    }
     const currentDay = today.getDay(); // 0 is Sunday, 1 is Monday, etc.
     const distanceToMonday = currentDay === 0 ? -6 : 1 - currentDay;
     
@@ -459,10 +496,9 @@ export default function Dashboard() {
                 className="px-2.5 py-1 bg-gray-50 dark:bg-zinc-900 hover:bg-gray-100 dark:hover:bg-zinc-800 text-[10px] font-bold text-gray-700 dark:text-zinc-300 border border-gray-200 dark:border-zinc-850 rounded-lg flex items-center gap-1 transition-colors focus:outline-none focus:ring-1 focus:ring-blue-500"
               >
                 <span>
-                  {timeFilter === 'thisWeek' 
-                    ? (language === 'en' ? 'This Week' : 'សប្តាហ៍នេះ') 
-                    : (language === 'en' ? 'Last Week' : 'សប្តាហ៍មុន')
-                  }
+                  {timeFilter === 'thisWeek' && (language === 'en' ? 'This Week' : 'សប្តាហ៍នេះ')}
+                  {timeFilter === 'lastWeek' && (language === 'en' ? 'Last Week' : 'សប្តាហ៍មុន')}
+                  {timeFilter === 'thisMonth' && (language === 'en' ? 'This Month' : 'ខែនេះ')}
                 </span>
                 <ChevronDown className="h-3 w-3 text-gray-400" />
               </button>
@@ -470,7 +506,7 @@ export default function Dashboard() {
               {isTimeFilterOpen && (
                 <>
                   <div className="fixed inset-0 z-10" onClick={() => setIsTimeFilterOpen(false)} />
-                  <div className="absolute right-0 mt-1 w-32 bg-white dark:bg-zinc-950 border border-gray-200 dark:border-zinc-800 rounded-xl shadow-lg py-1.5 z-20 text-[10px] font-bold text-gray-700 dark:text-zinc-300 animate-in fade-in slide-in-from-top-1 duration-100">
+                  <div className="absolute right-0 mt-1 w-32 bg-white dark:bg-zinc-955 border border-gray-200 dark:border-zinc-800 rounded-xl shadow-lg py-1.5 z-20 text-[10px] font-bold text-gray-700 dark:text-zinc-300 animate-in fade-in slide-in-from-top-1 duration-100">
                     <button
                       onClick={() => {
                         setTimeFilter('thisWeek');
@@ -492,6 +528,17 @@ export default function Dashboard() {
                       }`}
                     >
                       {language === 'en' ? 'Last Week' : 'សប្តាហ៍មុន'}
+                    </button>
+                    <button
+                      onClick={() => {
+                        setTimeFilter('thisMonth');
+                        setIsTimeFilterOpen(false);
+                      }}
+                      className={`w-full px-3 py-2 text-left flex items-center justify-between hover:bg-gray-50 dark:hover:bg-zinc-900/50 transition-colors ${
+                        timeFilter === 'thisMonth' ? 'text-blue-600 dark:text-blue-400 bg-blue-50/10' : ''
+                      }`}
+                    >
+                      {language === 'en' ? 'This Month' : 'ខែនេះ'}
                     </button>
                   </div>
                 </>
