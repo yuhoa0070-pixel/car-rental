@@ -98,9 +98,21 @@ export default function SettingsPage() {
   // Delete staff
   const handleDeleteStaff = (nameToRemove: string) => {
     if (staffNames.length <= 1) {
-      alert("You must retain at least one staff member to register transactions.");
+      alert(
+        language === 'en' 
+          ? "You must retain at least one staff member to register transactions." 
+          : "អ្នកត្រូវតែរក្សាទុកបុគ្គលិកយ៉ាងហោចណាស់ម្នាក់ ដើម្បីចុះឈ្មោះប្រតិបត្តិការ។"
+      );
       return;
     }
+
+    const confirmDelete = window.confirm(
+      language === 'en'
+        ? `Are you sure you want to delete "${nameToRemove}" from the staff directory?`
+        : `តើអ្នកប្រាកដជាចង់លុប "${nameToRemove}" ចេញពីបញ្ជីបុគ្គលិកមែនទេ?`
+    );
+    if (!confirmDelete) return;
+
     const updated = staffNames.filter(name => name !== nameToRemove);
     setStaffNames(updated);
 
