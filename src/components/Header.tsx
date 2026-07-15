@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
-import { Menu, Calendar, ChevronDown, Sun, Moon } from 'lucide-react';
+import { Menu, Calendar, ChevronDown, Sun, Moon, LogOut } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 
 interface HeaderProps {
@@ -38,7 +38,7 @@ const KHFlag = () => (
 );
 
 export const Header: React.FC<HeaderProps> = ({ onMenuToggle }) => {
-  const { language, setLanguage, t, settings, currentStaff, setCurrentStaff, theme, toggleTheme } = useApp();
+  const { language, setLanguage, t, settings, currentStaff, setCurrentStaff, theme, toggleTheme, logout } = useApp();
   const [mounted, setMounted] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isLangDropdownOpen, setIsLangDropdownOpen] = useState(false);
@@ -176,6 +176,23 @@ export const Header: React.FC<HeaderProps> = ({ onMenuToggle }) => {
                     </button>
                   ))}
                 </div>
+                <div className="border-t border-gray-100 dark:border-zinc-900 my-1" />
+                <button
+                  onClick={() => {
+                    const msg = language === 'en' 
+                      ? 'Are you sure you want to log out?' 
+                      : 'តើអ្នកប្រាកដជាចង់ចាកចេញមែនទេ?';
+                    if (window.confirm(msg)) {
+                      logout();
+                      setIsDropdownOpen(false);
+                    }
+                  }}
+                  type="button"
+                  className="w-full px-3.5 py-2 text-left flex items-center gap-2 text-red-600 hover:bg-red-50/50 dark:hover:bg-red-950/20 transition-colors font-bold"
+                >
+                  <LogOut className="h-4 w-4 text-red-550 shrink-0" />
+                  <span>{language === 'en' ? 'Log Out' : 'ចាកចេញ'}</span>
+                </button>
               </div>
             </>
           )}

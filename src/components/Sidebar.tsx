@@ -13,8 +13,7 @@ import {
   X,
   ShieldCheck,
   User,
-  CarFront,
-  LogOut
+  CarFront
 } from 'lucide-react';
 
 interface SidebarProps {
@@ -24,7 +23,7 @@ interface SidebarProps {
 
 export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
   const pathname = usePathname();
-  const { settings, t, logout, language } = useApp();
+  const { settings, t, language } = useApp();
 
   const navItems = [
     { name: t('dashboard'), href: '/', icon: LayoutDashboard },
@@ -104,17 +103,6 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
             </p>
           </div>
         </div>
-
-        <button
-          onClick={() => {
-            logout();
-            if (isOpen) onClose();
-          }}
-          className="w-full flex items-center gap-2.5 px-3 py-2 text-xs font-semibold text-red-600 hover:bg-red-50/50 dark:hover:bg-red-950/20 hover:text-red-700 rounded-lg transition-all border border-transparent"
-        >
-          <LogOut className="h-4.5 w-4.5 text-red-500 shrink-0" />
-          <span>{language === 'en' ? 'Log Out' : 'ចាកចេញ'}</span>
-        </button>
       </div>
     </div>
   );
