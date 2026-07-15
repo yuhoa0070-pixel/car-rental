@@ -169,7 +169,7 @@ export default function SettingsPage() {
       {deleteTarget && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
           <div className="fixed inset-0 bg-black/45 dark:bg-black/60 backdrop-blur-xs transition-opacity" onClick={() => setDeleteTarget(null)} />
-          <div className="relative bg-white dark:bg-zinc-950 border border-gray-150 dark:border-zinc-850 rounded-2xl shadow-xl max-w-sm w-full p-5 text-xs text-center animate-in fade-in zoom-in-95 duration-150">
+          <div className="relative bg-white dark:bg-zinc-950 border border-gray-200 dark:border-zinc-850 rounded-2xl shadow-xl max-w-sm w-full p-5 text-xs text-center animate-in fade-in zoom-in-95 duration-150">
             <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-red-50 dark:bg-red-950/20 text-red-600 mb-4 border border-red-100 dark:border-red-950/10">
               <Trash2 className="h-5 w-5" />
             </div>
@@ -201,7 +201,7 @@ export default function SettingsPage() {
                 }}
                 className="px-4 py-2 bg-red-600 hover:bg-red-750 text-white font-semibold rounded-lg shadow-sm transition-colors"
               >
-                {language === 'en' ? 'Delete' : 'លុប'}
+                {language === 'en' ? 'Confirm' : 'យល់ព្រម'}
               </button>
             </div>
           </div>

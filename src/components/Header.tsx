@@ -199,7 +199,7 @@ export const Header: React.FC<HeaderProps> = ({ onMenuToggle }) => {
       {isLogoutConfirmOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
           <div className="fixed inset-0 bg-black/45 dark:bg-black/60 backdrop-blur-xs transition-opacity" onClick={() => setIsLogoutConfirmOpen(false)} />
-          <div className="relative bg-white dark:bg-zinc-950 border border-gray-150 dark:border-zinc-850 rounded-2xl shadow-xl max-w-sm w-full p-5 text-xs text-center animate-in fade-in zoom-in-95 duration-150">
+          <div className="relative bg-white dark:bg-zinc-950 border border-gray-200 dark:border-zinc-850 rounded-2xl shadow-xl max-w-sm w-full p-5 text-xs text-center animate-in fade-in zoom-in-95 duration-150">
             <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-red-50 dark:bg-red-950/20 text-red-600 mb-4 border border-red-100 dark:border-red-950/10">
               <LogOut className="h-5 w-5" />
             </div>
