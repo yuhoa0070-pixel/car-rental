@@ -569,7 +569,7 @@ export default function Dashboard() {
             </Link>
           </div>
  
-          <div className="divide-y divide-gray-100 dark:divide-zinc-900 px-5 flex-1 flex flex-col justify-center min-h-[200px]">
+          <div className="divide-y divide-gray-100 dark:divide-zinc-900 px-5 flex-1 flex flex-col justify-start py-2 min-h-[200px]">
             {sortedActiveRentals.slice(0, 3).map((r) => {
               const car = vehicles.find(v => v.id === r.vehicleId);
               
