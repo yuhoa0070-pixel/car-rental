@@ -27,6 +27,8 @@ export default function Dashboard() {
   const { rentals, vehicles, expenses, settings, editVehicle, t, language } = useApp();
 
   const [activeTab, setActiveTab] = useState<'yard' | 'road' | 'workshop'>('yard');
+  const [timeFilter, setTimeFilter] = useState<'thisWeek' | 'lastWeek'>('thisWeek');
+  const [isTimeFilterOpen, setIsTimeFilterOpen] = useState(false);
 
   // Metrics calculations
   const activeRentals = rentals.filter(r => r.status === 'Active');
@@ -396,11 +398,47 @@ export default function Dashboard() {
             {/* Dropdown Filter */}
             <div className="relative">
               <button
-                className="px-2.5 py-1 bg-gray-50 dark:bg-zinc-900 hover:bg-gray-100 dark:hover:bg-zinc-800 text-[10px] font-bold text-gray-700 dark:text-zinc-300 border border-gray-200 dark:border-zinc-850 rounded-lg flex items-center gap-1 transition-colors"
+                onClick={() => setIsTimeFilterOpen(!isTimeFilterOpen)}
+                className="px-2.5 py-1 bg-gray-50 dark:bg-zinc-900 hover:bg-gray-100 dark:hover:bg-zinc-800 text-[10px] font-bold text-gray-700 dark:text-zinc-300 border border-gray-200 dark:border-zinc-850 rounded-lg flex items-center gap-1 transition-colors focus:outline-none focus:ring-1 focus:ring-blue-500"
               >
-                <span>{language === 'en' ? 'This Week' : 'សប្តាហ៍នេះ'}</span>
+                <span>
+                  {timeFilter === 'thisWeek' 
+                    ? (language === 'en' ? 'This Week' : 'សប្តាហ៍នេះ') 
+                    : (language === 'en' ? 'Last Week' : 'សប្តាហ៍មុន')
+                  }
+                </span>
                 <ChevronDown className="h-3 w-3 text-gray-400" />
               </button>
+              
+              {isTimeFilterOpen && (
+                <>
+                  <div className="fixed inset-0 z-10" onClick={() => setIsTimeFilterOpen(false)} />
+                  <div className="absolute right-0 mt-1 w-32 bg-white dark:bg-zinc-950 border border-gray-200 dark:border-zinc-800 rounded-xl shadow-lg py-1.5 z-20 text-[10px] font-bold text-gray-700 dark:text-zinc-300 animate-in fade-in slide-in-from-top-1 duration-100">
+                    <button
+                      onClick={() => {
+                        setTimeFilter('thisWeek');
+                        setIsTimeFilterOpen(false);
+                      }}
+                      className={`w-full px-3 py-2 text-left flex items-center justify-between hover:bg-gray-50 dark:hover:bg-zinc-900/50 transition-colors ${
+                        timeFilter === 'thisWeek' ? 'text-blue-600 dark:text-blue-400 bg-blue-50/10' : ''
+                      }`}
+                    >
+                      {language === 'en' ? 'This Week' : 'សប្តាហ៍នេះ'}
+                    </button>
+                    <button
+                      onClick={() => {
+                        setTimeFilter('lastWeek');
+                        setIsTimeFilterOpen(false);
+                      }}
+                      className={`w-full px-3 py-2 text-left flex items-center justify-between hover:bg-gray-50 dark:hover:bg-zinc-900/50 transition-colors ${
+                        timeFilter === 'lastWeek' ? 'text-blue-600 dark:text-blue-400 bg-blue-50/10' : ''
+                      }`}
+                    >
+                      {language === 'en' ? 'Last Week' : 'សប្តាហ៍មុន'}
+                    </button>
+                  </div>
+                </>
+              )}
             </div>
           </div>
 
@@ -438,7 +476,7 @@ export default function Dashboard() {
 
             {/* Bars columns container */}
             <div className="flex-1 flex justify-between items-end pl-8 h-full">
-              {[
+              {(timeFilter === 'thisWeek' ? [
                 { day: language === 'en' ? 'Mon' : 'ចន្ទ', inc: 2.7, exp: 1.4 },
                 { day: language === 'en' ? 'Tue' : 'អង្គារ', inc: 2.5, exp: 1.4 },
                 { day: language === 'en' ? 'Wed' : 'ពុធ', inc: 3.4, exp: 1.8 },
@@ -446,7 +484,15 @@ export default function Dashboard() {
                 { day: language === 'en' ? 'Fri' : 'សុក្រ', inc: 3.0, exp: 1.6 },
                 { day: language === 'en' ? 'Sat' : 'សៅរ៍', inc: 2.8, exp: 1.5 },
                 { day: language === 'en' ? 'Sun' : 'អាទិត្យ', inc: 1.7, exp: 0.7 }
-              ].map((d, index) => (
+              ] : [
+                { day: language === 'en' ? 'Mon' : 'ចន្ទ', inc: 2.1, exp: 1.2 },
+                { day: language === 'en' ? 'Tue' : 'អង្គារ', inc: 2.3, exp: 1.1 },
+                { day: language === 'en' ? 'Wed' : 'ពុធ', inc: 2.9, exp: 1.5 },
+                { day: language === 'en' ? 'Thu' : 'ព្រហ', inc: 3.2, exp: 1.4 },
+                { day: language === 'en' ? 'Fri' : 'សុក្រ', inc: 2.8, exp: 1.3 },
+                { day: language === 'en' ? 'Sat' : 'សៅរ៍', inc: 3.1, exp: 1.6 },
+                { day: language === 'en' ? 'Sun' : 'អាទិត្យ', inc: 1.5, exp: 0.8 }
+              ]).map((d, index) => (
                 <div key={index} className="flex flex-col items-center gap-1 h-full justify-end w-10 z-10">
                   {/* Visual Bars */}
                   <div className="flex items-end gap-1 h-24">
