@@ -4,6 +4,7 @@ import "./globals.css";
 import { AppContextProvider } from "../context/AppContext";
 import { ToastContainer } from "../components/ToastContainer";
 import { DashboardLayout } from "../components/DashboardLayout";
+import Script from "next/script";
 
 const inter = Inter({
   variable: "--font-sans",
@@ -23,6 +24,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.variable} h-full antialiased font-sans`}>
       <body className="min-h-full bg-gray-50/30 text-gray-900">
+        <Script src="https://telegram.org/js/telegram-web-app.js" strategy="beforeInteractive" />
         <AppContextProvider>
           <DashboardLayout>
             {children}

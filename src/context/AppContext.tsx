@@ -53,6 +53,7 @@ interface AppContextType {
   
   showToast: (message: string, type: 'success' | 'error' | 'info') => void;
   dismissToast: (id: string) => void;
+  isTelegramMiniApp: boolean;
 }
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
@@ -70,9 +71,31 @@ export const AppContextProvider: React.FC<{ children: React.ReactNode }> = ({ ch
   const [language, setLanguageState] = useState<Language>('en');
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [theme, setTheme] = useState<'light' | 'dark'>('light');
+  const [isTelegramMiniApp, setIsTelegramMiniApp] = useState(false);
 
   // Load initial data on mount (prefers localStorage first, falls back to Backend API)
   useEffect(() => {
+    // 1. Detect Telegram Mini App container
+    if (typeof window !== 'undefined' && (window as any).Telegram?.WebApp?.initData) {
+      setIsTelegramMiniApp(true);
+      (window as any).Telegram.WebApp.ready();
+      (window as any).Telegram.WebApp.expand();
+      
+      // Auto authenticate inside Telegram
+      setIsAuthenticated(true);
+      localStorage.setItem('cra_auth', 'true');
+      
+      // Sync theme with Telegram colorScheme
+      const tgScheme = (window as any).Telegram.WebApp.colorScheme;
+      if (tgScheme === 'dark') {
+        setTheme('dark');
+        document.documentElement.classList.add('dark');
+      } else if (tgScheme === 'light') {
+        setTheme('light');
+        document.documentElement.classList.remove('dark');
+      }
+    }
+
     try {
       const storedTheme = localStorage.getItem('cra_theme') as 'light' | 'dark' | null;
       if (storedTheme) {
@@ -543,6 +566,7 @@ export const AppContextProvider: React.FC<{ children: React.ReactNode }> = ({ ch
       isLoaded,
       language,
       setLanguage,
+      isTelegramMiniApp,
       setCurrentStaff,
       t,
       isAuthenticated,

@@ -1,6 +1,9 @@
 "use client";
 
 import React, { useState } from 'react';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import { LayoutDashboard, CalendarRange, Car, Receipt, Settings } from 'lucide-react';
 import { Sidebar } from './Sidebar';
 import { Header } from './Header';
 import { useApp } from '../context/AppContext';
@@ -8,7 +11,8 @@ import { LoginScreen } from './LoginScreen';
 
 export const DashboardLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const { isLoaded, isAuthenticated } = useApp();
+  const { isLoaded, isAuthenticated, isTelegramMiniApp, t } = useApp();
+  const pathname = usePathname();
 
   if (!isLoaded) {
     return (
@@ -23,6 +27,47 @@ export const DashboardLayout: React.FC<{ children: React.ReactNode }> = ({ child
 
   if (!isAuthenticated) {
     return <LoginScreen />;
+  }
+
+  // Telegram Mini App container layout
+  if (isTelegramMiniApp) {
+    const navItems = [
+      { name: t('dashboard'), href: '/', icon: LayoutDashboard },
+      { name: t('rentals'), href: '/rentals', icon: CalendarRange },
+      { name: t('vehicles'), href: '/vehicles', icon: Car },
+      { name: t('expenses'), href: '/expenses', icon: Receipt },
+      { name: t('settings'), href: '/settings', icon: Settings },
+    ];
+
+    return (
+      <div className="flex flex-col h-screen overflow-hidden bg-gray-50/30 dark:bg-zinc-950">
+        <main className="flex-1 overflow-y-auto focus:outline-none p-4 pb-20 dark:bg-zinc-900/40">
+          {children}
+        </main>
+        
+        {/* Bottom Tab Navigation Bar for Telegram */}
+        <nav className="fixed bottom-0 left-0 right-0 z-50 bg-white/95 dark:bg-zinc-955/95 backdrop-blur-md border-t border-gray-200 dark:border-zinc-900 flex justify-around items-center h-15 px-2 shadow-md shrink-0">
+          {navItems.map((item) => {
+            const Icon = item.icon;
+            const isActive = pathname === item.href;
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                className={`flex flex-col items-center justify-center flex-1 h-full py-1 gap-1 text-[9px] font-semibold transition-all ${
+                  isActive 
+                    ? 'text-blue-600 dark:text-blue-400 scale-105 font-bold' 
+                    : 'text-gray-400 dark:text-zinc-500 hover:text-gray-600 dark:hover:text-zinc-300'
+                }`}
+              >
+                <Icon className={`h-4.5 w-4.5 transition-transform ${isActive ? 'stroke-[2.5px]' : 'stroke-[2px]'}`} />
+                <span className="truncate max-w-[64px]">{item.name}</span>
+              </Link>
+            );
+          })}
+        </nav>
+      </div>
+    );
   }
 
   return (
