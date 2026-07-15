@@ -13,10 +13,10 @@ import {
 const DB_FILE = path.join(process.cwd(), 'db.json');
 
 const DEFAULT_DB = {
-  vehicles: defaultVehicles,
-  rentals: defaultRentals,
-  expenses: defaultExpenses,
-  drivers: defaultDrivers,
+  vehicles: [],
+  rentals: [],
+  expenses: [],
+  drivers: [],
   currentStaff: 'Sokmean',
   settings: defaultSettings,
   language: 'en'
