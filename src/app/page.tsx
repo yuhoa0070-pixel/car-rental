@@ -45,6 +45,63 @@ export default function Dashboard() {
   const fleetTotal = vehicles.length || 1;
   const rentedPct = Math.round((rentedCars.length / fleetTotal) * 100);
 
+  // Dynamic Weekly Analytics Calculator
+  const getWeeklyAnalytics = (filter: 'thisWeek' | 'lastWeek') => {
+    const today = new Date();
+    const currentDay = today.getDay(); // 0 is Sunday, 1 is Monday, etc.
+    const distanceToMonday = currentDay === 0 ? -6 : 1 - currentDay;
+    
+    const mondayOfThisWeek = new Date(today);
+    mondayOfThisWeek.setDate(today.getDate() + distanceToMonday);
+    mondayOfThisWeek.setHours(0, 0, 0, 0);
+    
+    const targetMonday = new Date(mondayOfThisWeek);
+    if (filter === 'lastWeek') {
+      targetMonday.setDate(mondayOfThisWeek.getDate() - 7);
+    }
+    
+    const daysArray = Array.from({ length: 7 }, (_, i) => {
+      const day = new Date(targetMonday);
+      day.setDate(targetMonday.getDate() + i);
+      return day;
+    });
+    
+    const dayNamesEn = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+    const dayNamesKm = ['ចន្ទ', 'អង្គារ', 'ពុធ', 'ព្រហ', 'សុក្រ', 'សៅរ៍', 'អាទិត្យ'];
+    
+    const data = daysArray.map((dayDate, index) => {
+      const dateStr = dayDate.toISOString().split('T')[0];
+      
+      // Calculate real income from Completed rentals returned on this day
+      const dayIncome = rentals
+        .filter(r => r.status === 'Completed' && r.returnedAt === dateStr)
+        .reduce((sum, r) => sum + (r.finalTotal || 0), 0);
+        
+      // Calculate real expenses logged on this day
+      const dayExpense = expenses
+        .filter(e => e.date === dateStr)
+        .reduce((sum, e) => sum + e.amount, 0);
+        
+      return {
+        day: language === 'en' ? dayNamesEn[index] : dayNamesKm[index],
+        inc: dayIncome,
+        exp: dayExpense
+      };
+    });
+    
+    return data;
+  };
+
+  const chartData = getWeeklyAnalytics(timeFilter);
+  const maxVal = Math.max(...chartData.map(d => Math.max(d.inc, d.exp)), 100);
+
+  const formatYLabel = (val: number) => {
+    if (val >= 1000) {
+      return `$${(val / 1000).toFixed(1).replace('.0', '')}K`;
+    }
+    return `$${Math.round(val)}`;
+  };
+
   // Helper to extract staff initials
   const getStaffInitials = (name: string) => {
     if (!name) return "ST";
@@ -466,51 +523,37 @@ export default function Dashboard() {
             </div>
 
             {/* Left Y-Axis labels */}
-            <div className="absolute left-0 top-0 bottom-0 flex flex-col justify-between pointer-events-none text-[9px]">
-              <span>$4K</span>
-              <span>$3K</span>
-              <span>$2K</span>
-              <span>$1K</span>
+            <div className="absolute left-0 top-0 bottom-0 flex flex-col justify-between pointer-events-none text-[9px] w-8 pr-1 font-mono text-right">
+              <span>{formatYLabel(maxVal)}</span>
+              <span>{formatYLabel(maxVal * 0.75)}</span>
+              <span>{formatYLabel(maxVal * 0.50)}</span>
+              <span>{formatYLabel(maxVal * 0.25)}</span>
               <span>$0</span>
             </div>
 
             {/* Bars columns container */}
-            <div className="flex-1 flex justify-between items-end pl-8 h-full">
-              {(timeFilter === 'thisWeek' ? [
-                { day: language === 'en' ? 'Mon' : 'ចន្ទ', inc: 2.7, exp: 1.4 },
-                { day: language === 'en' ? 'Tue' : 'អង្គារ', inc: 2.5, exp: 1.4 },
-                { day: language === 'en' ? 'Wed' : 'ពុធ', inc: 3.4, exp: 1.8 },
-                { day: language === 'en' ? 'Thu' : 'ព្រហ', inc: 3.6, exp: 1.5 },
-                { day: language === 'en' ? 'Fri' : 'សុក្រ', inc: 3.0, exp: 1.6 },
-                { day: language === 'en' ? 'Sat' : 'សៅរ៍', inc: 2.8, exp: 1.5 },
-                { day: language === 'en' ? 'Sun' : 'អាទិត្យ', inc: 1.7, exp: 0.7 }
-              ] : [
-                { day: language === 'en' ? 'Mon' : 'ចន្ទ', inc: 2.1, exp: 1.2 },
-                { day: language === 'en' ? 'Tue' : 'អង្គារ', inc: 2.3, exp: 1.1 },
-                { day: language === 'en' ? 'Wed' : 'ពុធ', inc: 2.9, exp: 1.5 },
-                { day: language === 'en' ? 'Thu' : 'ព្រហ', inc: 3.2, exp: 1.4 },
-                { day: language === 'en' ? 'Fri' : 'សុក្រ', inc: 2.8, exp: 1.3 },
-                { day: language === 'en' ? 'Sat' : 'សៅរ៍', inc: 3.1, exp: 1.6 },
-                { day: language === 'en' ? 'Sun' : 'អាទិត្យ', inc: 1.5, exp: 0.8 }
-              ]).map((d, index) => (
+            <div className="flex-1 flex justify-between items-end pl-10 pr-2 h-full">
+              {chartData.map((d, index) => (
                 <div key={index} className="flex flex-col items-center gap-1 h-full justify-end w-10 z-10">
                   {/* Visual Bars */}
                   <div className="flex items-end gap-1 h-24">
                     {/* Income bar */}
                     <div 
-                      style={{ height: `${(d.inc / 4) * 100}%` }}
+                      style={{ height: `${(d.inc / maxVal) * 100}%` }}
                       className="w-2.5 bg-emerald-500 rounded-t-sm hover:opacity-90 transition-opacity"
-                      title={`Income: $${d.inc * 1000}`}
+                      title={`Income: $${d.inc.toLocaleString()}`}
                     />
                     {/* Expense bar */}
                     <div 
-                      style={{ height: `${(d.exp / 4) * 100}%` }}
+                      style={{ height: `${(d.exp / maxVal) * 100}%` }}
                       className="w-2.5 bg-red-500 rounded-t-sm hover:opacity-90 transition-opacity"
-                      title={`Expense: $${d.exp * 1000}`}
+                      title={`Expense: $${d.exp.toLocaleString()}`}
                     />
                   </div>
                   {/* Label */}
-                  <span className="text-[10px] text-gray-500 dark:text-zinc-400 mt-1">{d.day}</span>
+                  <span className="text-[9px] font-bold text-gray-500 dark:text-zinc-400 mt-1.5 truncate max-w-[36px] text-center" title={d.day}>
+                    {d.day}
+                  </span>
                 </div>
               ))}
             </div>
