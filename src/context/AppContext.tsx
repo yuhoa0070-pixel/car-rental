@@ -66,6 +66,7 @@ export const AppContextProvider: React.FC<{ children: React.ReactNode }> = ({ ch
   const [settings, setSettings] = useState<Settings>(defaultSettings);
   const [toasts, setToasts] = useState<Toast[]>([]);
   const [isLoaded, setIsLoaded] = useState(false);
+  const [isSyncReady, setIsSyncReady] = useState(false);
   const [language, setLanguageState] = useState<Language>('en');
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [theme, setTheme] = useState<'light' | 'dark'>('light');
@@ -107,7 +108,6 @@ export const AppContextProvider: React.FC<{ children: React.ReactNode }> = ({ ch
         if (storedCurrentStaff) setCurrentStaffState(storedCurrentStaff);
         if (storedLanguage === 'en' || storedLanguage === 'km') setLanguageState(storedLanguage as Language);
         setIsLoaded(true);
-        return;
       }
     } catch (e) {
       console.error("Failed to load initial localStorage state:", e);
@@ -152,13 +152,16 @@ export const AppContextProvider: React.FC<{ children: React.ReactNode }> = ({ ch
         }
       } catch (err) {
         console.error("Backend fetch failed, using default mock data:", err);
-        setVehicles(defaultVehicles);
-        setRentals(defaultRentals);
-        setExpenses(defaultExpenses);
-        setSettings(defaultSettings);
-        setDrivers(defaultDrivers);
+        if (!localStorage.getItem('cra_vehicles')) {
+          setVehicles(defaultVehicles);
+          setRentals(defaultRentals);
+          setExpenses(defaultExpenses);
+          setSettings(defaultSettings);
+          setDrivers(defaultDrivers);
+        }
       } finally {
         setIsLoaded(true);
+        setIsSyncReady(true);
       }
     };
 
@@ -167,7 +170,7 @@ export const AppContextProvider: React.FC<{ children: React.ReactNode }> = ({ ch
 
   // Sync state to Backend on change
   useEffect(() => {
-    if (!isLoaded) return;
+    if (!isLoaded || !isSyncReady) return;
 
     const syncToBackend = async () => {
       try {
@@ -190,7 +193,7 @@ export const AppContextProvider: React.FC<{ children: React.ReactNode }> = ({ ch
     };
 
     syncToBackend();
-  }, [vehicles, rentals, expenses, drivers, currentStaff, settings, language, isLoaded]);
+  }, [vehicles, rentals, expenses, drivers, currentStaff, settings, language, isLoaded, isSyncReady]);
 
   // Save changes helper (maintains local storage backup)
   const saveState = (key: string, data: any) => {
