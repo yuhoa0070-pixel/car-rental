@@ -19,7 +19,8 @@ import {
   Fuel,
   Users,
   Compass,
-  Check
+  Check,
+  ChevronDown
 } from 'lucide-react';
 
 export default function Dashboard() {
@@ -286,54 +287,186 @@ export default function Dashboard() {
         </div>
       </div>
 
-      {/* Fleet Utilization Circular Gauge */}
-      <div className="bg-white dark:bg-zinc-950 border border-gray-200 dark:border-zinc-900 rounded-xl p-5 shadow-xs">
-        <h2 className="text-xs font-bold text-gray-900 dark:text-zinc-100 tracking-tight">{t('fleetOccupancy')}</h2>
-        <div className="mt-5 flex flex-col sm:flex-row items-center justify-between gap-6">
-          {/* Circular donut chart */}
-          <div className="relative flex items-center justify-center h-28 w-28 shrink-0">
-            <svg className="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
-              <circle
-                cx="50"
-                cy="50"
-                r="40"
-                className="stroke-neutral-100 dark:stroke-zinc-800 fill-none"
-                strokeWidth="10"
-              />
-              <circle
-                cx="50"
-                cy="50"
-                r="40"
-                className="stroke-blue-600 fill-none transition-all duration-1000 ease-out"
-                strokeWidth="10"
-                strokeDasharray={2 * Math.PI * 40}
-                strokeDashoffset={2 * Math.PI * 40 - (rentedPct / 100) * 2 * Math.PI * 40}
-                strokeLinecap="round"
-              />
-            </svg>
-            <div className="absolute text-center">
-              <span className="text-xl font-black text-gray-900 dark:text-zinc-100 block tracking-tight">{rentedPct}%</span>
-              <span className="text-[8px] uppercase tracking-wider font-extrabold text-gray-400 dark:text-zinc-500 block mt-0.5">{t('utilizationRate')}</span>
+      {/* Visual Analytics Row */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        {/* Card: Vehicle Status Overview */}
+        <div className="bg-white dark:bg-zinc-950 border border-gray-200 dark:border-zinc-900 rounded-xl p-5 shadow-xs">
+          <div className="flex items-center justify-between border-b border-gray-100 dark:border-zinc-900 pb-3">
+            <h2 className="text-xs font-bold text-gray-900 dark:text-zinc-100 tracking-tight">
+              {language === 'en' ? 'Vehicle Status Overview' : 'ស្ថានភាពយានយន្តទូទៅ'}
+            </h2>
+            <Link 
+              href="/vehicles" 
+              className="px-3 py-1 bg-gray-50 dark:bg-zinc-900 hover:bg-gray-100 dark:hover:bg-zinc-800 text-[10px] font-bold text-gray-700 dark:text-zinc-300 border border-gray-200 dark:border-zinc-850 rounded-lg transition-colors"
+            >
+              {t('viewAll')}
+            </Link>
+          </div>
+
+          <div className="mt-5 flex items-center justify-between gap-6">
+            {/* Doughnut Chart */}
+            <div className="relative flex items-center justify-center h-28 w-28 shrink-0">
+              <svg className="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
+                {/* Background Track */}
+                <circle
+                  cx="50"
+                  cy="50"
+                  r="35"
+                  className="stroke-gray-100 dark:stroke-zinc-800 fill-none"
+                  strokeWidth="10"
+                />
+                {/* Green (Available) Segment */}
+                <circle
+                  cx="50"
+                  cy="50"
+                  r="35"
+                  className="stroke-emerald-500 fill-none"
+                  strokeWidth="10"
+                  strokeDasharray={`${(availableCars.length / fleetTotal) * 219.91} 219.91`}
+                  strokeDashoffset="0"
+                />
+                {/* Blue (Rented) Segment */}
+                <circle
+                  cx="50"
+                  cy="50"
+                  r="35"
+                  className="stroke-blue-600 fill-none"
+                  strokeWidth="10"
+                  strokeDasharray={`${(rentedCars.length / fleetTotal) * 219.91} 219.91`}
+                  strokeDashoffset={`${-((availableCars.length / fleetTotal) * 219.91)}`}
+                />
+                {/* Orange (Maintenance) Segment */}
+                <circle
+                  cx="50"
+                  cy="50"
+                  r="35"
+                  className="stroke-amber-500 fill-none"
+                  strokeWidth="10"
+                  strokeDasharray={`${(maintenanceCars.length / fleetTotal) * 219.91} 219.91`}
+                  strokeDashoffset={`${-(((availableCars.length + rentedCars.length) / fleetTotal) * 219.91)}`}
+                />
+              </svg>
+              <div className="absolute text-center">
+                <span className="text-xl font-black text-gray-900 dark:text-zinc-100 block tracking-tight">{vehicles.length}</span>
+                <span className="text-[8px] uppercase tracking-wider font-extrabold text-gray-400 dark:text-zinc-500 block mt-0.5">
+                  {language === 'en' ? 'Total Vehicles' : 'ឡានសរុប'}
+                </span>
+              </div>
+            </div>
+
+            {/* Sliced Legend List */}
+            <div className="flex-1 divide-y divide-gray-100 dark:divide-zinc-900 text-xs font-semibold text-gray-700 dark:text-zinc-350 font-mono">
+              <div className="pb-2.5 flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 shrink-0" />
+                  <span className="font-sans font-semibold text-gray-600 dark:text-zinc-400">{t('available')}</span>
+                </div>
+                <span className="font-bold text-gray-900 dark:text-zinc-100">
+                  {availableCars.length} ({Math.round((availableCars.length / fleetTotal) * 100)}%)
+                </span>
+              </div>
+              <div className="py-2.5 flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <span className="w-2.5 h-2.5 rounded-full bg-blue-600 shrink-0" />
+                  <span className="font-sans font-semibold text-gray-600 dark:text-zinc-400">{t('rented')}</span>
+                </div>
+                <span className="font-bold text-gray-900 dark:text-zinc-100">
+                  {rentedCars.length} ({Math.round((rentedCars.length / fleetTotal) * 100)}%)
+                </span>
+              </div>
+              <div className="pt-2.5 flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <span className="w-2.5 h-2.5 rounded-full bg-amber-500 shrink-0" />
+                  <span className="font-sans font-semibold text-gray-600 dark:text-zinc-400">{t('maintenance')}</span>
+                </div>
+                <span className="font-bold text-gray-900 dark:text-zinc-100">
+                  {maintenanceCars.length} ({Math.round((maintenanceCars.length / fleetTotal) * 100)}%)
+                </span>
+              </div>
             </div>
           </div>
-          
-          {/* Stats details */}
-          <div className="flex-1 grid grid-cols-2 lg:grid-cols-4 gap-4 w-full text-xs">
-            <div className="bg-neutral-50/50 dark:bg-zinc-900/30 border border-neutral-200/50 dark:border-zinc-800/60 rounded-xl p-3 flex flex-col justify-between shadow-2xs">
-              <span className="text-[10px] text-gray-450 dark:text-zinc-500 font-bold uppercase tracking-wider block">{t('totalFleet')}</span>
-              <span className="text-lg font-bold text-gray-900 dark:text-zinc-100 mt-1">{vehicles.length} {language === 'en' ? 'Cars' : 'ឡាន'}</span>
+        </div>
+
+        {/* Card: Income vs Expenses Chart */}
+        <div className="bg-white dark:bg-zinc-950 border border-gray-200 dark:border-zinc-900 rounded-xl p-5 shadow-xs flex flex-col justify-between">
+          <div className="flex items-center justify-between border-b border-gray-100 dark:border-zinc-900 pb-3">
+            <h2 className="text-xs font-bold text-gray-900 dark:text-zinc-100 tracking-tight">
+              {language === 'en' ? 'Income vs Expenses' : 'ប្រាក់ចំណូល និង ការចំណាយ'}
+            </h2>
+            {/* Dropdown Filter */}
+            <div className="relative">
+              <button
+                className="px-2.5 py-1 bg-gray-50 dark:bg-zinc-900 hover:bg-gray-100 dark:hover:bg-zinc-800 text-[10px] font-bold text-gray-700 dark:text-zinc-300 border border-gray-200 dark:border-zinc-850 rounded-lg flex items-center gap-1 transition-colors"
+              >
+                <span>{language === 'en' ? 'This Week' : 'សប្តាហ៍នេះ'}</span>
+                <ChevronDown className="h-3 w-3 text-gray-400" />
+              </button>
             </div>
-            <div className="bg-emerald-50/20 dark:bg-emerald-950/10 border border-emerald-100/50 dark:border-emerald-900/20 rounded-xl p-3 flex flex-col justify-between shadow-2xs">
-              <span className="text-[10px] text-emerald-600 dark:text-emerald-450 font-bold uppercase tracking-wider block">{t('available')}</span>
-              <span className="text-lg font-bold text-emerald-700 dark:text-emerald-450 mt-1">{availableCars.length} {language === 'en' ? 'Cars' : 'ឡាន'}</span>
+          </div>
+
+          {/* Legend */}
+          <div className="mt-3 flex items-center justify-center gap-4 text-[10px] font-bold text-gray-500 dark:text-zinc-400">
+            <div className="flex items-center gap-1.5">
+              <span className="w-2.5 h-2.5 rounded-sm bg-emerald-500" />
+              <span>{language === 'en' ? 'Income' : 'ចំណូល'}</span>
             </div>
-            <div className="bg-blue-50/20 dark:bg-blue-950/10 border border-blue-100/50 dark:border-blue-900/20 rounded-xl p-3 flex flex-col justify-between shadow-2xs">
-              <span className="text-[10px] text-blue-600 dark:text-blue-450 font-bold uppercase tracking-wider block">{t('rented')}</span>
-              <span className="text-lg font-bold text-blue-700 dark:text-blue-450 mt-1">{rentedCars.length} {language === 'en' ? 'Cars' : 'ឡាន'}</span>
+            <div className="flex items-center gap-1.5">
+              <span className="w-2.5 h-2.5 rounded-sm bg-red-500" />
+              <span>{language === 'en' ? 'Expenses' : 'ចំណាយ'}</span>
             </div>
-            <div className="bg-amber-50/20 dark:bg-amber-950/10 border border-amber-100/50 dark:border-amber-900/20 rounded-xl p-3 flex flex-col justify-between shadow-2xs">
-              <span className="text-[10px] text-amber-600 dark:text-amber-450 font-bold uppercase tracking-wider block">{t('maintenance')}</span>
-              <span className="text-lg font-bold text-amber-700 dark:text-amber-450 mt-1">{maintenanceCars.length} {language === 'en' ? 'Cars' : 'ឡាន'}</span>
+          </div>
+
+          {/* Chart Bars Grid */}
+          <div className="mt-5 flex items-end justify-between h-36 relative pt-4 text-[10px] font-semibold text-gray-400 dark:text-zinc-550">
+            {/* Background Y-Axis lines */}
+            <div className="absolute inset-0 flex flex-col justify-between pointer-events-none pr-8">
+              <div className="border-b border-gray-100 dark:border-zinc-900/60 w-full" />
+              <div className="border-b border-gray-100 dark:border-zinc-900/60 w-full" />
+              <div className="border-b border-gray-100 dark:border-zinc-900/60 w-full" />
+              <div className="border-b border-gray-100 dark:border-zinc-900/60 w-full" />
+              <div className="border-b border-gray-200 dark:border-zinc-855 w-full" />
+            </div>
+
+            {/* Left Y-Axis labels */}
+            <div className="absolute left-0 top-0 bottom-0 flex flex-col justify-between pointer-events-none text-[9px]">
+              <span>$4K</span>
+              <span>$3K</span>
+              <span>$2K</span>
+              <span>$1K</span>
+              <span>$0</span>
+            </div>
+
+            {/* Bars columns container */}
+            <div className="flex-1 flex justify-between items-end pl-8 h-full">
+              {[
+                { day: language === 'en' ? 'Mon' : 'ចន្ទ', inc: 2.7, exp: 1.4 },
+                { day: language === 'en' ? 'Tue' : 'អង្គារ', inc: 2.5, exp: 1.4 },
+                { day: language === 'en' ? 'Wed' : 'ពុធ', inc: 3.4, exp: 1.8 },
+                { day: language === 'en' ? 'Thu' : 'ព្រហ', inc: 3.6, exp: 1.5 },
+                { day: language === 'en' ? 'Fri' : 'សុក្រ', inc: 3.0, exp: 1.6 },
+                { day: language === 'en' ? 'Sat' : 'សៅរ៍', inc: 2.8, exp: 1.5 },
+                { day: language === 'en' ? 'Sun' : 'អាទិត្យ', inc: 1.7, exp: 0.7 }
+              ].map((d, index) => (
+                <div key={index} className="flex flex-col items-center gap-1 h-full justify-end w-10 z-10">
+                  {/* Visual Bars */}
+                  <div className="flex items-end gap-1 h-24">
+                    {/* Income bar */}
+                    <div 
+                      style={{ height: `${(d.inc / 4) * 100}%` }}
+                      className="w-2.5 bg-emerald-500 rounded-t-sm hover:opacity-90 transition-opacity"
+                      title={`Income: $${d.inc * 1000}`}
+                    />
+                    {/* Expense bar */}
+                    <div 
+                      style={{ height: `${(d.exp / 4) * 100}%` }}
+                      className="w-2.5 bg-red-500 rounded-t-sm hover:opacity-90 transition-opacity"
+                      title={`Expense: $${d.exp * 1000}`}
+                    />
+                  </div>
+                  {/* Label */}
+                  <span className="text-[10px] text-gray-500 dark:text-zinc-400 mt-1">{d.day}</span>
+                </div>
+              ))}
             </div>
           </div>
         </div>
