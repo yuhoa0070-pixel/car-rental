@@ -46,8 +46,7 @@ body {
 .dark .border-gray-100,
 .dark .border-gray-200,
 .dark .border-neutral-200,
-.dark .border-neutral-200\/50,
-.dark .border-gray-150 {
+.dark .border-neutral-200\/50 {
   border-color: #27272a !important; /* zinc-800 */
 }
 

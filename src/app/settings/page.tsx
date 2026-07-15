@@ -131,7 +131,7 @@ export default function SettingsPage() {
 
           <div className="p-5 space-y-4 text-xs">
             {/* Staff list */}
-            <div className="divide-y divide-gray-100 border border-gray-150 rounded-lg overflow-hidden">
+            <div className="divide-y divide-gray-100 border border-gray-200 rounded-lg overflow-hidden">
               {staffNames.map(name => (
                 <div key={name} className="px-4 py-2.5 flex items-center justify-between hover:bg-gray-50/50 transition-colors">
                   <span className="font-semibold text-gray-700">{name}</span>

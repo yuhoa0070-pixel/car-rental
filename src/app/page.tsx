@@ -398,7 +398,7 @@ export default function Dashboard() {
             ) : (
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                 {availableCars.map(car => (
-                  <div key={car.id} className="border border-gray-150 dark:border-zinc-850 rounded-xl p-4 flex flex-col justify-between hover:border-blue-100 dark:hover:border-blue-900/30 transition-colors shadow-3xs bg-white dark:bg-zinc-900/40">
+                  <div key={car.id} className="border border-gray-200 dark:border-zinc-850 rounded-xl p-4 flex flex-col justify-between hover:border-blue-100 dark:hover:border-blue-900/30 transition-colors shadow-3xs bg-white dark:bg-zinc-900/40">
                     <div>
                       <div className="flex justify-between items-start">
                         <span className="text-[10px] font-bold text-gray-400 dark:text-zinc-500 tracking-wider uppercase font-mono">{car.plateNumber}</span>
@@ -442,7 +442,7 @@ export default function Dashboard() {
                 {rentedCars.map(car => {
                   const activeContract = rentals.find(r => r.status === 'Active' && r.vehicleId === car.id);
                   return (
-                    <div key={car.id} className="border border-gray-150 dark:border-zinc-850 rounded-xl p-4 flex flex-col justify-between hover:border-blue-100/50 dark:hover:border-blue-900/30 transition-colors shadow-3xs bg-white dark:bg-zinc-900/40">
+                    <div key={car.id} className="border border-gray-200 dark:border-zinc-850 rounded-xl p-4 flex flex-col justify-between hover:border-blue-100/50 dark:hover:border-blue-900/30 transition-colors shadow-3xs bg-white dark:bg-zinc-900/40">
                       <div>
                         <div className="flex justify-between items-start">
                           <span className="text-[10px] font-bold text-gray-400 dark:text-zinc-500 tracking-wider uppercase font-mono">{car.plateNumber}</span>
@@ -489,7 +489,7 @@ export default function Dashboard() {
             ) : (
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                 {maintenanceCars.map(car => (
-                  <div key={car.id} className="border border-gray-150 dark:border-zinc-850 rounded-xl p-4 flex flex-col justify-between hover:border-amber-100 dark:hover:border-amber-900/30 transition-colors shadow-3xs bg-white dark:bg-zinc-900/40">
+                  <div key={car.id} className="border border-gray-200 dark:border-zinc-850 rounded-xl p-4 flex flex-col justify-between hover:border-amber-100 dark:hover:border-amber-900/30 transition-colors shadow-3xs bg-white dark:bg-zinc-900/40">
                     <div>
                       <div className="flex justify-between items-start">
                         <span className="text-[10px] font-bold text-gray-400 dark:text-zinc-500 tracking-wider uppercase font-mono">{car.plateNumber}</span>
@@ -576,7 +576,7 @@ export default function Dashboard() {
               return (
                 <div key={r.id} className="py-3 flex items-center justify-between gap-4 text-xs font-medium">
                   <div className="flex items-center gap-3">
-                    <div className="w-12 h-8 bg-neutral-100 dark:bg-zinc-900 rounded-lg flex items-center justify-center border border-gray-150 dark:border-zinc-800 overflow-hidden shrink-0">
+                    <div className="w-12 h-8 bg-neutral-100 dark:bg-zinc-900 rounded-lg flex items-center justify-center border border-gray-200 dark:border-zinc-800 overflow-hidden shrink-0">
                       <VehicleVisual type={car?.photo || 'sedan'} className="h-6 w-8" />
                     </div>
                     <div>

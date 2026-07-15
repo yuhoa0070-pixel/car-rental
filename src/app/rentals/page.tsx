@@ -959,7 +959,7 @@ function RentalsPageContent() {
               </div>
 
               {/* Live Invoice Preview */}
-              <div className="bg-gray-55/50 border border-gray-150 rounded-xl p-3.5 space-y-2">
+              <div className="bg-gray-55/50 border border-gray-200 rounded-xl p-3.5 space-y-2">
                 <span className="text-[10px] font-bold text-gray-900 uppercase block tracking-wider">{t('invoiceDetails')}</span>
                 <div className="space-y-1 text-gray-500 font-medium">
                   <div className="flex justify-between">
