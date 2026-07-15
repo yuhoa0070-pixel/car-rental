@@ -42,6 +42,7 @@ export const Header: React.FC<HeaderProps> = ({ onMenuToggle }) => {
   const [mounted, setMounted] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isLangDropdownOpen, setIsLangDropdownOpen] = useState(false);
+  const [isLogoutConfirmOpen, setIsLogoutConfirmOpen] = useState(false);
 
   // Prevent hydration mismatch for locale-dependent dates
   useEffect(() => {
@@ -179,13 +180,8 @@ export const Header: React.FC<HeaderProps> = ({ onMenuToggle }) => {
                 <div className="border-t border-gray-100 dark:border-zinc-900 my-1" />
                 <button
                   onClick={() => {
-                    const msg = language === 'en' 
-                      ? 'Are you sure you want to log out?' 
-                      : 'តើអ្នកប្រាកដជាចង់ចាកចេញមែនទេ?';
-                    if (window.confirm(msg)) {
-                      logout();
-                      setIsDropdownOpen(false);
-                    }
+                    setIsLogoutConfirmOpen(true);
+                    setIsDropdownOpen(false);
                   }}
                   type="button"
                   className="w-full px-3.5 py-2 text-left flex items-center gap-2 text-red-600 hover:bg-red-50/50 dark:hover:bg-red-950/20 transition-colors font-bold"
@@ -198,6 +194,43 @@ export const Header: React.FC<HeaderProps> = ({ onMenuToggle }) => {
           )}
         </div>
       </div>
+
+      {/* Custom Confirmation Modal */}
+      {isLogoutConfirmOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+          <div className="fixed inset-0 bg-black/45 dark:bg-black/60 backdrop-blur-xs transition-opacity" onClick={() => setIsLogoutConfirmOpen(false)} />
+          <div className="relative bg-white dark:bg-zinc-950 border border-gray-150 dark:border-zinc-850 rounded-2xl shadow-xl max-w-sm w-full p-5 text-xs text-center animate-in fade-in zoom-in-95 duration-150">
+            <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-red-50 dark:bg-red-950/20 text-red-600 mb-4 border border-red-100 dark:border-red-950/10">
+              <LogOut className="h-5 w-5" />
+            </div>
+            <h3 className="text-sm font-bold text-gray-900 dark:text-zinc-100 mb-2">
+              {language === 'en' ? 'Confirm Log Out' : 'បញ្ជាក់ការចាកចេញ'}
+            </h3>
+            <p className="text-gray-500 dark:text-zinc-400 font-medium leading-relaxed mb-6 px-2">
+              {language === 'en'
+                ? 'Are you sure you want to log out?'
+                : 'តើអ្នកប្រាកដជាចង់ចាកចេញមែនទេ?'}
+            </p>
+            <div className="flex items-center justify-center gap-3">
+              <button
+                onClick={() => setIsLogoutConfirmOpen(false)}
+                className="px-4 py-2 border border-gray-200 dark:border-zinc-800 hover:bg-gray-50 dark:hover:bg-zinc-900 text-gray-700 dark:text-zinc-300 font-semibold rounded-lg shadow-2xs transition-colors"
+              >
+                {language === 'en' ? 'Cancel' : 'បោះបង់'}
+              </button>
+              <button
+                onClick={() => {
+                  logout();
+                  setIsLogoutConfirmOpen(false);
+                }}
+                className="px-4 py-2 bg-red-600 hover:bg-red-750 text-white font-semibold rounded-lg shadow-sm transition-colors"
+              >
+                {language === 'en' ? 'Log Out' : 'ចាកចេញ'}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </header>
   );
 };

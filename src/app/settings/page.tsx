@@ -19,6 +19,7 @@ export default function SettingsPage() {
   
   // New Staff Input state
   const [newStaffName, setNewStaffName] = useState('');
+  const [deleteTarget, setDeleteTarget] = useState<string | null>(null);
 
   // Submit Business Settings
   const handleSaveBusiness = (e: React.FormEvent) => {
@@ -50,34 +51,7 @@ export default function SettingsPage() {
     });
   };
 
-  // Delete staff
-  const handleDeleteStaff = (nameToRemove: string) => {
-    if (staffNames.length <= 1) {
-      alert(
-        language === 'en' 
-          ? "You must retain at least one staff member to register transactions." 
-          : "អ្នកត្រូវតែរក្សាទុកបុគ្គលិកយ៉ាងហោចណាស់ម្នាក់ ដើម្បីចុះឈ្មោះប្រតិបត្តិការ។"
-      );
-      return;
-    }
 
-    const confirmDelete = window.confirm(
-      language === 'en'
-        ? `Are you sure you want to delete "${nameToRemove}" from the staff directory?`
-        : `តើអ្នកប្រាកដជាចង់លុប "${nameToRemove}" ចេញពីបញ្ជីបុគ្គលិកមែនទេ?`
-    );
-    if (!confirmDelete) return;
-
-    const updated = staffNames.filter(name => name !== nameToRemove);
-    setStaffNames(updated);
-
-    // Auto-save settings
-    updateSettings({
-      businessName,
-      currency,
-      staffNames: updated
-    });
-  };
 
   return (
     <div className="space-y-8 max-w-4xl mx-auto">
@@ -148,7 +122,17 @@ export default function SettingsPage() {
                 <div key={name} className="px-4 py-2.5 flex items-center justify-between hover:bg-gray-50/50 transition-colors">
                   <span className="font-semibold text-gray-700">{name}</span>
                   <button
-                    onClick={() => handleDeleteStaff(name)}
+                    onClick={() => {
+                      if (staffNames.length <= 1) {
+                        alert(
+                          language === 'en' 
+                            ? "You must retain at least one staff member to register transactions." 
+                            : "អ្នកត្រូវតែរក្សាទុកបុគ្គលិកយ៉ាងហោចណាស់ម្នាក់ ដើម្បីចុះឈ្មោះប្រតិបត្តិការ។"
+                        );
+                        return;
+                      }
+                      setDeleteTarget(name);
+                    }}
                     className="p-1 text-red-500 hover:text-red-700 hover:bg-red-50 rounded-md transition-colors"
                     title={t('confirmDelete')}
                   >
@@ -180,6 +164,49 @@ export default function SettingsPage() {
         </div>
 
       </div>
+
+      {/* Custom Confirmation Modal */}
+      {deleteTarget && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+          <div className="fixed inset-0 bg-black/45 dark:bg-black/60 backdrop-blur-xs transition-opacity" onClick={() => setDeleteTarget(null)} />
+          <div className="relative bg-white dark:bg-zinc-950 border border-gray-150 dark:border-zinc-850 rounded-2xl shadow-xl max-w-sm w-full p-5 text-xs text-center animate-in fade-in zoom-in-95 duration-150">
+            <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-red-50 dark:bg-red-950/20 text-red-600 mb-4 border border-red-100 dark:border-red-950/10">
+              <Trash2 className="h-5 w-5" />
+            </div>
+            <h3 className="text-sm font-bold text-gray-900 dark:text-zinc-100 mb-2">
+              {language === 'en' ? 'Confirm Deletion' : 'បញ្ជាក់ការលុប'}
+            </h3>
+            <p className="text-gray-500 dark:text-zinc-400 font-medium leading-relaxed mb-6 px-2">
+              {language === 'en'
+                ? `Are you sure you want to delete "${deleteTarget}" from the staff directory?`
+                : `តើអ្នកប្រាកដជាចង់លុប "${deleteTarget}" ចេញពីបញ្ជីបុគ្គលិកមែនទេ?`}
+            </p>
+            <div className="flex items-center justify-center gap-3">
+              <button
+                onClick={() => setDeleteTarget(null)}
+                className="px-4 py-2 border border-gray-200 dark:border-zinc-800 hover:bg-gray-50 dark:hover:bg-zinc-900 text-gray-700 dark:text-zinc-300 font-semibold rounded-lg shadow-2xs transition-colors"
+              >
+                {language === 'en' ? 'Cancel' : 'បោះបង់'}
+              </button>
+              <button
+                onClick={() => {
+                  const updated = staffNames.filter(name => name !== deleteTarget);
+                  setStaffNames(updated);
+                  updateSettings({
+                    businessName,
+                    currency,
+                    staffNames: updated
+                  });
+                  setDeleteTarget(null);
+                }}
+                className="px-4 py-2 bg-red-600 hover:bg-red-750 text-white font-semibold rounded-lg shadow-sm transition-colors"
+              >
+                {language === 'en' ? 'Delete' : 'លុប'}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
