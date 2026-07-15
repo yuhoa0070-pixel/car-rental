@@ -322,7 +322,7 @@ export default function Dashboard() {
           </Link>
           <Link 
             href="/expenses" 
-            className="flex items-center gap-1.5 px-3.5 py-2 bg-white dark:bg-zinc-900 border border-gray-250 dark:border-zinc-800 hover:bg-gray-50 dark:hover:bg-zinc-850 text-gray-700 dark:text-zinc-200 rounded-lg text-xs font-semibold shadow-2xs transition-all"
+            className="flex items-center gap-1.5 px-3.5 py-2 bg-white dark:bg-zinc-900 border border-gray-200 dark:border-zinc-800 hover:bg-gray-50 dark:hover:bg-zinc-855 text-gray-700 dark:text-zinc-200 rounded-lg text-xs font-semibold shadow-2xs transition-all"
           >
             <Receipt className="h-3.5 w-3.5 text-gray-400 dark:text-zinc-500" />
             {t('logExpense')}

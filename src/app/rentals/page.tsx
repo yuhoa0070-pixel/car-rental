@@ -354,7 +354,7 @@ function RentalsPageContent() {
             placeholder={t('searchPlaceholder')}
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-9 pr-3 py-1.5 bg-white border border-gray-250 rounded-lg text-xs focus:outline-none focus:ring-1 focus:ring-black"
+            className="w-full pl-9 pr-3 py-1.5 bg-white border border-gray-200 rounded-lg text-xs focus:outline-none focus:ring-1 focus:ring-black"
           />
         </div>
       </div>
@@ -512,7 +512,7 @@ function RentalsPageContent() {
                   type="button"
                   onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
                   disabled={activePage === 1}
-                  className="px-3 py-1.5 bg-white border border-gray-250 rounded-lg font-semibold hover:bg-neutral-50/80 disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-2xs text-[11px]"
+                  className="px-3 py-1.5 bg-white border border-gray-200 rounded-lg font-semibold hover:bg-neutral-50/80 disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-2xs text-[11px]"
                 >
                   {language === 'en' ? 'Previous' : 'មុន'}
                 </button>
@@ -523,7 +523,7 @@ function RentalsPageContent() {
                   type="button"
                   onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
                   disabled={activePage === totalPages}
-                  className="px-3 py-1.5 bg-white border border-gray-250 rounded-lg font-semibold hover:bg-neutral-50/80 disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-2xs text-[11px]"
+                  className="px-3 py-1.5 bg-white border border-gray-200 rounded-lg font-semibold hover:bg-neutral-50/80 disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-2xs text-[11px]"
                 >
                   {language === 'en' ? 'Next' : 'បន្ទាប់'}
                 </button>

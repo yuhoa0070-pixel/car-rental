@@ -177,7 +177,7 @@ export default function ExpensesPage() {
       </div>
 
       {/* Filters Bar */}
-      <div className="flex flex-col sm:flex-row sm:items-center gap-4 bg-white dark:bg-zinc-950 border border-gray-250 dark:border-zinc-900 p-4 rounded-xl shadow-xs">
+      <div className="flex flex-col sm:flex-row sm:items-center gap-4 bg-white dark:bg-zinc-950 border border-gray-200 dark:border-zinc-900 p-4 rounded-xl shadow-xs">
         <span className="text-xs font-bold text-gray-705 dark:text-zinc-350">{t('filters')}៖</span>
         
         {/* Vehicle Filter */}
