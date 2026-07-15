@@ -311,45 +311,45 @@ export default function Dashboard() {
                 <circle
                   cx="50"
                   cy="50"
-                  r="35"
+                  r="40"
                   className="stroke-gray-100 dark:stroke-zinc-800 fill-none"
-                  strokeWidth="10"
+                  strokeWidth="8"
                 />
                 {/* Green (Available) Segment */}
                 <circle
                   cx="50"
                   cy="50"
-                  r="35"
+                  r="40"
                   className="stroke-emerald-500 fill-none"
-                  strokeWidth="10"
-                  strokeDasharray={`${(availableCars.length / fleetTotal) * 219.91} 219.91`}
+                  strokeWidth="8"
+                  strokeDasharray={`${(availableCars.length / fleetTotal) * 251.32} 251.32`}
                   strokeDashoffset="0"
                 />
                 {/* Blue (Rented) Segment */}
                 <circle
                   cx="50"
                   cy="50"
-                  r="35"
+                  r="40"
                   className="stroke-blue-600 fill-none"
-                  strokeWidth="10"
-                  strokeDasharray={`${(rentedCars.length / fleetTotal) * 219.91} 219.91`}
-                  strokeDashoffset={`${-((availableCars.length / fleetTotal) * 219.91)}`}
+                  strokeWidth="8"
+                  strokeDasharray={`${(rentedCars.length / fleetTotal) * 251.32} 251.32`}
+                  strokeDashoffset={`${-((availableCars.length / fleetTotal) * 251.32)}`}
                 />
                 {/* Orange (Maintenance) Segment */}
                 <circle
                   cx="50"
                   cy="50"
-                  r="35"
+                  r="40"
                   className="stroke-amber-500 fill-none"
-                  strokeWidth="10"
-                  strokeDasharray={`${(maintenanceCars.length / fleetTotal) * 219.91} 219.91`}
-                  strokeDashoffset={`${-(((availableCars.length + rentedCars.length) / fleetTotal) * 219.91)}`}
+                  strokeWidth="8"
+                  strokeDasharray={`${(maintenanceCars.length / fleetTotal) * 251.32} 251.32`}
+                  strokeDashoffset={`${-(((availableCars.length + rentedCars.length) / fleetTotal) * 251.32)}`}
                 />
               </svg>
-              <div className="absolute text-center">
-                <span className="text-xl font-black text-gray-900 dark:text-zinc-100 block tracking-tight">{vehicles.length}</span>
-                <span className="text-[8px] uppercase tracking-wider font-extrabold text-gray-400 dark:text-zinc-500 block mt-0.5">
-                  {language === 'en' ? 'Total Vehicles' : 'ឡានសរុប'}
+              <div className="absolute text-center flex flex-col items-center justify-center">
+                <span className="text-xl font-bold text-gray-900 dark:text-zinc-100 block tracking-tight leading-none">{vehicles.length}</span>
+                <span className="text-[9px] font-medium text-gray-400 dark:text-zinc-550 block mt-1 leading-none">
+                  {language === 'en' ? 'Vehicles' : 'យានយន្ត'}
                 </span>
               </div>
             </div>
