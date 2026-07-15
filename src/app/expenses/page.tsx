@@ -15,7 +15,8 @@ import {
   Sparkles, 
   Coins, 
   HelpCircle,
-  AlertTriangle
+  AlertTriangle,
+  ChevronDown
 } from 'lucide-react';
 
 export default function ExpensesPage() {
@@ -33,6 +34,8 @@ export default function ExpensesPage() {
   // Search/Filters state
   const [vehicleFilter, setVehicleFilter] = useState('');
   const [typeFilter, setTypeFilter] = useState('');
+  const [isVehicleDropdownOpen, setIsVehicleDropdownOpen] = useState(false);
+  const [isCategoryDropdownOpen, setIsCategoryDropdownOpen] = useState(false);
 
   // Modals state
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
@@ -174,40 +177,117 @@ export default function ExpensesPage() {
       </div>
 
       {/* Filters Bar */}
-      <div className="flex flex-col sm:flex-row sm:items-center gap-4 bg-white border border-gray-200 p-4 rounded-xl shadow-xs">
-        <span className="text-xs font-bold text-gray-700">{t('filters')}៖</span>
+      <div className="flex flex-col sm:flex-row sm:items-center gap-4 bg-white dark:bg-zinc-950 border border-gray-250 dark:border-zinc-900 p-4 rounded-xl shadow-xs">
+        <span className="text-xs font-bold text-gray-705 dark:text-zinc-350">{t('filters')}៖</span>
         
         {/* Vehicle Filter */}
         <div className="flex items-center gap-2">
-          <label className="text-[11px] font-semibold text-gray-400 uppercase">{t('vehicleFilter')}</label>
-          <select
-            value={vehicleFilter}
-            onChange={(e) => setVehicleFilter(e.target.value)}
-            className="px-2.5 py-1.5 bg-white border border-gray-200 rounded-lg text-xs focus:outline-none focus:ring-1 focus:ring-black"
-          >
-            <option value="">{t('allVehicles')}</option>
-            {vehicles.map(v => (
-              <option key={v.id} value={v.id}>{v.carName} ({v.plateNumber})</option>
-            ))}
-          </select>
+          <label className="text-[11px] font-semibold text-gray-400 dark:text-zinc-500 uppercase">{t('vehicleFilter')}</label>
+          <div className="relative">
+            <button
+              onClick={() => {
+                setIsVehicleDropdownOpen(!isVehicleDropdownOpen);
+                setIsCategoryDropdownOpen(false);
+              }}
+              className="px-3 py-1.5 bg-white dark:bg-zinc-900 border border-gray-200 dark:border-zinc-800 rounded-lg text-xs font-semibold text-gray-700 dark:text-zinc-350 hover:bg-gray-50 dark:hover:bg-zinc-800 flex items-center justify-between gap-1.5 min-w-[140px] shadow-2xs focus:outline-none"
+            >
+              <span>
+                {vehicleFilter === '' 
+                  ? t('allVehicles') 
+                  : vehicles.find(v => v.id === vehicleFilter)?.carName || t('allVehicles')
+                }
+              </span>
+              <ChevronDown className="h-3.5 w-3.5 text-gray-400 dark:text-zinc-550" />
+            </button>
+            
+            {isVehicleDropdownOpen && (
+              <>
+                <div className="fixed inset-0 z-10" onClick={() => setIsVehicleDropdownOpen(false)} />
+                <div className="absolute left-0 mt-1 w-56 bg-white dark:bg-zinc-950 border border-gray-200 dark:border-zinc-800 rounded-xl shadow-lg py-1.5 z-20 text-xs font-semibold text-gray-750 dark:text-zinc-300 animate-in fade-in slide-in-from-top-1 duration-100 max-h-60 overflow-y-auto">
+                  <button
+                    onClick={() => {
+                      setVehicleFilter('');
+                      setIsVehicleDropdownOpen(false);
+                    }}
+                    className={`w-full px-3 py-2 text-left flex items-center justify-between hover:bg-gray-50 dark:hover:bg-zinc-900/50 transition-colors ${
+                      vehicleFilter === '' ? 'text-blue-600 dark:text-blue-400 font-bold bg-blue-50/10' : ''
+                    }`}
+                  >
+                    {t('allVehicles')}
+                  </button>
+                  {vehicles.map(v => (
+                    <button
+                      key={v.id}
+                      onClick={() => {
+                        setVehicleFilter(v.id);
+                        setIsVehicleDropdownOpen(false);
+                      }}
+                      className={`w-full px-3 py-2 text-left flex items-center justify-between hover:bg-gray-50 dark:hover:bg-zinc-900/50 transition-colors ${
+                        vehicleFilter === v.id ? 'text-blue-600 dark:text-blue-400 font-bold bg-blue-50/10' : ''
+                      }`}
+                    >
+                      <span className="truncate">{v.carName} ({v.plateNumber})</span>
+                    </button>
+                  ))}
+                </div>
+              </>
+            )}
+          </div>
         </div>
 
         {/* Type Filter */}
         <div className="flex items-center gap-2">
-          <label className="text-[11px] font-semibold text-gray-400 uppercase">{t('categoryFilter')}</label>
-          <select
-            value={typeFilter}
-            onChange={(e) => setTypeFilter(e.target.value)}
-            className="px-2.5 py-1.5 bg-white border border-gray-200 rounded-lg text-xs focus:outline-none focus:ring-1 focus:ring-black"
-          >
-            <option value="">{t('allCategories')}</option>
-            <option value="Gasoline">{translateExpenseType('Gasoline')}</option>
-            <option value="Repair">{translateExpenseType('Repair')}</option>
-            <option value="Insurance">{translateExpenseType('Insurance')}</option>
-            <option value="Car Wash">{translateExpenseType('Car Wash')}</option>
-            <option value="Oil Change">{translateExpenseType('Oil Change')}</option>
-            <option value="Other">{translateExpenseType('Other')}</option>
-          </select>
+          <label className="text-[11px] font-semibold text-gray-400 dark:text-zinc-500 uppercase">{t('categoryFilter')}</label>
+          <div className="relative">
+            <button
+              onClick={() => {
+                setIsCategoryDropdownOpen(!isCategoryDropdownOpen);
+                setIsVehicleDropdownOpen(false);
+              }}
+              className="px-3 py-1.5 bg-white dark:bg-zinc-900 border border-gray-200 dark:border-zinc-800 rounded-lg text-xs font-semibold text-gray-700 dark:text-zinc-350 hover:bg-gray-50 dark:hover:bg-zinc-800 flex items-center justify-between gap-1.5 min-w-[140px] shadow-2xs focus:outline-none"
+            >
+              <span>
+                {typeFilter === '' 
+                  ? t('allCategories') 
+                  : translateExpenseType(typeFilter)
+                }
+              </span>
+              <ChevronDown className="h-3.5 w-3.5 text-gray-400 dark:text-zinc-550" />
+            </button>
+            
+            {isCategoryDropdownOpen && (
+              <>
+                <div className="fixed inset-0 z-10" onClick={() => setIsCategoryDropdownOpen(false)} />
+                <div className="absolute left-0 mt-1 w-48 bg-white dark:bg-zinc-950 border border-gray-200 dark:border-zinc-800 rounded-xl shadow-lg py-1.5 z-20 text-xs font-semibold text-gray-755 dark:text-zinc-300 animate-in fade-in slide-in-from-top-1 duration-100">
+                  <button
+                    onClick={() => {
+                      setTypeFilter('');
+                      setIsCategoryDropdownOpen(false);
+                    }}
+                    className={`w-full px-3 py-2 text-left flex items-center justify-between hover:bg-gray-50 dark:hover:bg-zinc-900/50 transition-colors ${
+                      typeFilter === '' ? 'text-blue-600 dark:text-blue-400 font-bold bg-blue-50/10' : ''
+                    }`}
+                  >
+                    {t('allCategories')}
+                  </button>
+                  {['Gasoline', 'Repair', 'Insurance', 'Car Wash', 'Oil Change', 'Other'].map(typeOpt => (
+                    <button
+                      key={typeOpt}
+                      onClick={() => {
+                        setTypeFilter(typeOpt);
+                        setIsCategoryDropdownOpen(false);
+                      }}
+                      className={`w-full px-3 py-2 text-left flex items-center justify-between hover:bg-gray-50 dark:hover:bg-zinc-900/50 transition-colors ${
+                        typeFilter === typeOpt ? 'text-blue-600 dark:text-blue-400 font-bold bg-blue-50/10' : ''
+                      }`}
+                    >
+                      {translateExpenseType(typeOpt)}
+                    </button>
+                  ))}
+                </div>
+              </>
+            )}
+          </div>
         </div>
 
         {/* Reset Filter Button */}
