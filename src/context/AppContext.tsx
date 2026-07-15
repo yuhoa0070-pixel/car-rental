@@ -174,7 +174,7 @@ export const AppContextProvider: React.FC<{ children: React.ReactNode }> = ({ ch
 
     const syncToBackend = async () => {
       try {
-        await fetch('/api/data', {
+        const res = await fetch('/api/data', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
@@ -187,6 +187,18 @@ export const AppContextProvider: React.FC<{ children: React.ReactNode }> = ({ ch
             language
           })
         });
+
+        if (res.ok) {
+          const result = await res.json();
+          if (result.source === 'local' && typeof window !== 'undefined' && window.location.hostname.includes('.vercel.app')) {
+            showToast(
+              language === 'en'
+                ? 'Warning: Cloud database is not connected. Your changes will be lost on page reload. Please configure SUPABASE_URL and SUPABASE_ANON_KEY on Vercel.'
+                : 'ព្រមាន៖ មូលដ្ឋានទិន្នន័យពពក (Cloud) មិនទាន់ភ្ជាប់ទេ។ ការកែប្រែរបស់អ្នកនឹងត្រូវបាត់បង់ពេលផ្ទុកទំព័រឡើងវិញ។ សូមកំណត់ SUPABASE_URL និង SUPABASE_ANON_KEY លើ Vercel។',
+              'error'
+            );
+          }
+        }
       } catch (err) {
         console.error("Failed to sync state to backend API:", err);
       }
