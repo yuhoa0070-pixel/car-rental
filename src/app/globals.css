@@ -111,3 +111,19 @@ body {
 .dark ::-webkit-scrollbar-thumb:hover {
   background: #3f3f46;
 }
+
+/* Accessibility: Scale up font sizes when running inside Telegram Mini App */
+.tma-active {
+  font-size: 112.5% !important; /* Scales all rem-based elements up by 12.5% */
+}
+
+/* Override custom pixel font classes for legibility in TMA */
+.tma-active .text-\[9px\] {
+  font-size: 11.5px !important;
+}
+.tma-active .text-\[10px\] {
+  font-size: 12.5px !important;
+}
+.tma-active .text-\[11px\] {
+  font-size: 13.5px !important;
+}

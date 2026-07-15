@@ -78,6 +78,7 @@ export const AppContextProvider: React.FC<{ children: React.ReactNode }> = ({ ch
     // 1. Detect Telegram Mini App container
     if (typeof window !== 'undefined' && (window as any).Telegram?.WebApp?.initData) {
       setIsTelegramMiniApp(true);
+      document.documentElement.classList.add('tma-active');
       (window as any).Telegram.WebApp.ready();
       (window as any).Telegram.WebApp.expand();
       
