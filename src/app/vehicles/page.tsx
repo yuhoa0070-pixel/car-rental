@@ -210,17 +210,17 @@ export default function VehiclesPage() {
   return (
     <div className="space-y-6 max-w-7xl mx-auto">
       {/* Header bar */}
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
         <div>
           <h1 className="text-xl font-bold text-gray-900 tracking-tight">{t('vehicles')}</h1>
           <p className="text-xs text-gray-500">{t('addMonitorFleet')}</p>
         </div>
         <button
           onClick={handleOpenAdd}
-          className="flex items-center gap-1.5 px-4 py-2 glass-btn-primary rounded-full text-xs font-bold transition-all"
+          className="flex items-center justify-center gap-1.5 px-4 py-2 glass-btn-primary rounded-full text-xs font-bold transition-all w-fit sm:w-auto shrink-0"
         >
           <Plus className="h-3.5 w-3.5" />
-          {t('addVehicle')}
+          <span>{t('addVehicle')}</span>
         </button>
       </div>
 

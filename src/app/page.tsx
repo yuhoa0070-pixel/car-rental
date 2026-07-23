@@ -305,14 +305,14 @@ export default function Dashboard() {
   return (
     <div className="space-y-6 max-w-7xl mx-auto">
       {/* Welcome / Header */}
-      <div className="flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
         <div>
           <h1 className="text-xl font-bold text-gray-900 dark:text-zinc-100 tracking-tight">{t('overview')}</h1>
           <p className="text-xs text-gray-500 dark:text-zinc-400">{t('realTimeStatus')}</p>
         </div>
         
         {/* Quick Actions */}
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 w-fit sm:w-auto shrink-0">
           <Link 
             href="/rentals" 
             className="flex items-center gap-1.5 px-4 py-2 glass-btn-primary rounded-full text-xs font-bold transition-all"

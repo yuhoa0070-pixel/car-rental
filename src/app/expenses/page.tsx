@@ -136,7 +136,7 @@ export default function ExpensesPage() {
   return (
     <div className="space-y-6 max-w-7xl mx-auto">
       {/* Page Header */}
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
         <div>
           <h1 className="text-xl font-bold text-gray-900 tracking-tight">{t('expenses')}</h1>
           <p className="text-xs text-gray-500">{t('recordExp')}</p>
@@ -144,10 +144,10 @@ export default function ExpensesPage() {
         <button
           onClick={handleOpenAdd}
           disabled={vehicles.length === 0}
-          className="flex items-center gap-1.5 px-4 py-2 glass-btn-primary disabled:opacity-50 disabled:cursor-not-allowed rounded-full text-xs font-bold transition-all"
+          className="flex items-center justify-center gap-1.5 px-4 py-2 glass-btn-primary disabled:opacity-50 disabled:cursor-not-allowed rounded-full text-xs font-bold transition-all w-fit sm:w-auto shrink-0"
         >
           <Plus className="h-3.5 w-3.5" />
-          {t('logExpense')}
+          <span>{t('logExpense')}</span>
         </button>
       </div>
 
