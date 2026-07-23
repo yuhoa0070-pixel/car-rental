@@ -91,7 +91,7 @@ export const Header: React.FC<HeaderProps> = ({ onMenuToggle }) => {
         <div className="relative">
           <button
             onClick={() => setIsLangDropdownOpen(!isLangDropdownOpen)}
-            className="flex items-center gap-1.5 px-2.5 py-1.5 border border-gray-200 dark:border-zinc-800 rounded-lg bg-gray-50 dark:bg-zinc-900 text-[10px] font-bold text-gray-700 dark:text-zinc-300 hover:bg-gray-100 dark:hover:bg-zinc-800 transition-colors shadow-2xs focus:outline-none"
+            className="flex items-center gap-1.5 px-3 py-1.5 glass-btn-secondary rounded-full text-[10px] font-bold shadow-2xs focus:outline-none"
           >
             {language === 'en' ? <USFlag /> : <KHFlag />}
             <span>{language === 'en' ? 'EN' : 'ខ្មែរ'}</span>
@@ -101,14 +101,14 @@ export const Header: React.FC<HeaderProps> = ({ onMenuToggle }) => {
           {isLangDropdownOpen && (
             <>
               <div className="fixed inset-0 z-40" onClick={() => setIsLangDropdownOpen(false)} />
-              <div className="absolute right-0 mt-2 w-28 bg-white dark:bg-zinc-950 border border-gray-200 dark:border-zinc-800 rounded-xl shadow-lg py-1 z-50 text-xs font-semibold text-gray-700 dark:text-zinc-300 animate-in fade-in slide-in-from-top-1 duration-100">
+              <div className="absolute right-0 mt-2 w-32 glass-card rounded-2xl shadow-xl py-1.5 z-50 text-xs font-semibold text-gray-700 dark:text-zinc-300 animate-in fade-in slide-in-from-top-1 duration-100">
                 <button
                   onClick={() => {
                     setLanguage('en');
                     setIsLangDropdownOpen(false);
                   }}
-                  className={`w-full px-3 py-2 text-left flex items-center gap-2 hover:bg-gray-50 dark:hover:bg-zinc-900/50 transition-colors ${
-                    language === 'en' ? 'text-blue-600 dark:text-blue-400 font-bold bg-blue-50/10 dark:bg-blue-950/20' : ''
+                  className={`w-full px-3 py-2 text-left flex items-center gap-2 hover:bg-gray-50/50 dark:hover:bg-zinc-800/50 transition-colors rounded-xl ${
+                    language === 'en' ? 'text-blue-600 dark:text-blue-400 font-bold bg-blue-500/10 dark:bg-blue-400/15' : ''
                   }`}
                 >
                   <USFlag />
@@ -119,8 +119,8 @@ export const Header: React.FC<HeaderProps> = ({ onMenuToggle }) => {
                     setLanguage('km');
                     setIsLangDropdownOpen(false);
                   }}
-                  className={`w-full px-3 py-2 text-left flex items-center gap-2 hover:bg-gray-50 dark:hover:bg-zinc-900/50 transition-colors ${
-                    language === 'km' ? 'text-blue-600 dark:text-blue-400 font-bold bg-blue-50/10 dark:bg-blue-950/20' : ''
+                  className={`w-full px-3 py-2 text-left flex items-center gap-2 hover:bg-gray-50/50 dark:hover:bg-zinc-800/50 transition-colors rounded-xl ${
+                    language === 'km' ? 'text-blue-600 dark:text-blue-400 font-bold bg-blue-500/10 dark:bg-blue-400/15' : ''
                   }`}
                 >
                   <KHFlag />
@@ -134,7 +134,7 @@ export const Header: React.FC<HeaderProps> = ({ onMenuToggle }) => {
         {/* Theme Toggle Button */}
         <button
           onClick={toggleTheme}
-          className="p-1.5 border border-gray-200 dark:border-zinc-800 rounded-lg bg-gray-50 dark:bg-zinc-900 text-gray-500 dark:text-zinc-400 hover:text-gray-900 dark:hover:text-zinc-200 transition-colors shadow-2xs focus:outline-none"
+          className="p-2 glass-btn-secondary rounded-full text-gray-500 dark:text-zinc-400 focus:outline-none"
           title={theme === 'light' ? (language === 'en' ? 'Dark Mode' : 'មុខងារងងឹត') : (language === 'en' ? 'Light Mode' : 'មុខងារពន្លឺ')}
         >
           {theme === 'light' ? <Moon className="h-4 w-4" /> : <Sun className="h-4 w-4 text-amber-500" />}
@@ -195,12 +195,12 @@ export const Header: React.FC<HeaderProps> = ({ onMenuToggle }) => {
         </div>
       </div>
 
-      {/* Custom Confirmation Modal */}
+      {/* Custom Confirmation Modal (iPhone Glassmorphism Style) */}
       {isLogoutConfirmOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
           <div className="fixed inset-0 bg-black/45 dark:bg-black/60 backdrop-blur-xs transition-opacity" onClick={() => setIsLogoutConfirmOpen(false)} />
-          <div className="relative bg-white dark:bg-zinc-950 border border-gray-200 dark:border-zinc-850 rounded-2xl shadow-xl max-w-sm w-full p-5 text-xs text-center animate-in fade-in zoom-in-95 duration-150">
-            <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-red-50 dark:bg-red-950/20 text-red-600 mb-4 border border-red-100 dark:border-red-950/10">
+          <div className="relative glass-card rounded-3xl shadow-2xl max-w-sm w-full p-6 text-xs text-center animate-in fade-in zoom-in-95 duration-150">
+            <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-red-500/10 dark:bg-red-500/20 text-red-600 dark:text-red-400 mb-4 border border-red-500/20">
               <LogOut className="h-5 w-5" />
             </div>
             <h3 className="text-sm font-bold text-gray-900 dark:text-zinc-100 mb-2">
@@ -214,7 +214,7 @@ export const Header: React.FC<HeaderProps> = ({ onMenuToggle }) => {
             <div className="flex items-center justify-center gap-3">
               <button
                 onClick={() => setIsLogoutConfirmOpen(false)}
-                className="px-4 py-2 border border-gray-200 dark:border-zinc-800 hover:bg-gray-50 dark:hover:bg-zinc-900 text-gray-700 dark:text-zinc-300 font-semibold rounded-lg shadow-2xs transition-colors"
+                className="px-5 py-2.5 glass-btn-secondary rounded-full font-bold shadow-xs"
               >
                 {language === 'en' ? 'Cancel' : 'បោះបង់'}
               </button>
@@ -223,7 +223,7 @@ export const Header: React.FC<HeaderProps> = ({ onMenuToggle }) => {
                   logout();
                   setIsLogoutConfirmOpen(false);
                 }}
-                className="px-4 py-2 bg-red-600 hover:bg-red-750 text-white font-semibold rounded-lg shadow-sm transition-colors"
+                className="px-5 py-2.5 glass-btn-danger rounded-full font-bold shadow-sm"
               >
                 {language === 'en' ? 'Log Out' : 'ចាកចេញ'}
               </button>

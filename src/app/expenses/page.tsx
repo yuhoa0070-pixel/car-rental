@@ -144,7 +144,7 @@ export default function ExpensesPage() {
         <button
           onClick={handleOpenAdd}
           disabled={vehicles.length === 0}
-          className="flex items-center gap-1.5 px-3 py-1.5 bg-blue-600 hover:bg-blue-700 disabled:bg-blue-300/50 disabled:cursor-not-allowed text-white rounded-lg text-xs font-medium shadow-sm transition-all"
+          className="flex items-center gap-1.5 px-4 py-2 glass-btn-primary disabled:opacity-50 disabled:cursor-not-allowed rounded-full text-xs font-bold transition-all"
         >
           <Plus className="h-3.5 w-3.5" />
           {t('logExpense')}

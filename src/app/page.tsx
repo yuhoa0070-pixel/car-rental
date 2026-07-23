@@ -315,14 +315,14 @@ export default function Dashboard() {
         <div className="flex items-center gap-2">
           <Link 
             href="/rentals" 
-            className="flex items-center gap-1.5 px-3.5 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-xs font-semibold shadow-sm transition-all"
+            className="flex items-center gap-1.5 px-4 py-2 glass-btn-primary rounded-full text-xs font-bold transition-all"
           >
             <Plus className="h-3.5 w-3.5" />
             {t('createRental')}
           </Link>
           <Link 
             href="/expenses" 
-            className="flex items-center gap-1.5 px-3.5 py-2 bg-white dark:bg-zinc-900 border border-gray-200 dark:border-zinc-800 hover:bg-gray-50 dark:hover:bg-zinc-855 text-gray-700 dark:text-zinc-200 rounded-lg text-xs font-semibold shadow-2xs transition-all"
+            className="flex items-center gap-1.5 px-4 py-2 glass-btn-secondary rounded-full text-xs font-bold transition-all"
           >
             <Receipt className="h-3.5 w-3.5 text-gray-400 dark:text-zinc-500" />
             {t('logExpense')}
