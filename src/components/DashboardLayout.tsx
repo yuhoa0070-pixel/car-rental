@@ -40,13 +40,13 @@ export const DashboardLayout: React.FC<{ children: React.ReactNode }> = ({ child
     ];
 
     return (
-      <div className="flex flex-col h-screen overflow-hidden bg-gray-50/30 dark:bg-zinc-950">
-        <main className="flex-1 overflow-y-auto focus:outline-none p-4 pb-20 dark:bg-zinc-900/40">
+      <div className="flex flex-col h-screen max-w-full overflow-x-hidden bg-gray-50/30 dark:bg-zinc-950">
+        <main className="flex-1 overflow-y-auto overflow-x-hidden max-w-full focus:outline-none p-4 pb-24 dark:bg-zinc-900/40">
           {children}
         </main>
         
-        {/* Bottom Tab Navigation Bar for Telegram (iPhone Dock Style) */}
-        <nav className="fixed bottom-2 left-3 right-3 z-50 glass-dock rounded-2xl flex justify-around items-center h-16 px-2 shrink-0">
+        {/* Bottom Tab Navigation Bar for Telegram (Fits all devices without overflow) */}
+        <nav className="fixed bottom-0 left-0 right-0 z-50 glass-dock flex justify-around items-center h-16 px-1 border-t border-gray-200/80 dark:border-zinc-800/80 shrink-0 max-w-full">
           {navItems.map((item) => {
             const Icon = item.icon;
             const isActive = pathname === item.href;
@@ -54,14 +54,14 @@ export const DashboardLayout: React.FC<{ children: React.ReactNode }> = ({ child
               <Link
                 key={item.href}
                 href={item.href}
-                className={`flex flex-col items-center justify-center flex-1 h-12 py-1 gap-1 text-[9.5px] font-semibold transition-all duration-200 rounded-xl ${
+                className={`flex flex-col items-center justify-center flex-1 h-12 py-1 gap-1 text-[9.5px] font-semibold transition-all duration-200 rounded-xl max-w-[20%] ${
                   isActive 
                     ? 'text-blue-600 dark:text-blue-400 font-bold bg-blue-500/10 dark:bg-blue-400/15 backdrop-blur-xs scale-105' 
                     : 'text-gray-500 dark:text-zinc-400 hover:text-gray-800 dark:hover:text-zinc-200 active:scale-95'
                 }`}
               >
                 <Icon className={`h-4.5 w-4.5 transition-transform ${isActive ? 'stroke-[2.5px] text-blue-600 dark:text-blue-400' : 'stroke-[1.8px]'}`} />
-                <span className="truncate max-w-[64px]">{item.name}</span>
+                <span className="truncate w-full text-center px-0.5">{item.name}</span>
               </Link>
             );
           })}
@@ -71,13 +71,13 @@ export const DashboardLayout: React.FC<{ children: React.ReactNode }> = ({ child
   }
 
   return (
-    <div className="flex h-screen overflow-hidden bg-gray-50/30 dark:bg-zinc-950">
+    <div className="flex h-screen max-w-full overflow-hidden bg-gray-50/30 dark:bg-zinc-950">
       <Sidebar isOpen={isSidebarOpen} onClose={() => setIsSidebarOpen(false)} />
       
-      <div className="flex flex-col flex-1 min-w-0 overflow-hidden">
+      <div className="flex flex-col flex-1 min-w-0 max-w-full overflow-hidden">
         <Header onMenuToggle={() => setIsSidebarOpen(true)} />
         
-        <main className="flex-1 overflow-y-auto focus:outline-none p-4 md:p-8 dark:bg-zinc-900/40">
+        <main className="flex-1 overflow-y-auto overflow-x-hidden max-w-full focus:outline-none p-4 md:p-8 dark:bg-zinc-900/40">
           {children}
         </main>
       </div>
