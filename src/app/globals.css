@@ -128,28 +128,28 @@ body {
   font-size: 13.5px !important;
 }
 
-/* GLOBAL GLASSMORPHISM UI SYSTEM - Applies to ALL buttons, modals, & floating elements */
+/* GLOBAL LIQUID GLASS UI SYSTEM - Applies to ALL buttons, modals, & floating elements */
 button,
 .button-glass {
   backdrop-filter: blur(16px) saturate(180%);
   -webkit-backdrop-filter: blur(16px) saturate(180%);
-  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
 }
 
 button:active {
-  transform: scale(0.96) !important;
+  transform: scale(0.95) !important;
 }
 
-/* Primary Glass Buttons (Blue CTA) */
+/* Liquid Glass Primary Buttons (Blue CTA) */
 button.bg-blue-600,
 button[type="submit"].bg-blue-600,
 a.bg-blue-600,
 .glass-btn-primary {
-  background: rgba(37, 99, 235, 0.88) !important;
+  background: linear-gradient(180deg, rgba(59, 130, 246, 0.92) 0%, rgba(37, 99, 235, 0.85) 50%, rgba(29, 78, 216, 0.95) 100%) !important;
   backdrop-filter: blur(16px) saturate(180%) !important;
   -webkit-backdrop-filter: blur(16px) saturate(180%) !important;
-  border: 1px solid rgba(255, 255, 255, 0.35) !important;
-  box-shadow: 0 4px 16px -2px rgba(37, 99, 235, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.5) !important;
+  border: 1px solid rgba(255, 255, 255, 0.4) !important;
+  box-shadow: 0 4px 20px -2px rgba(37, 99, 235, 0.45), inset 0 1.5px 2px rgba(255, 255, 255, 0.75) !important;
   color: #ffffff !important;
   border-radius: 9999px !important;
 }
@@ -157,21 +157,21 @@ a.bg-blue-600,
 button.bg-blue-600:hover,
 a.bg-blue-600:hover,
 .glass-btn-primary:hover {
-  background: rgba(37, 99, 235, 0.95) !important;
-  box-shadow: 0 6px 20px -2px rgba(37, 99, 235, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.6) !important;
-  transform: translateY(-1px) !important;
+  background: linear-gradient(180deg, rgba(96, 165, 250, 0.95) 0%, rgba(37, 99, 235, 0.92) 50%, rgba(29, 78, 216, 0.98) 100%) !important;
+  box-shadow: 0 6px 25px -2px rgba(37, 99, 235, 0.6), inset 0 1.5px 3px rgba(255, 255, 255, 0.9) !important;
+  transform: translateY(-1px) scale(1.02) !important;
 }
 
-/* Secondary Glass Buttons (White / Neutral) */
+/* Liquid Glass Secondary Buttons (White / Neutral Glass) */
 button.bg-white,
 button.border-gray-200,
 a.bg-white,
 .glass-btn-secondary {
-  background: rgba(255, 255, 255, 0.72) !important;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.85) 0%, rgba(255, 255, 255, 0.65) 50%, rgba(243, 244, 246, 0.75) 100%) !important;
   backdrop-filter: blur(20px) saturate(190%) !important;
   -webkit-backdrop-filter: blur(20px) saturate(190%) !important;
-  border: 1px solid rgba(255, 255, 255, 0.75) !important;
-  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.06), inset 0 1px 1px rgba(255, 255, 255, 0.9) !important;
+  border: 1px solid rgba(255, 255, 255, 0.8) !important;
+  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.06), inset 0 1.5px 2px rgba(255, 255, 255, 0.95) !important;
   color: #1f2937 !important;
   border-radius: 9999px !important;
 }
@@ -179,76 +179,77 @@ a.bg-white,
 button.bg-white:hover,
 a.bg-white:hover,
 .glass-btn-secondary:hover {
-  background: rgba(255, 255, 255, 0.88) !important;
-  box-shadow: 0 6px 24px -2px rgba(0, 0, 0, 0.08), inset 0 1px 1px rgba(255, 255, 255, 1) !important;
-  transform: translateY(-1px) !important;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.8) 50%, rgba(243, 244, 246, 0.9) 100%) !important;
+  box-shadow: 0 6px 25px -2px rgba(0, 0, 0, 0.1), inset 0 1.5px 3px rgba(255, 255, 255, 1) !important;
+  transform: translateY(-1px) scale(1.02) !important;
 }
 
 .dark button.bg-white,
 .dark button.border-gray-200,
 .dark a.bg-white,
 .dark .glass-btn-secondary {
-  background: rgba(255, 255, 255, 0.1) !important;
-  border: 1px solid rgba(255, 255, 255, 0.15) !important;
-  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.15) !important;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.18) 0%, rgba(255, 255, 255, 0.08) 50%, rgba(255, 255, 255, 0.04) 100%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.4), inset 0 1.5px 2px rgba(255, 255, 255, 0.25) !important;
   color: #f4f4f5 !important;
 }
 
 .dark button.bg-white:hover,
 .dark a.bg-white:hover,
 .dark .glass-btn-secondary:hover {
-  background: rgba(255, 255, 255, 0.18) !important;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.25) 0%, rgba(255, 255, 255, 0.12) 50%, rgba(255, 255, 255, 0.08) 100%) !important;
 }
 
-/* Danger / Destructive Glass Buttons (Red) */
+/* Liquid Glass Danger Buttons (Red) */
 button.bg-red-600,
 button.bg-red-500,
 .glass-btn-danger {
-  background: rgba(225, 29, 72, 0.88) !important;
+  background: linear-gradient(180deg, rgba(244, 63, 94, 0.92) 0%, rgba(225, 29, 72, 0.85) 50%, rgba(190, 18, 60, 0.95) 100%) !important;
   backdrop-filter: blur(16px) saturate(180%) !important;
   -webkit-backdrop-filter: blur(16px) saturate(180%) !important;
-  border: 1px solid rgba(255, 255, 255, 0.35) !important;
-  box-shadow: 0 4px 16px -2px rgba(225, 29, 72, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.5) !important;
+  border: 1px solid rgba(255, 255, 255, 0.4) !important;
+  box-shadow: 0 4px 20px -2px rgba(225, 29, 72, 0.45), inset 0 1.5px 2px rgba(255, 255, 255, 0.75) !important;
   color: #ffffff !important;
   border-radius: 9999px !important;
 }
 
 button.bg-red-600:hover,
 .glass-btn-danger:hover {
-  background: rgba(225, 29, 72, 0.95) !important;
-  box-shadow: 0 6px 20px -2px rgba(225, 29, 72, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.6) !important;
+  background: linear-gradient(180deg, rgba(251, 113, 133, 0.95) 0%, rgba(225, 29, 72, 0.92) 50%, rgba(190, 18, 60, 0.98) 100%) !important;
+  box-shadow: 0 6px 25px -2px rgba(225, 29, 72, 0.6), inset 0 1.5px 3px rgba(255, 255, 255, 0.9) !important;
+  transform: translateY(-1px) scale(1.02) !important;
 }
 
-/* Modal Dialogs Glass Cards */
+/* Modal Dialogs Liquid Glass Cards */
 .glass-card,
 div[role="dialog"] {
-  background: rgba(255, 255, 255, 0.78) !important;
+  background: rgba(255, 255, 255, 0.8) !important;
   backdrop-filter: blur(24px) saturate(190%) !important;
   -webkit-backdrop-filter: blur(24px) saturate(190%) !important;
-  border: 1px solid rgba(255, 255, 255, 0.8) !important;
-  box-shadow: 0 12px 40px 0 rgba(31, 38, 135, 0.08), inset 0 1px 1px rgba(255, 255, 255, 0.9) !important;
+  border: 1px solid rgba(255, 255, 255, 0.85) !important;
+  box-shadow: 0 12px 40px 0 rgba(31, 38, 135, 0.08), inset 0 1.5px 2px rgba(255, 255, 255, 0.95) !important;
   border-radius: 1.5rem !important;
 }
 
 .dark .glass-card,
 .dark div[role="dialog"] {
-  background: rgba(18, 18, 22, 0.78) !important;
-  border: 1px solid rgba(255, 255, 255, 0.12) !important;
-  box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.1) !important;
+  background: rgba(18, 18, 22, 0.8) !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.5), inset 0 1.5px 2px rgba(255, 255, 255, 0.15) !important;
 }
 
-/* Glass Floating Bottom Navigation Bar (iPhone Dock Style) */
+/* Liquid Glass Dock (Telegram Bottom Nav) */
 .glass-dock {
-  background: rgba(255, 255, 255, 0.78) !important;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.85) 0%, rgba(255, 255, 255, 0.72) 100%) !important;
   backdrop-filter: blur(25px) saturate(200%);
   -webkit-backdrop-filter: blur(25px) saturate(200%);
-  border-top: 1px solid rgba(255, 255, 255, 0.6) !important;
-  box-shadow: 0 -4px 30px rgba(0, 0, 0, 0.08), inset 0 1px 1px rgba(255, 255, 255, 0.9) !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.7) !important;
+  box-shadow: 0 -4px 30px rgba(0, 0, 0, 0.08), inset 0 1.5px 2px rgba(255, 255, 255, 0.95) !important;
 }
 
 .dark .glass-dock {
-  background: rgba(20, 20, 24, 0.78) !important;
-  border-top: 1px solid rgba(255, 255, 255, 0.12) !important;
-  box-shadow: 0 -4px 30px rgba(0, 0, 0, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.1) !important;
+  background: linear-gradient(180deg, rgba(24, 24, 28, 0.85) 0%, rgba(18, 18, 22, 0.75) 100%) !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.15) !important;
+  box-shadow: 0 -4px 30px rgba(0, 0, 0, 0.5), inset 0 1.5px 2px rgba(255, 255, 255, 0.15) !important;
 }
 
