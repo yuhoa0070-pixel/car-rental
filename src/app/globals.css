@@ -262,3 +262,57 @@ div[role="dialog"] {
   box-shadow: 0 -4px 30px rgba(0, 0, 0, 0.5), inset 0 1.5px 2px rgba(255, 255, 255, 0.15) !important;
 }
 
+/* Liquid Water Drop & Wave Keyframes for Menu Bar */
+@keyframes waterDrop {
+  0% {
+    transform: scale(0.5);
+    opacity: 0.9;
+    border-radius: 50%;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 0.5;
+    border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%;
+  }
+  100% {
+    transform: scale(1.5);
+    opacity: 0;
+    border-radius: 50%;
+  }
+}
+
+@keyframes liquidFloat {
+  0%, 100% {
+    transform: translateY(0) scale(1.06);
+  }
+  50% {
+    transform: translateY(-2.5px) scale(1.1);
+  }
+}
+
+@keyframes waterGlow {
+  0%, 100% {
+    box-shadow: 0 0 10px rgba(59, 130, 246, 0.35), inset 0 1px 2px rgba(255, 255, 255, 0.8);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(14, 165, 233, 0.6), inset 0 1px 3px rgba(255, 255, 255, 1);
+  }
+}
+
+.animate-water-float {
+  animation: liquidFloat 2.4s ease-in-out infinite;
+}
+
+.animate-water-glow {
+  animation: waterGlow 2s ease-in-out infinite;
+}
+
+.water-ripple {
+  position: absolute;
+  inset: -2px;
+  border-radius: 9999px;
+  background: radial-gradient(circle, rgba(59, 130, 246, 0.35) 0%, rgba(14, 165, 233, 0.15) 60%, transparent 100%);
+  animation: waterDrop 1.8s cubic-bezier(0.1, 0.4, 0.8, 1) infinite;
+  pointer-events: none;
+}
+

@@ -45,7 +45,7 @@ export const DashboardLayout: React.FC<{ children: React.ReactNode }> = ({ child
           {children}
         </main>
         
-        {/* Bottom Tab Navigation Bar for Telegram (Fits all devices without overflow) */}
+        {/* Bottom Tab Navigation Bar for Telegram (With Liquid Water Drop Animation) */}
         <nav className="fixed bottom-0 left-0 right-0 z-50 glass-dock flex justify-around items-center h-16 px-1 border-t border-gray-200/80 dark:border-zinc-800/80 shrink-0 max-w-full">
           {navItems.map((item) => {
             const Icon = item.icon;
@@ -54,14 +54,24 @@ export const DashboardLayout: React.FC<{ children: React.ReactNode }> = ({ child
               <Link
                 key={item.href}
                 href={item.href}
-                className={`flex flex-col items-center justify-center flex-1 h-12 py-1 gap-1 text-[9.5px] font-semibold transition-all duration-200 rounded-xl max-w-[20%] ${
+                className={`relative flex flex-col items-center justify-center flex-1 h-12 py-1 gap-1 text-[9.5px] font-semibold transition-all duration-300 rounded-2xl max-w-[20%] ${
                   isActive 
-                    ? 'text-blue-600 dark:text-blue-400 font-bold bg-blue-500/10 dark:bg-blue-400/15 backdrop-blur-xs scale-105' 
-                    : 'text-gray-500 dark:text-zinc-400 hover:text-gray-800 dark:hover:text-zinc-200 active:scale-95'
+                    ? 'text-blue-600 dark:text-blue-400 font-bold bg-gradient-to-b from-blue-500/20 via-sky-400/25 to-blue-600/10 border border-blue-400/40 dark:border-blue-500/30 animate-water-float animate-water-glow' 
+                    : 'text-gray-500 dark:text-zinc-400 hover:text-blue-600 dark:hover:text-blue-400 active:scale-95'
                 }`}
               >
-                <Icon className={`h-4.5 w-4.5 transition-transform ${isActive ? 'stroke-[2.5px] text-blue-600 dark:text-blue-400' : 'stroke-[1.8px]'}`} />
-                <span className="truncate w-full text-center px-0.5">{item.name}</span>
+                {/* Liquid Water Ripple Wave on Active Tab */}
+                {isActive && <span aria-hidden="true" className="water-ripple" />}
+                
+                {/* Water Specular Gloss Highlight */}
+                {isActive && (
+                  <span aria-hidden="true" className="absolute inset-x-2 top-0.5 h-[40%] bg-gradient-to-b from-white/60 via-white/20 to-transparent rounded-t-xl pointer-events-none" />
+                )}
+
+                <div className="relative z-10 flex flex-col items-center gap-0.5">
+                  <Icon className={`h-4.5 w-4.5 transition-all duration-300 ${isActive ? 'stroke-[2.5px] text-blue-600 dark:text-blue-400 scale-110 drop-shadow-[0_2px_8px_rgba(59,130,246,0.5)]' : 'stroke-[1.8px]'}`} />
+                  <span className="truncate w-full text-center px-0.5">{item.name}</span>
+                </div>
               </Link>
             );
           })}
