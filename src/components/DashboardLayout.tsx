@@ -45,7 +45,7 @@ export const DashboardLayout: React.FC<{ children: React.ReactNode }> = ({ child
           {children}
         </main>
         
-        {/* Bottom Tab Navigation Bar for Telegram (No Blue Background Box) */}
+        {/* Bottom Tab Navigation Bar for Telegram (Simple Mode) */}
         <nav className="fixed bottom-0 left-0 right-0 z-50 glass-dock flex justify-around items-center h-16 px-1 border-t border-gray-200/80 dark:border-zinc-800/80 shrink-0 max-w-full">
           {navItems.map((item) => {
             const Icon = item.icon;
@@ -54,22 +54,17 @@ export const DashboardLayout: React.FC<{ children: React.ReactNode }> = ({ child
               <Link
                 key={item.href}
                 href={item.href}
-                className={`relative flex flex-col items-center justify-center flex-1 h-12 py-1 gap-1 text-[9.5px] font-semibold transition-all duration-300 max-w-[20%] ${
+                className={`flex flex-col items-center justify-center flex-1 h-12 py-1 gap-1 text-[10px] font-semibold transition-colors duration-150 max-w-[20%] ${
                   isActive 
                     ? 'text-blue-600 dark:text-blue-400 font-bold' 
-                    : 'text-gray-500 dark:text-zinc-400 hover:text-blue-600 dark:hover:text-blue-400 active:scale-95'
+                    : 'text-gray-500 dark:text-zinc-400 hover:text-gray-800 dark:hover:text-zinc-200'
                 }`}
               >
-                <div className="relative flex items-center justify-center">
-                  {/* Water Ripple Effect Centered Directly Around Icon */}
-                  {isActive && <span aria-hidden="true" className="water-icon-ripple" />}
-
-                  <Icon className={`h-5 w-5 transition-all duration-300 ${
-                    isActive 
-                      ? 'stroke-[2.5px] text-blue-600 dark:text-blue-400 scale-110 animate-water-float drop-shadow-[0_2px_8px_rgba(59,130,246,0.4)]' 
-                      : 'stroke-[1.8px]'
-                  }`} />
-                </div>
+                <Icon className={`h-5 w-5 transition-transform duration-150 ${
+                  isActive 
+                    ? 'stroke-[2.2px] text-blue-600 dark:text-blue-400 scale-105' 
+                    : 'stroke-[1.7px]'
+                }`} />
                 <span className="truncate w-full text-center px-0.5">{item.name}</span>
               </Link>
             );
