@@ -559,48 +559,58 @@ export default function Dashboard() {
           </div>
 
           {/* Chart Bars Grid */}
-          <div className="mt-5 flex items-end justify-between h-36 relative pt-4 text-[10px] font-semibold text-gray-400 dark:text-zinc-550">
-            {/* Background Y-Axis lines */}
-            <div className="absolute inset-0 flex flex-col justify-between pointer-events-none pr-8">
-              <div className="border-b border-gray-100 dark:border-zinc-900/60 w-full" />
-              <div className="border-b border-gray-100 dark:border-zinc-900/60 w-full" />
-              <div className="border-b border-gray-100 dark:border-zinc-900/60 w-full" />
-              <div className="border-b border-gray-100 dark:border-zinc-900/60 w-full" />
-              <div className="border-b border-gray-200 dark:border-zinc-855 w-full" />
+          <div className="mt-5 relative">
+            {/* Chart Area (Y-Axis + Bars) */}
+            <div className="flex h-36 relative">
+              {/* Left Y-Axis labels */}
+              <div className="w-8 flex flex-col justify-between py-0.5 text-[9px] font-mono text-gray-400 dark:text-zinc-500 text-right pr-1.5 shrink-0 select-none">
+                <span>{formatYLabel(maxVal)}</span>
+                <span>{formatYLabel(maxVal * 0.75)}</span>
+                <span>{formatYLabel(maxVal * 0.50)}</span>
+                <span>{formatYLabel(maxVal * 0.25)}</span>
+                <span>$0</span>
+              </div>
+
+              {/* Grid lines and Bars area */}
+              <div className="flex-1 relative h-full">
+                {/* Background Y-Axis grid lines */}
+                <div className="absolute inset-0 flex flex-col justify-between pointer-events-none">
+                  <div className="border-b border-gray-100 dark:border-zinc-900/60 w-full" />
+                  <div className="border-b border-gray-100 dark:border-zinc-900/60 w-full" />
+                  <div className="border-b border-gray-100 dark:border-zinc-900/60 w-full" />
+                  <div className="border-b border-gray-100 dark:border-zinc-900/60 w-full" />
+                  <div className="border-b border-gray-200 dark:border-zinc-800 w-full" />
+                </div>
+
+                {/* Bars container */}
+                <div className="absolute inset-0 flex justify-around items-end px-1">
+                  {chartData.map((d, index) => (
+                    <div key={index} className="flex-1 flex justify-center items-end h-full z-10">
+                      <div className="flex items-end gap-0.5 sm:gap-1">
+                        {/* Income bar */}
+                        <div 
+                          style={{ height: `${Math.max((d.inc / maxVal) * 100, 2)}%` }}
+                          className="w-1.5 sm:w-2.5 bg-emerald-500 rounded-t-sm hover:opacity-90 transition-all duration-300"
+                          title={`Income: $${d.inc.toLocaleString()}`}
+                        />
+                        {/* Expense bar */}
+                        <div 
+                          style={{ height: `${Math.max((d.exp / maxVal) * 100, 2)}%` }}
+                          className="w-1.5 sm:w-2.5 bg-red-500 rounded-t-sm hover:opacity-90 transition-all duration-300"
+                          title={`Expense: $${d.exp.toLocaleString()}`}
+                        />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
             </div>
 
-            {/* Left Y-Axis labels */}
-            <div className="absolute left-0 top-0 bottom-0 flex flex-col justify-between pointer-events-none text-[9px] w-8 pr-1 font-mono text-right">
-              <span>{formatYLabel(maxVal)}</span>
-              <span>{formatYLabel(maxVal * 0.75)}</span>
-              <span>{formatYLabel(maxVal * 0.50)}</span>
-              <span>{formatYLabel(maxVal * 0.25)}</span>
-              <span>$0</span>
-            </div>
-
-            {/* Bars columns container */}
-            <div className="flex-1 flex justify-between items-end pl-10 pr-2 h-full">
+            {/* X-Axis Day Labels Below Grid */}
+            <div className="flex pl-8 mt-2.5 text-[9px] font-bold text-gray-500 dark:text-zinc-400">
               {chartData.map((d, index) => (
-                <div key={index} className="flex flex-col items-center gap-1 h-full justify-end w-10 z-10">
-                  {/* Visual Bars */}
-                  <div className="flex items-end gap-1 h-24">
-                    {/* Income bar */}
-                    <div 
-                      style={{ height: `${(d.inc / maxVal) * 100}%` }}
-                      className="w-2.5 bg-emerald-500 rounded-t-sm hover:opacity-90 transition-opacity"
-                      title={`Income: $${d.inc.toLocaleString()}`}
-                    />
-                    {/* Expense bar */}
-                    <div 
-                      style={{ height: `${(d.exp / maxVal) * 100}%` }}
-                      className="w-2.5 bg-red-500 rounded-t-sm hover:opacity-90 transition-opacity"
-                      title={`Expense: $${d.exp.toLocaleString()}`}
-                    />
-                  </div>
-                  {/* Label */}
-                  <span className="text-[9px] font-bold text-gray-500 dark:text-zinc-400 mt-1.5 truncate max-w-[36px] text-center" title={d.day}>
-                    {d.day}
-                  </span>
+                <div key={index} className="flex-1 text-center truncate px-0.5" title={d.day}>
+                  {d.day}
                 </div>
               ))}
             </div>
